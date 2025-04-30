@@ -12,7 +12,7 @@ $oUser = new user();
     <title>Přihlášení do aplikace Home</title>
     <script src="<?= c_MainUrl; ?>inc/jquery-3.6.4.min.js"></script>
     <script src="<?= c_MainUrl; ?>Bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="<?= c_MainUrl; ?>inc/clinterap.js?ch=<?= md5_file('inc/clinterap.js') ?>"></script>
+    <script src="<?= c_MainUrl; ?>inc/home.js?ch=<?= md5_file('inc/home.js') ?>"></script>
     <style>
         .tile { background-color: #d2f4ea; border:white solid 0.15em; border-radius: 0.5em; padding:1em; }
         .tile:hover { background-color: #a6e9d5; }
@@ -26,7 +26,7 @@ $oUser = new user();
             <input type="hidden" name="action" value="login">
             <div class="m-3">
                 <label for="login" class="form-label">Přihlašovací jméno:</label>
-                <input type="text" id="user" class="form-control" name="user" value="<?= $oUser->user["name"] ?>">
+                <input type="text" id="login" class="form-control" name="login" value="<?= $oUser->user["login"] ?>">
               </div>
               <div class="m-3">
                 <label for="password" class="form-label">Heslo:</label>

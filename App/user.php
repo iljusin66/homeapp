@@ -33,16 +33,16 @@ class user {
     }
     
     private function login() {
-        $this->user["name"] = request::string('user', 'POST');
+        $this->user["login"] = $login = request::string('login', 'POST');
         $heslo = request::string('password', 'POST');
-        //utils::debug([$this->user["name"], $heslo,  utils::getHashHeslo($heslo, self::SaltMd5)]);
-        if ($this->user["name"] == '' || $heslo == '') : $this->setErrorLogin(1); return; endif;
-        //debug([$this->user["name"], $heslo, utils::getHash($heslo, self::SaltMd5)]);
-        $q = "SELECT u.id, u.username FROM users AS u WHERE u.login = ? AND u.heslo = ?";
-        $this->user = db::fa($q, $this->user["name"], utils::getHashHeslo($heslo, self::SaltMd5));
         
+        if ($login == '' || $heslo == '') : $this->setErrorLogin(1); return; endif;
+        //debug([$this->user["name"], $heslo, utils::getHash($heslo, self::SaltMd5)]);
+        $q = "SELECT u.id, u.username AS name FROM users AS u WHERE u.login = ? AND u.heslo = ?";
+        $this->user = db::f($q, $login, utils::getHashHeslo($heslo, self::SaltMd5));
+        $this->user["login"] = $login;
         if ($this->user["id"]==0) : $this->setErrorLogin(2); return; endif;
-        utils::setCookie('user', $this->user["name"], $this->cookieTime);
+        utils::setCookie('username', $this->user["name"], $this->cookieTime);
         utils::setCookie('iduser', $this->user["id"], $this->cookieTime);
         utils::setCookie('hash', utils::getHash([$this->user["name"], $this->user["id"]], self::SaltMd5), $this->cookieTime);
         header('Location: /');
@@ -64,7 +64,7 @@ class user {
     
     public function checkLogin($bRedirect = true) {
         
-        $this->user["name"] = request::string('user', 'COOKIE');
+        $this->user["name"] = request::string('username', 'COOKIE');
         $this->user["id"] = request::int('iduser', 'COOKIE');
 
         if ($this->user["name"]=='') : 
@@ -91,7 +91,7 @@ class user {
     public function logout($err = '', $bRedirect = true) {
         if (!$bRedirect) : die('Chyba #21 : Neopravneny pristup'); endif;
         
-        utils::clearCookiesArray(['user', 'iduser', 'hash']);
+        utils::clearCookiesArray(['username', 'iduser', 'hash']);
         header('Location: /?e=' . $err);
         die();
     }
