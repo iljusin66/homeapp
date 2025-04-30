@@ -37,7 +37,7 @@ class user {
         $heslo = request::string('password', 'POST');
         
         if ($login == '' || $heslo == '') : $this->setErrorLogin(1); return; endif;
-        //debug([$this->user["name"], $heslo, utils::getHash($heslo, self::SaltMd5)]);
+
         $q = "SELECT u.id, u.username AS name FROM users AS u WHERE u.login = ? AND u.heslo = ?";
         $this->user = db::f($q, $login, utils::getHashHeslo($heslo, self::SaltMd5));
         $this->user["login"] = $login;
@@ -75,9 +75,7 @@ class user {
             define('cb_Login', false);
             return;
         endif;
-        
-
-        
+                
         if (utils::getHash([$this->user["name"], $this->user["id"]], self::SaltMd5) != request::string('hash', 'COOKIE')) : 
             $this->logout('badHash', $bRedirect);
         endif;
@@ -85,7 +83,10 @@ class user {
         if (!defined('cb_Login')) : define('cb_Login', true); endif;
         utils::refreshCookies();
         
+        $this->doplnVsechnaUserData();
     }
+
+    
     
     
     public function logout($err = '', $bRedirect = true) {
@@ -94,6 +95,24 @@ class user {
         utils::clearCookiesArray(['username', 'iduser', 'hash']);
         header('Location: /?e=' . $err);
         die();
+    }
+
+    private function doplnVsechnaUserData() {
+        $q = "SELECT u.id, u.username AS name, u.login, u.heslo, u.email FROM users AS u WHERE u.id = ?";
+        $this->user = db::f($q, $this->user["id"]);
+        if ($this->user["id"]==0) : $this->setErrorLogin(2); return; endif;
+        $this->doplnUser2Zarizeni();
+    }
+
+    private function doplnUser2Zarizeni() {
+        $this->user["zarizeniRole"] = [];
+        $q = "SELECT idzarizeni, idrole FROM zarizeni2users WHERE iduser = ?";
+        $r = db::fa($q, $this->user["id"]);
+        
+        foreach ($r as $row) {
+            $this->user["zarizeniRole"][$row["idzarizeni"]] = $row["idrole"];
+        }
+        
     }
         
 }
