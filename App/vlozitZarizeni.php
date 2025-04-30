@@ -21,8 +21,7 @@ class vlozitOdpocet extends zarizeni {
     }
     
     function vlozOdpocet($id, $odpo) {
-        $this->db->query("INSERT INTO zarizeni_odpocet (id_zarizeni, id_odpocet) VALUES (:id_zarizeni, :id_odpocet)", ['id_zarizeni'=>$id, 'id_odpocet'=>$odpo]);
-        return $this->db->lastInsertId(); 
+        
     }
     
 }

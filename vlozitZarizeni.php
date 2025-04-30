@@ -1,6 +1,6 @@
 <?php
 require_once 'Config/config.php';
-require_once 'App/login.php';
+require_once 'App/.php';
 $oLogin = new login();
 ?><!DOCTYPE html>
 <html lang="cs">
