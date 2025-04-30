@@ -1,0 +1,21 @@
+{
+    "name": "latecka/home",
+    "description": "Chytrá domácnost",
+    "type": "project",
+    "require": {
+        "phpmailer/phpmailer": "^6.6",
+        "phpoffice/phpspreadsheet": "^1.25"
+    },
+    "autoload": {
+        "psr-4": {
+            "Latecka\\home\\": "App/",
+            "App\\" : "App/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Ivan Latecka",
+            "email": "ivan.latecka@gmail.com"
+        }
+    ]
+}

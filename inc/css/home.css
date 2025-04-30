@@ -1,0 +1,28 @@
+:root { --bs-body-font-size: 0.90rem; }
+.h1, h1 { font-size: 1.6rem !important; }
+.tile { background-color: #d2f4ea; border:white solid 0.15em; border-radius: 0.5em; padding:1em; }
+.tile:hover { background-color: #a6e9d5; }
+h2 { font-size:1.1em; min-height:3.6em; }
+p { min-height:3em; display: inline-block; }
+table.table-xsm { font-size:0.90rem; }
+table.table-xsm>:not(caption)>*>* { padding: .15rem .2rem; }
+table.table-xsm * .btn-sm { padding: 0 var(--bs-btn-padding-x); }
+.table-primary { border-top: white solid 20px;}
+.table-primary:first-of-type { border-top: white solid 1px;}
+tr td:first-child { padding-left: 1.5em;}
+tr.table-primary td { font-weight: bold; }
+tr.table-primary td:first-child { padding-left: 0.5em;}
+tr.table-secondary td:first-child { padding-left: 1em; }
+tr.table-secondary td { font-weight: bold; }
+tr.table-warning td:first-child { padding-left: 1.5em; font-weight: bold; }
+
+legend { font-size: 1.1rem !important; font-weight: 600; }
+.input-group-sm>.btn, .input-group-sm>.form-control, .input-group-sm>.form-select, .input-group-sm>.input-group-text {
+    padding: .15rem .5rem !important;
+}
+
+.row.border.rounded {
+    padding: .15rem 0 !important;
+}
+
+
