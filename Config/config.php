@@ -9,6 +9,9 @@ define('c_MainUrl', (stripos($_SERVER['REQUEST_SCHEME'],'https') === 0 ? 'https:
 define('c_bWork', ($_SERVER["SERVER_NAME"]=='homeapp'));
 define('c_Mena', 'Kč');
 
+define('c_DefaultLang', 'cs');
+define('c_bNoTranslate', true); //Pokud je true, tak se preklady neprovadi, ale jen se presmerovavaji retezce na output a sanitizeHTMLm funkce
+
 /**
  * Main Class
  * Config
@@ -20,10 +23,13 @@ class config{
     public static $dbPass;
     public static $dbName;
     public static $mailsFolder;
+    public static $lang;
+    public static $appLangs = ['cs', 'en', 'de'];
     
     //Konstruktor
     function __construct () {
-        $this->init();     
+        $this->init(); 
+        self::$lang = c_DefaultLang; //Default v Config.php
     }
     
     /**

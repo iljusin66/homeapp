@@ -107,9 +107,9 @@ class mailer {
         self::$mailer->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; //ssl
         //self::$mailer->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; //tls
         //Username to use for SMTP authentication
-        self::$mailer->Username = 'statistiky@clinterap.cz';
+        self::$mailer->Username = 'statistiky@.cz';
         //Password to use for SMTP authentication
-        self::$mailer->Password = "5BdhTjD_b";
+        self::$mailer->Password = "xxxxx";
 
     }
     
@@ -148,7 +148,7 @@ class mailer {
 
         foreach ($aCidImages AS $cid => $file) {
             if (!file_exists($file)) { continue; }
-            selef::$mailer->AddEmbeddedImage($file, $cid);
+            self::$mailer->AddEmbeddedImage($file, $cid);
         } 
     }
 

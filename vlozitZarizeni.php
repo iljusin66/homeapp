@@ -1,5 +1,6 @@
 <?php
 require_once 'autoload.php';
+
 $oUser = new user();
 ?><!DOCTYPE html>
 <html lang="cs">
@@ -9,7 +10,7 @@ $oUser = new user();
     <link href="<?= c_MainUrl; ?>Bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- https://icons.getbootstrap.com/ -->
     <link href="<?= c_MainUrl; ?>Bootstrap/css/icons/bootstrap-icons.css" rel="stylesheet">
-    <title>Přihlášení do aplikace Home</title>
+    <title><?= __('Nové zařízení') ?></title>
     <script src="<?= c_MainUrl; ?>inc/jquery-3.6.4.min.js"></script>
     <script src="<?= c_MainUrl; ?>Bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="<?= c_MainUrl; ?>inc/home.js?ch=<?= md5_file('inc/home.js') ?>"></script>

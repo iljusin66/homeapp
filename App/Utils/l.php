@@ -1,6 +1,9 @@
 <?php
 namespace Latecka\Utils;
 
+require_once 'autoload.php';
+use Config\config;
+
 /**
  * Staticka trida pro nacitani prekladu retezcu, dostupna v cele webove aplikaci
  */
@@ -21,11 +24,12 @@ class l{
         /*
         * Kdyz je c_bNoTranslate == true, nic neprekladam, jen prespmeruju input na output a sanitizeHTMLm funkce
         */
-        if (c_bNoTranslate) { return; }
+        self::$lang = self::sanitizeLang(config::$lang);
+         if (c_bNoTranslate) { return; }
         if (!isset(self::$aS)) {
             self::$sekce = 'front';
             self::$appLang = c_DefaultLang; //Default v Config.php
-            self::$lang = self::sanitizeLang(config::$lang); //prvotni inicializace v Config.php, pretizeni v RouterController -> fn setLangUser
+            self::$lang = self::sanitizeLang(config::$lang); //prvotni inicializace v Config.php
             self::$aS = array();
             self::$output = "";
         }
@@ -78,7 +82,7 @@ class l{
     
     private static function sanitizeLang(&$kodJazyka) {
 
-        utils::mb_strtoupperRef($kodJazyka);
+        utils::mb_strtolowerRef($kodJazyka);
         if (!in_array($kodJazyka, config::$appLangs)) { $kodJazyka = ''; }
         return $kodJazyka;
     }

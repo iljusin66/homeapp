@@ -1,8 +1,8 @@
 <?php
-require_once 'utils.php';
-
 use Latecka\Utils\utils;
 use Latecka\Utils\l;
+
+require_once 'autoload.php';
 
 new utils();
 

@@ -13,7 +13,7 @@ $oUser->checkLogin();
     <link href="<?= c_MainUrl; ?>Bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- https://icons.getbootstrap.com/ -->
     <link href="<?= c_MainUrl; ?>Bootstrap/css/icons/bootstrap-icons.css" rel="stylesheet">
-    <title>Home Dashboard</title>
+    <title><?= __('Home Dashboard') ?></title>
     <script src="<?= c_MainUrl; ?>inc/jquery-3.6.4.min.js"></script>
     <script src="<?= c_MainUrl; ?>Bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="<?= c_MainUrl; ?>inc/home.js?ch=<?= md5_file('inc/home.js') ?>"></script>
@@ -29,15 +29,16 @@ $oUser->checkLogin();
         <?php include('inc/navbar-top.php') ?>
         <div class="row">
             <div class="col p-3 bg-white m-2 rounded-3">
-                <h1>Statistiky</h1>
+                <h1><?= __('Statistiky') ?></h1>
                 <div class="row rounded-3">
                     <div class="tile col-6 col-lg-2">
-                        <h2>Odečty</h3>
+                        <h2><?= __('Odečty') ?></h3>
                         <p>Vodoměr teplá</p>
-						<div class="text-center"><a href="<?= c_MainUrl; ?>vlozitOdpocet.php?idz=1" class="btn btn-primary my-2 col-12"><i class="bi-eye me-1"></i> Odečet</a></div>
-						<div class="text-center"><a href="<?= c_MainUrl; ?>nastaveniZarizeni.php?idz=1" class="btn btn-primary my-2 col-12"><i class="bi-eye me-1"></i> Nastavení</a></div>
-                        <!--<div class="text-center"><button class="btn btn-primary my-2 col-12" id="btnImportDat"><i class="bi-box-arrow-in-down me-1"></i> Spusť import dat</button><br> <i>(dat je hodně, import může trvat i pár minutek)</i></div>-->
+						<div class="text-center"><a href="<?= c_MainUrl; ?>vlozitOdpocet.php?idz=1" class="btn btn-primary my-2 col-12"><i class="bi-eye me-1"></i> <?= __('Odečet') ?></a></div>
+						<div class="text-center"><a href="<?= c_MainUrl; ?>nastaveniZarizeni.php?idz=1" class="btn btn-primary my-2 col-12"><i class="bi-eye me-1"></i> <?= __('Nastavení') ?></a></div>
+                        <!--<div class="text-center"><button class="btn btn-primary my-2 col-12" id="btnImportDat"><i class="bi-box-arrow-in-down me-1"></i> <?= __('Spusť import dat') ?></button><br> <i>(<?= __('dat je hodně, import může trvat i pár minutek') ?>)</i></div>-->
                     </div>
+                    
                 </div>
             </div>
         </div>

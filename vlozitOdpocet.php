@@ -10,7 +10,7 @@ $oOdpocet = new vlozitOdpocet();
     <link href="<?= c_MainUrl; ?>Bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- https://icons.getbootstrap.com/ -->
     <link href="<?= c_MainUrl; ?>Bootstrap/css/icons/bootstrap-icons.css" rel="stylesheet">
-    <title>Přihlášení do aplikace Home</title>
+    <title><?= __('Nový odpočet') ?></title>
     <script src="<?= c_MainUrl; ?>inc/jquery-3.6.4.min.js"></script>
     <script src="<?= c_MainUrl; ?>Bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="<?= c_MainUrl; ?>inc/home.js?ch=<?= md5_file('inc/home.js') ?>"></script>
@@ -34,7 +34,7 @@ $oOdpocet = new vlozitOdpocet();
                 <div class="invalid-feedback mt-3" style="display:block;"> <?= implode(', ', (array)$oUser->aErr) ?> </div>
               </div>
               
-              <button type="submit" class="btn btn-primary m-3">Vložit</button>
+              <button type="submit" class="btn btn-primary m-3"><?= __('Vložit') ?></button>
         </form>
         </div>
     </body>

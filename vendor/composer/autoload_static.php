@@ -7,7 +7,6 @@ namespace Composer\Autoload;
 class ComposerStaticInit7ff3a7ffc22ce4b868b37925ae168dc1
 {
     public static $files = array (
-        '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         '2cffec82183ee1cea088009cef9a6fc3' => __DIR__ . '/..' . '/ezyang/htmlpurifier/library/HTMLPurifier.composer.php',
     );
 
@@ -15,10 +14,6 @@ class ComposerStaticInit7ff3a7ffc22ce4b868b37925ae168dc1
         'Z' => 
         array (
             'ZipStream\\' => 10,
-        ),
-        'S' => 
-        array (
-            'Symfony\\Polyfill\\Mbstring\\' => 26,
         ),
         'P' => 
         array (
@@ -30,15 +25,15 @@ class ComposerStaticInit7ff3a7ffc22ce4b868b37925ae168dc1
         ),
         'M' => 
         array (
-            'MyCLabs\\Enum\\' => 13,
             'Matrix\\' => 7,
         ),
         'L' => 
         array (
-            'Latecka\\HomeApp\\' => 18,
+            'Latecka\\home\\' => 13,
         ),
         'C' => 
         array (
+            'Composer\\Pcre\\' => 14,
             'Complex\\' => 8,
         ),
         'A' => 
@@ -51,10 +46,6 @@ class ComposerStaticInit7ff3a7ffc22ce4b868b37925ae168dc1
         'ZipStream\\' => 
         array (
             0 => __DIR__ . '/..' . '/maennchen/zipstream-php/src',
-        ),
-        'Symfony\\Polyfill\\Mbstring\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
         ),
         'Psr\\SimpleCache\\' => 
         array (
@@ -77,17 +68,17 @@ class ComposerStaticInit7ff3a7ffc22ce4b868b37925ae168dc1
         array (
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
         ),
-        'MyCLabs\\Enum\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/myclabs/php-enum/src',
-        ),
         'Matrix\\' => 
         array (
             0 => __DIR__ . '/..' . '/markbaker/matrix/classes/src',
         ),
-        'Latecka\\HomeApp\\' => 
+        'Latecka\\home\\' => 
         array (
             0 => __DIR__ . '/../..' . '/App',
+        ),
+        'Composer\\Pcre\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/composer/pcre/src',
         ),
         'Complex\\' => 
         array (
@@ -111,7 +102,6 @@ class ComposerStaticInit7ff3a7ffc22ce4b868b37925ae168dc1
 
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
-        'Stringable' => __DIR__ . '/..' . '/myclabs/php-enum/stubs/Stringable.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

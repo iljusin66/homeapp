@@ -40,7 +40,7 @@ class request {
         self::$var = trim(self::$var);
         self::$isPost = ($_SERVER['REQUEST_METHOD']==='POST');
         $filter = "";
-        $flags = NULL;
+        $flags = 0;
         if ($type == 'phone' || $type == 'psc') {
             self::$var = str_replace([' ', '-','/'], ['','', ''], self::$var);
         }elseif ($type == 'url') { 
@@ -51,9 +51,10 @@ class request {
             self::$var = utils::fixFloat(self::$var);
         }elseif ($type == 'email') {
             $filter = FILTER_SANITIZE_EMAIL;
-        }elseif ($type == 'string') {
-            $filter = FILTER_SANITIZE_STRING;
-            $flags = FILTER_FLAG_NO_ENCODE_QUOTES;
+        }elseif ($type == 'string') { //Odfiltruje HTML tagy a zbytek HTML kodu prevede na HTML entity
+            self::$var = htmlspecialchars(strip_tags(self::$var), ENT_NOQUOTES, 'UTF-8');
+            //$filter = FILTER_SANITIZE_STRING;
+            //$flags = FILTER_FLAG_NO_ENCODE_QUOTES;
         }
         if (!empty($filter)) {
             self::$var = (filter_var(self::$var, $filter, $flags));

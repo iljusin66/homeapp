@@ -25,7 +25,6 @@ class db{
      * @param string $dbName
      */
     function __construct ($dbHost = '', $dbUser = '', $dbPass = '', $dbName = '') {
-        
         self::$dbHost = ($dbHost=='') ? config::$dbHost : $dbHost;
         self::$dbUser = ($dbUser=='') ? config::$dbUser : $dbUser;
         self::$dbPass = ($dbPass=='') ? config::$dbPass : $dbPass;
@@ -141,7 +140,7 @@ class db{
         );
         
         if (!$this->checkIfDbExists($options)) {
-            echo '<p>Databáze '. self::$dbName .' neexistuje!</p>';
+            echo '<p>'. __('Chyba: databáze neexistuje!').'</p>';
             return false;
         }
         
@@ -205,7 +204,7 @@ class db{
             }
             touch($touchFile, time());
             //if ($bSendMail) { sendPHPMail("Hlídač DB UNCS", "info@uncs.eu", "Ivan", "latecka@uncs.eu", "Chyba databáze na UNCS.eu!", $eMessage); }
-            die('Ajvaj, něco se nepovedlo :(<p class="error">Chyba DB: '.$e->getMessage().'</p>');
+            die('Ajvaj, něco se nepovedlo :(<p class="error">DB error: '.$e->getMessage().'</p>');
             
             
         }

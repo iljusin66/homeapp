@@ -9,14 +9,14 @@ spl_autoload_register(function ($class) {
     
     if (strpos($class, 'Config') === 0) :
         $file = __DIR__ . "/Config/config.php";
-    elseif (strpos($class, 'Utils') === 0) :
-        $file = __DIR__ . "/App/" . $class . ".php"; 
     else:
         $file = __DIR__ . "/App/" . $class . ".php";
     endif;
     if (file_exists($file)) :
         require_once $file;
     else:
-        die("Autoload: file $file not found.");
+        die("Chyba autoload: file $file not found.");
     endif;
 });
+
+require_once 'App/Utils/helper.php';

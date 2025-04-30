@@ -9,7 +9,7 @@ $oUser = new user();
     <link href="<?= c_MainUrl; ?>Bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- https://icons.getbootstrap.com/ -->
     <link href="<?= c_MainUrl; ?>Bootstrap/css/icons/bootstrap-icons.css" rel="stylesheet">
-    <title>Přihlášení do aplikace Home</title>
+    <title><?= __('Přihlášení do aplikace Home') ?></title>
     <script src="<?= c_MainUrl; ?>inc/jquery-3.6.4.min.js"></script>
     <script src="<?= c_MainUrl; ?>Bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="<?= c_MainUrl; ?>inc/home.js?ch=<?= md5_file('inc/home.js') ?>"></script>
@@ -25,16 +25,16 @@ $oUser = new user();
         <form method="post" action="login.php" id="frmLogin" class="col-3 m-auto text-start">
             <input type="hidden" name="action" value="login">
             <div class="m-3">
-                <label for="login" class="form-label">Přihlašovací jméno:</label>
+                <label for="login" class="form-label"><?= __('Přihlašovací jméno') ?>:</label>
                 <input type="text" id="login" class="form-control" name="login" value="<?= $oUser->user["login"] ?>">
               </div>
               <div class="m-3">
-                <label for="password" class="form-label">Heslo:</label>
+                <label for="password" class="form-label"><?= __('Heslo') ?>:</label>
                 <input type="password" class="form-control" id="password" name="password">
                 <div class="invalid-feedback mt-3" style="display:block;"> <?= implode(', ', (array)$oUser->aErr) ?> </div>
               </div>
               
-              <button type="submit" class="btn btn-primary m-3">Přihlásit</button>
+              <button type="submit" class="btn btn-primary m-3"><?= __('Přihlásit') ?></button>
         </form>
         </div>
     </body>
