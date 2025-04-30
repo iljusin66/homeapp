@@ -1,5 +1,5 @@
 <?php
-namespace Latecka\HomeApp\Utils;
+namespace Latecka\Utils;
 
 /**
  * Staticka trida pro nacitani prekladu retezcu, dostupna v cele webove aplikaci

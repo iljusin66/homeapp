@@ -2,14 +2,11 @@
 set_time_limit(600);
 
 use Config\config;
-use Latecka\HomeApp\Utils\utils;
+use Latecka\Utils\utils;
 
-use Latecka\HomeApp\Utils\request;
-use Latecka\HomeApp\Utils\db;
+use Latecka\Utils\request;
+use Latecka\Utils\db;
 
-
-require_once 'Config/config.php';
-new config();
 
 require_once 'vendor/autoload.php';
 require_once 'Utils/utils.php';

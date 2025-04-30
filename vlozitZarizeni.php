@@ -1,6 +1,5 @@
 <?php
-require_once 'Config/config.php';
-require_once 'App/.php';
+require_once 'autoload.php';
 $oUser = new user();
 ?><!DOCTYPE html>
 <html lang="cs">

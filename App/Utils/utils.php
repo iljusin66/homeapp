@@ -1,5 +1,5 @@
 <?php
-namespace Latecka\HomeApp\Utils;
+namespace Latecka\Utils;
 
 define('c_CookieTime', time() + (60*60*2));
 
@@ -364,6 +364,7 @@ class utils {
     }
     
     public static function truncateword($str, $maxlength = 15){
+        $final = "";
         if (is_array($str)) { return ''; }
         $aStr  = explode("·¨·",preg_replace("(<([^>]+)>)","·¨·\\0·¨·",$str));
         foreach($aStr AS $i => $val){
@@ -469,13 +470,13 @@ class utils {
         if ($current_dir = opendir($dir)){
             while($entryname = readdir($current_dir)){
                  if(is_dir("$dir/$entryname") and ($entryname != "." and $entryname!="..")){
-                    deldir("${dir}/${entryname}");
+                    self::delDir("${dir}/${entryname}");
                  }elseif($entryname !== "." && $entryname!==".."){
                     unlink("${dir}/${entryname}");
                  }
             }
             closedir($current_dir);
-            rmdir(${dir});
+            rmdir("${dir}");
         }
     }
 
@@ -534,7 +535,7 @@ class utils {
         
         try {
             $handle = opendir($dirname);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return $filelist;
         }
 
@@ -608,8 +609,8 @@ class utils {
     /**
      * Nalezne pocizi posledniho vyskytu nejakeho znaku ve stringu
      * @param string $haystack 
-     * @param type $needle
-     * @return type
+     * @param string $needle
+     * @return int
      */
     public static function strrevpos($haystack, $needle) {
         $rev_pos = strpos (strrev($haystack), strrev($needle));
@@ -623,6 +624,7 @@ class utils {
      * @return string
      */
     public static function rndStrS($lenght = 6, $bToUpper = false) {
+        $strRdm = "";
         $i = 1;
         while ($i <= $lenght){
             do {
@@ -668,10 +670,10 @@ class utils {
             return $val;
         }elseif ($type == 'phone') {
             $val = trim(str_replace(array(' ', '-', '/'), '', $val));
-            return filter_var($val, FILTER_VALIDATE_REGEXP, array("options"=> array("regexp"=>'!'.$regexes[phone].'!i')));
+            return filter_var($val, FILTER_VALIDATE_REGEXP, array("options"=> array("regexp"=>'!'.$regexes["phone"].'!i')));
         }elseif($type=='psc') {
             $val = trim(str_replace(array(' ', '-'), '', $val));
-            return filter_var($val, FILTER_VALIDATE_REGEXP, array("options"=> array("regexp"=>'!'.$regexes[psc].'!i')));
+            return filter_var($val, FILTER_VALIDATE_REGEXP, array("options"=> array("regexp"=>'!'.$regexes["psc"].'!i')));
         }elseif ($type == 'email') {
             $filter = FILTER_VALIDATE_EMAIL;
         }elseif ($type == 'float') { 
@@ -755,6 +757,8 @@ class utils {
     * @return str
     */
     public static function nl2line($str, $delimiter = ', '){
+        $finalStr = '';
+        if (is_array($str)) { return ''; }
         if (empty($str)) { return ''; }
         $aStr = explode(PHP_EOL, $str);
         //debug($aStr);
@@ -867,7 +871,7 @@ class utils {
         
         $formatter = new \IntlDateFormatter($locale, \IntlDateFormatter::MEDIUM, \IntlDateFormatter::SHORT);
         if ($formatter === null) {
-            throw new \InvalidConfigException(intl_get_error_message());
+            //throw new \InvalidConfigException(intl_get_error_message());
         }
         
         $formatedDate = $formatter->format($unixTime);
@@ -886,7 +890,7 @@ class utils {
         
         $formatter = new \IntlDateFormatter($locale, \IntlDateFormatter::MEDIUM, \IntlDateFormatter::NONE);
         if ($formatter === null) {
-            throw new \InvalidConfigException(intl_get_error_message());
+            //throw new \InvalidConfigException(intl_get_error_message());
         }
         
         $formatedDate = $formatter->format($unixTime);
@@ -911,13 +915,13 @@ class utils {
         $str = mb_strtolower($str);
     }
     
+    /*
     public static function tidyHtml($str) : ?string {
         if (empty($str)) { return null; }
         
-        /*
-         * Tidy obsahuje chybu, ze meni nastaveni LOCALE. Prto si povodni locale ulozim 
-         * do $origLovćale a po pouziti tidy jej nastavim zpet
-        */
+        //Tidy obsahuje chybu, ze meni nastaveni LOCALE. Prto si povodni locale ulozim 
+        //do $origLovćale a po pouziti tidy jej nastavim zpet
+        
         $origLocale = setlocale(LC_ALL, 0);
         
         $config = array(
@@ -938,13 +942,14 @@ class utils {
             'wrap' => 200);
 
         // Tidy
-        $tidy = new tidy;
+        $tidy = new \tidy;
         $tidy->parseString($str, $config, 'utf8');
         $tidy->cleanRepair();
         setlocale (LC_ALL, $origLocale);
         // Output
         return $tidy;
     }
+    */
     
     public static function getQueryParams() {
         parse_str( parse_url( $_SERVER['REQUEST_URI'], PHP_URL_QUERY), $aQueryParams );

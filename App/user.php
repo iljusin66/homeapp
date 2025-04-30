@@ -2,19 +2,16 @@
 set_time_limit(600);
 
 use Config\config;
-use Latecka\HomeApp\Utils\utils;
+use Latecka\Utils\utils;
 
-use Latecka\HomeApp\Utils\request;
-use Latecka\HomeApp\Utils\db;
+use Latecka\Utils\request;
+use Latecka\Utils\db;
 
 
-require_once 'Config/config.php';
-new config();
-
+require_once 'autoload.php';
 require_once 'vendor/autoload.php';
-require_once 'Utils/utils.php';
-require_once 'Utils/helper.php';
-require_once 'Utils/request.php';
+
+new config();
 
 
 class user {
@@ -26,8 +23,8 @@ class user {
     private $cookieTime;
 
     function __construct() {
-        $this->cookieTime = time() + (60*60*2); //2 hodiny
-        if ($_SERVER['REQUEST_METHOD']=='POST') :
+        $this->cookieTime = time() + (60*60*6); //6 hodin
+        if (request::string('action', 'POST')=='login') :
             $this->login();
         else:
             $this->checkLogin();

@@ -5,7 +5,7 @@ define('c_SubfolderURL', '/');
 
 list($scriptBaseName) = explode('.', trim($_SERVER['SCRIPT_NAME'], '/'));
 define('c_ScriptBaseName', $scriptBaseName);
-define('c_MainUrl', (stripos($_SERVER['SERVER_PROTOCOL'],'https') === 0 ? 'https://' : 'http://'). $_SERVER["SERVER_NAME"] . c_SubfolderURL);
+define('c_MainUrl', (stripos($_SERVER['REQUEST_SCHEME'],'https') === 0 ? 'https://' : 'http://'). $_SERVER["SERVER_NAME"] . c_SubfolderURL);
 define('c_bWork', ($_SERVER["SERVER_NAME"]=='homeapp'));
 define('c_Mena', 'Kč');
 

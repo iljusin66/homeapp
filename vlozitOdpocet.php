@@ -1,8 +1,6 @@
 <?php
-require_once 'Config/config.php';
-require_once 'App/user.php';
+require_once 'autoload.php';
 $oUser = new user();
-require_once 'App/vlozitOdpocet.php';
 $oOdpocet = new vlozitOdpocet();
 ?><!DOCTYPE html>
 <html lang="cs">

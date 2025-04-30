@@ -1,5 +1,5 @@
 <?php
-namespace Latecka\HomeApp\Utils;
+namespace Latecka\Utils;
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;

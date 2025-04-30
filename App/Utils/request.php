@@ -1,7 +1,7 @@
 <?php
-namespace Latecka\HomeApp\Utils;
+namespace Latecka\Utils;
 
-use Latecka\HomeApp\Utils\l;
+use Latecka\Utils\l;
 /**
  * Trida na cteni a validaci hodnot z globalnich promennych
  */

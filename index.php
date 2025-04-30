@@ -1,6 +1,9 @@
 <?php
-require_once 'Config/config.php';
-require_once 'App/user.php';
+
+use Latecka\Utils\utils;
+
+require_once 'autoload.php';
+
 $oUser = new user();
 $oUser->checkLogin();
 

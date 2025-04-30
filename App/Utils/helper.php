@@ -1,8 +1,8 @@
 <?php
 require_once 'utils.php';
 
-use Latecka\HomeApp\Utils\utils;
-use Latecka\HomeApp\Utils\l;
+use Latecka\Utils\utils;
+use Latecka\Utils\l;
 
 new utils();
 

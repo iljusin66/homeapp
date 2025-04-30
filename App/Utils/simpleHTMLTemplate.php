@@ -1,5 +1,5 @@
 <?php
-namespace Latecka\HomeApp\Utils;
+namespace Latecka\Utils;
 
 /**
  * Jednoduchý sablonovaci system pro HTML

@@ -1,6 +1,5 @@
 <?php
-require_once 'Config/config.php';
-require_once 'App/user.php';
+require_once 'autoload.php';
 $oUser = new user();
 ?><!DOCTYPE html>
 <html lang="cs">
@@ -24,9 +23,10 @@ $oUser = new user();
     <body>
         <div class="row text-center mt-5">
         <form method="post" action="login.php" id="frmLogin" class="col-3 m-auto text-start">
+            <input type="hidden" name="action" value="login">
             <div class="m-3">
                 <label for="login" class="form-label">Přihlašovací jméno:</label>
-                <input type="text" id="user" class="form-control" name="user" value="<?= $oUser->user ?>">
+                <input type="text" id="user" class="form-control" name="user" value="<?= $oUser->user["name"] ?>">
               </div>
               <div class="m-3">
                 <label for="password" class="form-label">Heslo:</label>
