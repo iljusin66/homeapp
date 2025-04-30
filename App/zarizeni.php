@@ -8,11 +8,7 @@ use Latecka\Utils\request;
 use Latecka\Utils\db;
 
 
-require_once 'vendor/autoload.php';
-require_once 'Utils/utils.php';
-require_once 'Utils/helper.php';
-require_once 'Utils/request.php';
-
+require_once 'autoload.php';
 
 class zarizeni {
 
@@ -30,9 +26,8 @@ class zarizeni {
             return;
         endif;
         $q = "SELECT * FROM zarizeni WHERE id = ?";
-        $this->zarizeni = db::fa($q, $this->zarizeni["id"]);
-        debug($this->zarizeni);
-        if (db::nr() == 0) :
+        $this->zarizeni = db::f($q, $this->zarizeni["id"]);
+        if (empty($this->zarizeni)) :
             $this->zarizeni = [];
             $this->zarizeni["id"] = 0;
             return;

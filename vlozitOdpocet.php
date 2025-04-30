@@ -1,6 +1,8 @@
 <?php
 require_once 'autoload.php';
+
 $oUser = new user();
+$oZarizeni = new zarizeni();
 $oOdpocet = new vlozitOdpocet();
 ?><!DOCTYPE html>
 <html lang="cs">
@@ -25,7 +27,7 @@ $oOdpocet = new vlozitOdpocet();
         <div class="row text-center mt-5">
         <form method="post" action="<?= c_ScriptBaseName ?>" id="frmLogin" class="col-3 m-auto text-start">
             <div class="m-3">
-                <label for="login" class="form-label"><?= '_NAZEV_ZARIZENI_' ?></label>
+                <label for="login" class="form-label"><?= $oZarizeni->zarizeni["nazev"] ?></label>
                 <input type="text" id="user" class="form-control" name="user" value="<?= $oUser->user ?>">
               </div>
               <div class="m-3">

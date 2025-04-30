@@ -1,5 +1,6 @@
 <?php
 require_once 'autoload.php';
+
 $oUser = new user();
 ?><!DOCTYPE html>
 <html lang="cs">

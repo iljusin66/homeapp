@@ -35,6 +35,17 @@ INSERT INTO `cis_jednotky_mereni` (`id`, `jednotka`) VALUES
 (1,	'l'),
 (2,	'kWh');
 
+DROP TABLE IF EXISTS `langstrings`;
+CREATE TABLE `langstrings` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `lang` char(2) NOT NULL DEFAULT 'cs',
+  `checksum` char(32) CHARACTER SET ascii COLLATE ascii_general_ci NOT NULL,
+  `string` text NOT NULL,
+  `section` varchar(20) NOT NULL DEFAULT 'front',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_czech_ci;
+
+
 DROP TABLE IF EXISTS `odpocet_zarizeni`;
 CREATE TABLE `odpocet_zarizeni` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -51,23 +62,37 @@ CREATE TABLE `odpocet_zarizeni` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_czech_ci;
 
 
-DROP TABLE IF EXISTS `users`;
-CREATE TABLE `users` (
+DROP TABLE IF EXISTS `role`;
+CREATE TABLE `role` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `login` varchar(100) NOT NULL,
-  `heslo` char(32) NOT NULL,
-  `username` char(100) DEFAULT NULL,
+  `role` varchar(20) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_czech_ci;
 
-INSERT INTO `users` (`id`, `login`, `heslo`, `username`) VALUES
-(1,	'ivan',	'0e45936f31dbcf006d3535c780d83321',	'Ivan');
+INSERT INTO `role` (`id`, `role`) VALUES
+(1,	'reader'),
+(2,	'writer'),
+(3,	'editor'),
+(4,	'admin');
+
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `login` varchar(50) NOT NULL,
+  `heslo` char(32) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_czech_ci;
+
+INSERT INTO `users` (`id`, `login`, `heslo`, `username`, `email`) VALUES
+(1,	'ivan',	'0e45936f31dbcf006d3535c780d83321',	'Ivan',	NULL);
 
 DROP TABLE IF EXISTS `zarizeni`;
 CREATE TABLE `zarizeni` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `idadmin` int(11) NOT NULL,
-  `nazevZarizeni` varchar(255) NOT NULL,
+  `nazev` varchar(255) NOT NULL,
   `idjednotky` int(11) DEFAULT NULL,
   `poznamka` tinytext DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -77,7 +102,7 @@ CREATE TABLE `zarizeni` (
   CONSTRAINT `zarizeni_ibfk_2` FOREIGN KEY (`idadmin`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_czech_ci;
 
-INSERT INTO `zarizeni` (`id`, `idadmin`, `nazevZarizeni`, `idjednotky`, `poznamka`) VALUES
+INSERT INTO `zarizeni` (`id`, `idadmin`, `nazev`, `idjednotky`, `poznamka`) VALUES
 (1,	1,	'Teplá voda',	1,	NULL),
 (2,	1,	'Studená voda',	1,	NULL);
 
@@ -85,11 +110,17 @@ DROP TABLE IF EXISTS `zarizeni2users`;
 CREATE TABLE `zarizeni2users` (
   `iduser` int(11) NOT NULL,
   `idzarizeni` int(11) NOT NULL,
+  `idrole` int(11) NOT NULL DEFAULT 1,
   UNIQUE KEY `iduser_idzarizeni` (`iduser`,`idzarizeni`),
   KEY `idzarizeni` (`idzarizeni`),
+  KEY `idrole` (`idrole`),
   CONSTRAINT `zarizeni2users_ibfk_1` FOREIGN KEY (`iduser`) REFERENCES `users` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `zarizeni2users_ibfk_2` FOREIGN KEY (`idzarizeni`) REFERENCES `zarizeni` (`id`) ON DELETE CASCADE
+  CONSTRAINT `zarizeni2users_ibfk_2` FOREIGN KEY (`idzarizeni`) REFERENCES `zarizeni` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `zarizeni2users_ibfk_3` FOREIGN KEY (`idrole`) REFERENCES `role` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_czech_ci;
 
+INSERT INTO `zarizeni2users` (`iduser`, `idzarizeni`, `idrole`) VALUES
+(1,	1,	4),
+(1,	2,	4);
 
--- 2025-04-30 08:02:36
+-- 2025-04-30 19:14:01
