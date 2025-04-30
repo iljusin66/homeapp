@@ -3,10 +3,10 @@ use Latecka\HomeApp\Utils\utils;
 
 require_once 'Config/config.php';
 require_once 'App/Utils/utils.php';
-require_once 'App/login.php';
+require_once 'App/user.php';
 
-$oLogin = new login();
-$oLogin->checkLogin();
+$oUser = new user();
+$oUser->checkLogin();
 ?><!DOCTYPE html>
 <html lang="cs">
     <head>

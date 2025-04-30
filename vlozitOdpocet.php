@@ -1,7 +1,7 @@
 <?php
 require_once 'Config/config.php';
-require_once 'App/login.php';
-$oLogin = new login();
+require_once 'App/user.php';
+$oUser = new user();
 require_once 'App/vlozitOdpocet.php';
 $oOdpocet = new vlozitOdpocet();
 ?><!DOCTYPE html>
@@ -28,12 +28,12 @@ $oOdpocet = new vlozitOdpocet();
         <form method="post" action="<?= c_ScriptBaseName ?>" id="frmLogin" class="col-3 m-auto text-start">
             <div class="m-3">
                 <label for="login" class="form-label"><?= '_NAZEV_ZARIZENI_' ?></label>
-                <input type="text" id="user" class="form-control" name="user" value="<?= $oLogin->user ?>">
+                <input type="text" id="user" class="form-control" name="user" value="<?= $oUser->user ?>">
               </div>
               <div class="m-3">
                 <label for="password" class="form-label">Heslo:</label>
                 <input type="password" class="form-control" id="password" name="password">
-                <div class="invalid-feedback mt-3" style="display:block;"> <?= implode(', ', (array)$oLogin->aErr) ?> </div>
+                <div class="invalid-feedback mt-3" style="display:block;"> <?= implode(', ', (array)$oUser->aErr) ?> </div>
               </div>
               
               <button type="submit" class="btn btn-primary m-3">Vložit</button>

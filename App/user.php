@@ -17,7 +17,7 @@ require_once 'Utils/helper.php';
 require_once 'Utils/request.php';
 
 
-class login {
+class user {
 
     const SaltMd5 = 'hhžžQH|*k855';
     

@@ -1,7 +1,7 @@
 <?php
 require_once 'Config/config.php';
-require_once 'App/login.php';
-$oLogin = new login();
+require_once 'App/user.php';
+$oUser = new user();
 ?><!DOCTYPE html>
 <html lang="cs">
     <head>
@@ -26,12 +26,12 @@ $oLogin = new login();
         <form method="post" action="login.php" id="frmLogin" class="col-3 m-auto text-start">
             <div class="m-3">
                 <label for="login" class="form-label">Přihlašovací jméno:</label>
-                <input type="text" id="user" class="form-control" name="user" value="<?= $oLogin->user ?>">
+                <input type="text" id="user" class="form-control" name="user" value="<?= $oUser->user ?>">
               </div>
               <div class="m-3">
                 <label for="password" class="form-label">Heslo:</label>
                 <input type="password" class="form-control" id="password" name="password">
-                <div class="invalid-feedback mt-3" style="display:block;"> <?= implode(', ', (array)$oLogin->aErr) ?> </div>
+                <div class="invalid-feedback mt-3" style="display:block;"> <?= implode(', ', (array)$oUser->aErr) ?> </div>
               </div>
               
               <button type="submit" class="btn btn-primary m-3">Přihlásit</button>
