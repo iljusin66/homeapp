@@ -18,7 +18,6 @@ class vlozitOdpocet extends odpocet {
 
     function __construct() {
         parent::__construct();
-        debug($this);
     }
     
     

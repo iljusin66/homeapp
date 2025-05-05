@@ -25,7 +25,7 @@ $oOdpocet = new vlozitOdpocet();
         <div class="row text-center mt-5">
         <form method="post" action="<?= c_ScriptBaseName ?>" id="frmLogin" class="col-3 m-auto text-start">
             <div class="m-3">
-                <label for="login" class="form-label"><?= '_NAZEV_ZARIZENI_' ?></label>
+                <label for="login" class="form-label"><?= $oOdpocet->zarizeni['nazevZarizeni'] ?></label>
                 <input type="text" id="user" class="form-control" name="user" value="<?= $oUser->user ?>">
               </div>
               <div class="m-3">

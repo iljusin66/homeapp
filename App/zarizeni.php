@@ -24,15 +24,15 @@ class zarizeni {
     }
     
     private function nactiZarizeni() {
+        
         $this->zarizeni["id"] = max(0, request::int("idz"));
         
         if ($this->zarizeni["id"] == 0) :
             return;
         endif;
         $q = "SELECT * FROM zarizeni WHERE id = ?";
-        $this->zarizeni = db::fa($q, $this->zarizeni["id"]);
-        debug($this->zarizeni);
-        if (db::nr() == 0) :
+        $this->zarizeni = db::f($q, $this->zarizeni["id"]);
+        if (empty($this->zarizeni)) :
             $this->zarizeni = [];
             $this->zarizeni["id"] = 0;
             return;
