@@ -11,7 +11,6 @@ use Latecka\Utils\db;
 require_once 'autoload.php';
 
 
-
 class vlozitOdpocet extends odpocet {
 
  

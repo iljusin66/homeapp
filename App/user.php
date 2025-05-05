@@ -9,7 +9,6 @@ use Latecka\Utils\db;
 
 
 require_once 'autoload.php';
-require_once 'vendor/autoload.php';
 
 new config();
 

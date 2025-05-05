@@ -20,3 +20,4 @@ spl_autoload_register(function ($class) {
 });
 
 require_once 'App/Utils/helper.php';
+require_once 'vendor/autoload.php';
