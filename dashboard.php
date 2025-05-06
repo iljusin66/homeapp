@@ -34,7 +34,7 @@ $oUser->checkLogin();
                     <div class="tile col-6 col-lg-2">
                         <h2><?= __('Odečty') ?></h3>
                         <p>Vodoměr teplá</p>
-						<div class="text-center"><a href="<?= c_MainUrl; ?>vlozitOdpocet.php?idz=1" class="btn btn-primary my-2 col-12"><i class="bi-eye me-1"></i> <?= __('Nový odečet') ?></a></div>
+						<div class="text-center"><a href="<?= c_MainUrl; ?>zapisOdecet.php?idz=1" class="btn btn-primary my-2 col-12"><i class="bi-eye me-1"></i> <?= __('Nový odečet') ?></a></div>
 						<div class="text-center"><a href="<?= c_MainUrl; ?>nastaveniZarizeni.php?idz=1" class="btn btn-primary my-2 col-12"><i class="bi-eye me-1"></i> <?= __('Nastavení') ?></a></div>
                         <!--<div class="text-center"><button class="btn btn-primary my-2 col-12" id="btnImportDat"><i class="bi-box-arrow-in-down me-1"></i> <?= __('Spusť import dat') ?></button><br> <i>(<?= __('dat je hodně, import může trvat i pár minutek') ?>)</i></div>-->
                     </div>

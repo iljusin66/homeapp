@@ -5,7 +5,7 @@ require_once 'autoload.php';
 
 $oUser = new user();
 $oZarizeni = new zarizeni();
-$oOdpocet = new vlozitOdpocet();
+$oOdecet = new vlozitOdecet();
 ?><!DOCTYPE html>
 <html lang="cs">
     <head>
@@ -294,20 +294,20 @@ $oOdpocet = new vlozitOdpocet();
                                     <legend class="form-label">Pravidelný odpočet</legend>
                                     <div class="col-3">
                                         <div class="input-group input-group-sm mb-1 ">
-                                            <label class="input-group-text col-5" for="odpocet" id="label_odpocet" style="font-size: .875rem;">Odpočet</label>
-                                            <input type="text" data-kontrolaZmeny name="odpocet" id="odpocet" value="<?= utils::fixInt($oZam->aConfigZamestnanec["odpocet"]) ?>" class="form-control text-end">
+                                            <label class="input-group-text col-5" for="odecet" id="label_odecet" style="font-size: .875rem;">Odpočet</label>
+                                            <input type="text" data-kontrolaZmeny name="odecet" id="odecet" value="<?= utils::fixInt($oZam->aConfigZamestnanec["odecet"]) ?>" class="form-control text-end">
                                         </div>                                        
                                     </div>
                                     <div class="col-3">
                                         <div class="input-group input-group-sm mb-1 ">
-                                            <label class="input-group-text col-5" id="label_odpocet_datum_do" for="odpocet_datum_do" style="font-size: .875rem;">Platné do</label>
-                                            <input type="date" class="form-control form-control-sm " id="odpocet_datum_do" name="odpocet_datum_do" value="<?= utils::safeForm($oZam->aConfigZamestnanec["odpocet_datum_do"]) ?>">
+                                            <label class="input-group-text col-5" id="label_odecet_datum_do" for="odecet_datum_do" style="font-size: .875rem;">Platné do</label>
+                                            <input type="date" class="form-control form-control-sm " id="odecet_datum_do" name="odecet_datum_do" value="<?= utils::safeForm($oZam->aConfigZamestnanec["odecet_datum_do"]) ?>">
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <div class="input-group input-group-sm mb-1 ">
-                                            <label class="input-group-text col-2" id="label_odpocet_popis" for="odpocet_popis" style="font-size: .875rem;">Poznámka</label>
-                                            <input type="text" data-kontrolaZmeny class="form-control form-control-sm" id="odpocet_popis" name="odpocet_popis" value="<?= utils::safeForm($oZam->aConfigZamestnanec["odpocet_popis"]) ?>">
+                                            <label class="input-group-text col-2" id="label_odecet_popis" for="odecet_popis" style="font-size: .875rem;">Poznámka</label>
+                                            <input type="text" data-kontrolaZmeny class="form-control form-control-sm" id="odecet_popis" name="odecet_popis" value="<?= utils::safeForm($oZam->aConfigZamestnanec["odecet_popis"]) ?>">
                                         </div>
                                     </div>
                                     

@@ -46,19 +46,19 @@ CREATE TABLE `langstrings` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_czech_ci;
 
 
-DROP TABLE IF EXISTS `odpocet_zarizeni`;
-CREATE TABLE `odpocet_zarizeni` (
+DROP TABLE IF EXISTS `odecet_zarizeni`;
+CREATE TABLE `odecet_zarizeni` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `idzarizeni` int(11) NOT NULL,
-  `odpocet` float(12,6) NOT NULL,
+  `odecet` float(12,6) NOT NULL,
   `casodpoctu` datetime NOT NULL,
   `poznamka` varchar(255) NOT NULL,
   `zadal` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `idzarizeni` (`idzarizeni`),
   KEY `zadal` (`zadal`),
-  CONSTRAINT `odpocet_zarizeni_ibfk_1` FOREIGN KEY (`idzarizeni`) REFERENCES `zarizeni` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `odpocet_zarizeni_ibfk_2` FOREIGN KEY (`zadal`) REFERENCES `users` (`id`) ON DELETE SET NULL
+  CONSTRAINT `odecet_zarizeni_ibfk_1` FOREIGN KEY (`idzarizeni`) REFERENCES `zarizeni` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `odecet_zarizeni_ibfk_2` FOREIGN KEY (`zadal`) REFERENCES `users` (`id`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_czech_ci;
 
 

@@ -14,7 +14,7 @@ new config();
 
 
 
-class odpocet extends zarizeni{
+class odecet extends zarizeni{
 
     function __construct() {
         parent::__construct();

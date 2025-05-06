@@ -11,6 +11,8 @@ define('c_Mena', 'Kč');
 
 define('c_DefaultLang', 'cs');
 define('c_bNoTranslate', true); //Pokud je true, tak se preklady neprovadi, ale jen se presmerovavaji retezce na output a sanitizeHTMLm funkce
+define('c_RequestPost', $_SERVER['REQUEST_METHOD'] == 'POST');
+define('c_RequestGet', $_SERVER['REQUEST_METHOD'] == 'GET');
 
 /**
  * Main Class
