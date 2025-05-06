@@ -32,7 +32,13 @@ $oOdpocet = new vlozitOdpocet();
                 <div class="row">
                     <div class="col-2 d-print-none"></div>
                     <div class="col ps-0">
-                        <h1 class="fs-3 ps-0"><?= $oZarizeni->zarizeni['nazev'] ?></h1>
+                        <h1 class="fs-3 ps-0"><?php
+                        if ($oZam->idzamestnance > 0) :
+                            echo $oZam->aZamestnanci[$oZam->idzamestnance]['jmeno'];
+                        else:
+                            echo 'Nový zaměstnanec';
+                        endif; ?>
+                        </h1>
                     </div>
                 </div>
                 <div class="row pt-0">
@@ -40,15 +46,15 @@ $oOdpocet = new vlozitOdpocet();
                     <div class="col" style="min-height: 85vh">
                         <div id="dataContainer" class="row">
                             <form class="p-1 pt-0 me-1 col-l-10 col-12" id="frmZamestnanecEdit" action="zamestnanecEdit.php" method="POST" novalidate>
-                                <input type="hidden" name="idz" value="<?= $oZarizeni->zarizeni['id'] ?>">
+                                <input type="hidden" name="idzamestnance" value="<?= $oZam->idzamestnance ?>">
                                 <input type="hidden" name="ulozZamestnance" value="1">
                                 <fieldset class="row">
-                                    <legend class="form-label"><?= __('Vložit odpočet') ?></legend>
-                                    <div class="col-4 sm-col-12">
+                                    <legend class="form-label">Základní nastavení</legend>
+                                    <div class="col-4">
                                         <div class="input-group input-group-sm mb-1 ">
-                                            <label class="input-group-text col-4 sm-col-12" id="label_jmeno" for="jmeno" style="font-size: .875rem;">Jméno</label>
+                                            <label class="input-group-text col-4" id="label_jmeno" for="jmeno" style="font-size: .875rem;">Jméno</label>
                                             <input type="text" data-kontrolaZmeny name="jmeno" id="jmeno" value="<?= utils::safeForm($oZam->aZamestnanci[$oZam->idzamestnance]['jmeno']) ?>" class="form-control">
-                                            <div class="invalid-feedback w-100"><div class="col col-4"></div><div class="col col-8">zadej jméno zaměstnance</div></div>
+                                            <div class="invalid-feedback w-100"><div class="col col-4">sss</div><div class="col col-8">zadej jméno zaměstnance</div></div>
                                         </div>
                                     </div>
 
