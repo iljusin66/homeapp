@@ -12,7 +12,7 @@ require_once 'zarizeni.php';
 
 
 
-class vlozitOdecet extends zarizeni {
+class zapisZarizeni extends zarizeni {
 
  
 
@@ -20,8 +20,6 @@ class vlozitOdecet extends zarizeni {
         parent::__construct();
     }
     
-    function vlozOdecet($id, $odpo) {
-        
-    }
+    
     
 }
