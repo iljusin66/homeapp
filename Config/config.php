@@ -40,27 +40,33 @@ class config{
      */
     private static function init() : void {
         
-        if (c_bWork){
+        if (c_bWork) :
             //Nastaveni pro pracovni, lokalnim server
             $dbHost = "localhost";
             $dbUser = "root";
             $dbPass = "php895admin";
             $dbName = "home_app";
             error_reporting (E_ALL & ~E_DEPRECATED & ~E_NOTICE & ~E_WARNING);
-        }else{
+        else:
 
             //Nastaveni pro ostry, verejny server
-            /*
-            $dbHost = "localhost";
-            $dbUser = "";
-            $dbPass = "";
-            $dbName = "";
+            
+            $dbHost = "md413.wedos.net";
+
+            //Uzivatel s plnymi opravnenimi
+            //$dbUser = "a376140_homeapp";
+            //$dbPass = "2rBBLuj9";
+
+
+            //Uzivatel s omezenymi opravnenimi
+            $dbUser = "w376140_homeapp";
+            $dbPass = "GfUqr6J3";
+
+            $dbName = "d376140_homeapp";
             
             ini_set('display_errors', 1);
             error_reporting (E_ALL & ~E_DEPRECATED & ~E_NOTICE & ~E_WARNING);    
-             * 
-             */
-        }
+        endif;
 
         self::$dbHost = $dbHost;
         self::$dbUser = $dbUser;
