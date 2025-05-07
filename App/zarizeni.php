@@ -12,27 +12,29 @@ require_once 'autoload.php';
 
 class zarizeni {
 
-    public $zarizeni = [];   
+    private static $initialized = false;
+
+    public $aZarizeni = [];  
 
     function __construct() {
-        $this->nactiZarizeni();
-        
+        if (!self::$initialized) {
+            $this->nactiZarizeni();
+            self::$initialized = true;
+        }        
     }
     
     private function nactiZarizeni() {
-        
-        $this->zarizeni["id"] = max(0, request::int("idz"));
-        
-        if ($this->zarizeni["id"] == 0) :
+
+        $this->aZarizeni["id"] = max(0, request::int("idz", "REQUEST"));
+        if ($this->aZarizeni["id"] == 0) :
             return;
         endif;
         $q = "SELECT * FROM zarizeni WHERE id = ?";
-        $this->zarizeni = db::f($q, $this->zarizeni["id"]);
-        if (empty($this->zarizeni)) :
-            $this->zarizeni = [];
-            $this->zarizeni["id"] = 0;
-            return;
+        $this->aZarizeni = db::f($q, $this->aZarizeni["id"]);
+        if (empty($this->aZarizeni)) :
+            $this->aZarizeni = [];
+            $this->aZarizeni["id"] = 0;
+           return;
         endif;
-
     }    
 }

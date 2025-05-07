@@ -27,7 +27,7 @@ $oUser = new user();
             <input type="hidden" name="action" value="login">
             <div class="m-3">
                 <label for="login" class="form-label"><?= __('Přihlašovací jméno') ?>:</label>
-                <input type="text" id="login" class="form-control" name="login" value="<?= $oUser->user["login"] ?>">
+                <input type="text" id="login" class="form-control" name="login" value="<?= $oUser->aUser["login"] ?>">
               </div>
               <div class="m-3">
                 <label for="password" class="form-label"><?= __('Heslo') ?>:</label>

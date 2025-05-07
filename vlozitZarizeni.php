@@ -26,7 +26,7 @@ $oUser = new user();
         <form method="post" action="login.php" id="frmLogin" class="col-3 m-auto text-start">
             <div class="m-3">
                 <label for="login" class="form-label">Přihlašovací jméno:</label>
-                <input type="text" id="user" class="form-control" name="user" value="<?= $oUser->user ?>">
+                <input type="text" id="user" class="form-control" name="user" value="<?= $oUser->aUser ?>">
               </div>
               <div class="m-3">
                 <label for="password" class="form-label">Heslo:</label>

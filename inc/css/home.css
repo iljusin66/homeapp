@@ -25,4 +25,15 @@ legend { font-size: 1.1rem !important; font-weight: 600; }
     padding: .15rem 0 !important;
 }
 
+input[type="number"] {
+    -webkit-appearance: none; /* pro Chrome, Safari a nový Edge */
+    -moz-appearance: textfield; /* pro Firefox */
+    appearance: none; /* univerzální, pokud je podporováno */
+}
 
+/* Odstranění spinneru u WebKit prohlížečů */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}

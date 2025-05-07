@@ -16,8 +16,13 @@ new config();
 
 class odecet extends zarizeni{
 
+    private static $initialized = false;
+
     function __construct() {
-        parent::__construct();
+        if (!self::$initialized) {
+            parent::__construct();
+            self::$initialized = true;
+        }
         
     }
 
