@@ -5,8 +5,6 @@ SET time_zone = '+00:00';
 SET foreign_key_checks = 0;
 SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
-USE `home_app`;
-
 SET NAMES utf8mb4;
 
 DROP TABLE IF EXISTS `ceny_jednotky`;
@@ -54,13 +52,18 @@ CREATE TABLE `odecet_zarizeni` (
   `casodpoctu` datetime NOT NULL,
   `poznamka` varchar(255) NOT NULL,
   `zadal` int(11) DEFAULT NULL,
+  `opravil` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `idzarizeni` (`idzarizeni`),
   KEY `zadal` (`zadal`),
-  CONSTRAINT `odecet_zarizeni_ibfk_1` FOREIGN KEY (`idzarizeni`) REFERENCES `zarizeni` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `odecet_zarizeni_ibfk_2` FOREIGN KEY (`zadal`) REFERENCES `users` (`id`) ON DELETE SET NULL
+  KEY `idzarizeni` (`idzarizeni`),
+  KEY `opravil` (`opravil`),
+  CONSTRAINT `odecet_zarizeni_ibfk_2` FOREIGN KEY (`zadal`) REFERENCES `users` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `odecet_zarizeni_ibfk_3` FOREIGN KEY (`idzarizeni`) REFERENCES `zarizeni` (`id`),
+  CONSTRAINT `odecet_zarizeni_ibfk_4` FOREIGN KEY (`opravil`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_czech_ci;
 
+INSERT INTO `odecet_zarizeni` (`id`, `idzarizeni`, `odecet`, `casodpoctu`, `poznamka`, `zadal`, `opravil`) VALUES
+(1,	1,	487.540009,	'2025-05-06 19:30:00',	'Hokus pokus',	1,	1);
 
 DROP TABLE IF EXISTS `role`;
 CREATE TABLE `role` (
@@ -123,4 +126,4 @@ INSERT INTO `zarizeni2users` (`iduser`, `idzarizeni`, `idrole`) VALUES
 (1,	1,	4),
 (1,	2,	4);
 
--- 2025-04-30 19:14:01
+-- 2025-05-07 05:20:32
