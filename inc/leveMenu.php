@@ -1,6 +1,21 @@
-<div class="col-2 d-print-none" id="leve-menu">
-    <div class="row pe-2">
-        <h6>Nadpis</h6>
+<div class="col-2 d-none d-md-block" id="sidebar"> <!-- Skryté na mobilu, viditelné na širších obrazovkách -->
+    <h6>Levemenu</h6>
+        <ul class="nav flex-column mb-1">
+            <li class="nav-item"><a class="nav-link <?= (c_ScriptBaseName == 'zapisOdecet') ? 'active' : ''?>" href="<?= c_MainUrl; ?>zapisOdecet.php?idz=1"><?= __('Nový odečet') ?></a></li>
+        </ul>
+        <ul class="nav flex-column">
+            <li class="nav-item"><a class="nav-link <?= (c_ScriptBaseName == 'zapisZarizeni') ? 'active' : ''?>" href="<?= c_MainUrl; ?>zapisZarizeni.php?idz=1"><?= __('Nastavení') ?></a></li>
+            <li class="nav-item"><a class="nav-link <?= (c_ScriptBaseName == 'logout') ? 'active' : ''?>" href="<?= c_MainUrl; ?>logout.php"><?= __('Odhlásit') ?></a></li>
+        </ul>
+</div>
+
+<!-- Offcanvas menu pro mobilní zobrazení -->
+<div class="offcanvas offcanvas-start d-md-none" id="leve-menu">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title">Levemenu</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
         <ul class="nav flex-column mb-1">
             <li class="nav-item"><a class="nav-link <?= (c_ScriptBaseName == 'zapisOdecet') ? 'active' : ''?>" href="<?= c_MainUrl; ?>zapisOdecet.php?idz=1"><?= __('Nový odečet') ?></a></li>
         </ul>
@@ -9,6 +24,4 @@
             <li class="nav-item"><a class="nav-link <?= (c_ScriptBaseName == 'logout') ? 'active' : ''?>" href="<?= c_MainUrl; ?>logout.php"><?= __('Odhlásit') ?></a></li>
         </ul>
     </div>
-
-    <div class="text-center"></div>
 </div>

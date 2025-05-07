@@ -13,7 +13,7 @@ $oOdecet = new zapisOdecet($oUser->aUser);
     <link href="<?= c_MainUrl; ?>Bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- https://icons.getbootstrap.com/ -->
     <link href="<?= c_MainUrl; ?>Bootstrap/css/icons/bootstrap-icons.css" rel="stylesheet">
-    <title>: <?= $oOdecet->aZarizeni['nazev'] ?><?= ($oOdecet->aOdecet["id"]==0) ? __('Vložit odpočet') : __('Oprava odečtu') ?></title>
+    <title><?= $oOdecet->aZarizeni['nazev'] ?><?= ($oOdecet->aOdecet["id"]==0) ? __('Vložit odpočet') : __('Oprava odečtu') ?></title>
     <script src="<?= c_MainUrl; ?>inc/jquery-3.6.4.min.js"></script>
     <script src="<?= c_MainUrl; ?>Bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="<?= c_MainUrl; ?>inc/home.js?ch=<?= md5_file('inc/home.js') ?>"></script>
@@ -27,7 +27,7 @@ $oOdecet = new zapisOdecet($oUser->aUser);
         <div class="row">
             <div class="col p-3 bg-white m-2 rounded-3">
                 <div class="row">
-                    <div class="col-2 d-print-none"></div>
+                    <div class="col-2 d-print-none d-none d-md-block"></div>
                     <div class="col ps-0">
                         <h1 class="fs-3 ps-0"><?= $oOdecet->aZarizeni['nazev'] ?></h1>
                     </div>
@@ -41,27 +41,33 @@ $oOdecet = new zapisOdecet($oUser->aUser);
                                 <input type="hidden" name="ido" value="<?= utils::fixFloat($oOdecet->aOdecet['id']) ?>">
                                 <fieldset class="row">
                                     <legend class="form-label"><?= ($oOdecet->aOdecet["id"]==0) ? __('Vložit odpočet') : __('Oprava odečtu') ?></legend>
+                                    <div class="row">
+                                    <div class="d-flex flex-wrap">
+                                        <!-- První pole -->
+                                        <div class="me-3 mb-2" style="max-width: 400px; width: 100%;">
+                                            <div class="d-flex flex-column flex-sm-row align-items-sm-center">
+                                            <label for="odecet" class="me-sm-2 mb-1 mb-sm-0" style="width: 100px; flex-shrink: 0;">Hodnota</label>
+                                            <input type="number" class="form-control" id="odecet" name="odecet" required>
+                                            </div>
+                                        </div>
 
-                                    <div class="col-4">
-                                        <div class="input-group input-group-sm mb-1 ">
-                                            <label class="input-group-text col-4" for="odecet" id="label_odecet" style="font-size: .875rem;"><?= __('Hodnota') ?></label>
-                                            <input type="number" pattern="[0-9]+([.][0-9]+)?" required data-kontrolaZmeny name="odecet" id="odecet" value="<?= utils::fixFloat($oOdecet->aOdecet['odecet'], false) ?>" class="form-control">
+                                        <!-- Druhé pole -->
+                                        <div class="me-3 mb-2" style="max-width: 400px; width: 100%;">
+                                            <div class="d-flex flex-column flex-sm-row align-items-sm-center">
+                                            <label for="casodpoctu" class="me-sm-2 mb-1 mb-sm-0" style="width: 100px; flex-shrink: 0;">Datum a čas</label>
+                                            <input type="datetime-local" class="form-control" id="casodpoctu" name="casodpoctu" required>
+                                            </div>
                                         </div>
                                     </div>
 
-                                    <div class="col-4">
-                                        <div class="input-group input-group-sm mb-1">
-                                            <label class="input-group-text col-5" id="label_casodpoctu" for="casodpoctu" style="font-size: .875rem;"><?= __('Datum a čas') ?></label>
-                                            <input type="datetime-local" class="form-control form-control-sm" id="casodpoctu" name="casodpoctu" value="<?= utils::safeForm($oOdecet->aOdecet['casodpoctu']) ?>" required data-kontrolaZmeny>
-                                        </div>
+                                    <!-- Třetí pole přes celou šířku -->
+                                    <div class="mb-2">
+                                        <div class="d-flex flex-column flex-sm-row align-items-sm-center">
+                                            <label for="poznamka" class="me-sm-2 mb-1 mb-sm-0" style="width: 100px; flex-shrink: 0;">Poznámka</label>
+                                            <input type="text" class="form-control" id="poznamka" name="poznamka">
                                     </div>
-                                    
-                                    <div class="col-12">
-                                        <div class="input-group input-group-sm mb-1 ">
-                                            <label class="input-group-text col-1" for="poznamka" id="label_poznamka" style="font-size: .875rem; min-width:8.5vw;"><?= __('Poznámka') ?></label>
-                                            <input type="text" data-kontrolaZmeny name="poznamka" id="poznamka" value="<?= utils::safeForm($oOdecet->aOdecet['poznamka']) ?>" class="form-control">
-                                        </div>
                                     </div>
+
                                                                       
                                 </fieldset>
                                 <input type="submit" name="ulozit" value="<?= __('Uložit') ?>" class="btn btn-primary">

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="cs">
+    <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/Bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- https://icons.getbootstrap.com/ -->
+    <link href="/Bootstrap/css/icons/bootstrap-icons.css" rel="stylesheet">
+    <title>Test hamburger</title>
+    <script src="inc/jquery-3.6.4.min.js"></script>
+    <script src="/Bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/inc/home.js"></script>
+    <link href="/inc/css/home.css" rel="stylesheet">
+    <style>
+        body { min-height: 85vh; padding-top: 3rem !important; }
+    </style>
+  </head>
+  <body class="ps-3 pe-3 m-0 border-0 bg-light">
+        <nav class="navbar navbar-expand-sm bg-primary fixed-top pe-4 d-print-none">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item active">
+                    <a href="/" class="text-white ps-4 text-decoration-none"><i class="bi-house me-1"></i> Home</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a href="logout.php" class="text-white ps-4 text-decoration-none"><i class="bi-person-x me-1"></i> Logout</a>
+                </li>
+            </ul>
+        </nav>
+        <div class="row">
+            <div class="col p-3 bg-white m-2 rounded-3">
+                <div class="row">
+                    <div class="col-2 d-print-none"></div>
+                    <div class="col ps-0">
+                        <h1 class="fs-3 ps-0">Nadpis H1</h1>
+                    </div>
+                </div>
+                <div class="row pt-0">
+                    <!-- Toto je leve menu a melo by byt na mobilu typu hamburger-->
+                    <div class="col-2 d-print-none" id="leve-menu">
+                        <div class="row pe-2">
+                            <h6>Levemenu</h6>
+                            <ul class="nav flex-column mb-1">
+                                <li class="nav-item"><a class="nav-link" href="#">Menu 1</a></li>
+                            </ul>
+                        </div>
+                    
+                        <div class="text-center"></div>
+                    </div>
+
+                    <!-- Toto je hlavni obsah, ktery by mit na mobilu plnou sirku -->
+                    <div class="col">
+                        <div id="dataContainer" class="row">
+                            
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </body>
+</html>

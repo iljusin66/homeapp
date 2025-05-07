@@ -31,8 +31,8 @@ $oUser->checkLogin();
             <div class="col p-3 bg-white m-2 rounded-3">
                 <h1><?= __('Statistiky') ?></h1>
                 <div class="row rounded-3">
-                    <div class="tile col-6 col-lg-2">
-                        <h2><?= __('Odečty') ?></h3>
+                    <div class="tile col-12 col-sm-2">
+                        <h2><?= __('Odečty') ?></h2>
                         <p>Vodoměr teplá</p>
 						<div class="text-center"><a href="<?= c_MainUrl; ?>zapisOdecet.php?idz=1" class="btn btn-primary my-2 col-12"><i class="bi-eye me-1"></i> <?= __('Nový odečet') ?></a></div>
 						<div class="text-center"><a href="<?= c_MainUrl; ?>nastaveniZarizeni.php?idz=1" class="btn btn-primary my-2 col-12"><i class="bi-eye me-1"></i> <?= __('Nastavení') ?></a></div>
