@@ -47,7 +47,7 @@ $oOdecet = new zapisOdecet($oUser->aUser);
                                         <div class="me-3 mb-2" style="max-width: 400px; width: 100%;">
                                             <div class="d-flex flex-column flex-sm-row align-items-sm-center">
                                             <label for="odecet" class="me-sm-2 mb-1 mb-sm-0" style="width: 100px; flex-shrink: 0;">Hodnota</label>
-                                            <input type="number" class="form-control" id="odecet" name="odecet" required>
+                                            <input type="number" placeholder="0.000" step=".001" class="form-control" id="odecet" name="odecet" value="<?= round($oOdecet->aOdecet["odecet"], 3) ?>" required>
                                             </div>
                                         </div>
 
@@ -55,7 +55,7 @@ $oOdecet = new zapisOdecet($oUser->aUser);
                                         <div class="me-3 mb-2" style="max-width: 400px; width: 100%;">
                                             <div class="d-flex flex-column flex-sm-row align-items-sm-center">
                                             <label for="casodpoctu" class="me-sm-2 mb-1 mb-sm-0" style="width: 100px; flex-shrink: 0;">Datum a čas</label>
-                                            <input type="datetime-local" class="form-control" id="casodpoctu" name="casodpoctu" required>
+                                            <input type="datetime-local" class="form-control" id="casodpoctu" value="<?= utils::safeForm($oOdecet->aOdecet["casodpoctu"]) ?>" name="casodpoctu" required>
                                             </div>
                                         </div>
                                     </div>
@@ -64,7 +64,7 @@ $oOdecet = new zapisOdecet($oUser->aUser);
                                     <div class="mb-2">
                                         <div class="d-flex flex-column flex-sm-row align-items-sm-center">
                                             <label for="poznamka" class="me-sm-2 mb-1 mb-sm-0" style="width: 100px; flex-shrink: 0;">Poznámka</label>
-                                            <input type="text" class="form-control" id="poznamka" name="poznamka">
+                                            <input type="text" class="form-control" id="poznamka" value="<?= utils::safeForm($oOdecet->aOdecet["poznamka"]) ?>" name="poznamka">
                                     </div>
                                     </div>
 
