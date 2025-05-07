@@ -13,7 +13,7 @@ $oOdecet = new zapisOdecet($oUser->aUser);
     <link href="<?= c_MainUrl; ?>Bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- https://icons.getbootstrap.com/ -->
     <link href="<?= c_MainUrl; ?>Bootstrap/css/icons/bootstrap-icons.css" rel="stylesheet">
-    <title><?= $oOdecet->aZarizeni['nazev'] ?><?= ($oOdecet->aOdecet["id"]==0) ? __('Vložit odpočet') : __('Oprava odečtu') ?></title>
+    <title><?= $oOdecet->aZarizeni['nazev'] ?>: <?= ($oOdecet->aOdecet["id"]==0) ? __('vložit odečet') : __('oprava odečtu') ?></title>
     <script src="<?= c_MainUrl; ?>inc/jquery-3.6.4.min.js"></script>
     <script src="<?= c_MainUrl; ?>Bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="<?= c_MainUrl; ?>inc/home.js?ch=<?= md5_file('inc/home.js') ?>"></script>
@@ -40,7 +40,7 @@ $oOdecet = new zapisOdecet($oUser->aUser);
                                 <input type="hidden" name="idz" value="<?= utils::fixFloat($oOdecet->aZarizeni['id']) ?>">
                                 <input type="hidden" name="ido" value="<?= utils::fixFloat($oOdecet->aOdecet['id']) ?>">
                                 <fieldset class="row">
-                                    <legend class="form-label"><?= ($oOdecet->aOdecet["id"]==0) ? __('Vložit odpočet') : __('Oprava odečtu') ?></legend>
+                                    <legend class="form-label"><?= ($oOdecet->aOdecet["id"]==0) ? __('Vložit odečet') : __('Oprava odečtu') ?></legend>
                                     <div class="row">
                                     <div class="d-flex flex-wrap">
                                         <!-- První pole -->

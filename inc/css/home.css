@@ -2,7 +2,7 @@
 .h1, h1 { font-size: 1.6rem !important; }
 .tile { background-color: #d2f4ea; border:white solid 0.15em; border-radius: 0.5em; padding:1em; }
 .tile:hover { background-color: #a6e9d5; }
-h2 { font-size:1.1em; min-height:3.6em; }
+h2 { font-size:1.1em; min-height:2em; }
 p { min-height:3em; display: inline-block; }
 table.table-xsm { font-size:0.90rem; }
 table.table-xsm>:not(caption)>*>* { padding: .15rem .2rem; }

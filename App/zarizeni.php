@@ -14,9 +14,11 @@ class zarizeni {
 
     private static $initialized = false;
 
-    public $aZarizeni = [];  
+    public $aZarizeni = [];
+    private $aUser = [];
 
-    function __construct() {
+    function __construct($aUser = []) {
+        $this->aUser = $aUser;
         if (!self::$initialized) {
             $this->nactiZarizeni();
             self::$initialized = true;
@@ -36,5 +38,24 @@ class zarizeni {
             $this->aZarizeni["id"] = 0;
            return;
         endif;
-    }    
+    }
+
+    public function nactiSeznamZarizeniUzivatele() : array {
+        $q = "SELECT z.*, r.role, mj.jednotka FROM zarizeni AS z
+            JOIN zarizeni2users AS zu ON z.id = zu.idzarizeni
+            JOIN cis_merne_jednotky AS mj ON mj.id = z.idjednotky
+            JOIN role AS r ON r.id = zu.idrole
+            WHERE zu.iduser = ? ORDER BY id";
+        $rows = db::fa($q, $this->aUser["id"]);
+        
+        foreach ($rows as $row) :
+            $this->aZarizeni[$row["id"]] = $row;
+        endforeach;
+        if (empty($this->aZarizeni)) {
+            $this->aZarizeni = [];
+        }
+        
+        return $this->aZarizeni;
+    }
+    
 }
