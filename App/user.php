@@ -21,11 +21,11 @@ class user {
     public $aUser;
     private $cookieTime;
 
-    function __construct() {
+    function __construct($bCheckLogin = true) {
         $this->cookieTime = time() + (60*60*6); //6 hodin
         if (request::string('action', 'POST')=='login') :
             $this->login();
-        else:
+        elseif($bCheckLogin):
             $this->checkLogin();
         endif;
         
@@ -63,6 +63,7 @@ class user {
     
     public function checkLogin($bRedirect = true) {
         
+
         $this->aUser["name"] = request::string('username', 'COOKIE');
         $this->aUser["id"] = request::int('iduser', 'COOKIE');
 
