@@ -44,8 +44,8 @@ $oZarizeni->nactiSeznamZarizeniUzivatele();
 
                         <div class="tile col-12 col-sm-2">
                             <h2 class="mb-1"><?= $aZarizeni["nazev"] ?></h2>
-                            <div class="text-center"><a href="<?= c_MainUrl; ?>zapisOdecet.php?idz=<?= $aZarizeni["id"] ?>" class="btn btn-primary my-2 col-12"><i class="bi-eye me-1"></i> <?= __('Nový odečet') ?></a></div>
-                            <div class="text-center"><a href="<?= c_MainUrl; ?>nastaveniZarizeni.php?idz=<?= $aZarizeni["id"] ?>" class="btn btn-primary my-2 col-12"><i class="bi-eye me-1"></i> <?= __('Nastavení') ?></a></div>
+                            <div class="text-center"><a href="<?= c_MainUrl; ?>zapisOdecet.php?idz=<?= $aZarizeni["id"] ?>" class="btn btn-primary my-2 col-12"><i class="bi-plus-circle me-1"></i> <?= __('Nový odečet') ?></a></div>
+                            <div class="text-center"><a href="<?= c_MainUrl; ?>nastaveniZarizeni.php?idz=<?= $aZarizeni["id"] ?>" class="btn btn-primary my-2 col-12"><i class="bi-gear me-1"></i> <?= __('Nastavení') ?></a></div>
                         </div>
                     <?php endforeach;
                     endif;
