@@ -70,14 +70,17 @@ class zapisOdecet extends odecet {
                 $this->errors[] = "Chyba při ukládání odpočtu!";
                 return false;
             }
-            header("Location: " . c_MainUrl . "zapisOdecet.php?ido=" . $this->aOdecet["id"] . "&idz=" . $this->aZarizeni["id"]);
+            header("Location: " . c_MainUrl . "zapisOdecet.php?i=&ido=" . $this->aOdecet["id"] . "&idz=" . $this->aZarizeni["id"]);
             exit;        
     }
 
     private function opravOdecet() {
         
         $q = "UPDATE odecet_zarizeni SET casodpoctu = ?, odecet = ?, poznamka = ?, opravil = ? WHERE id = ? AND idzarizeni = ?";
-        db::q($q, utils::formatDbDateTime($this->aOdecet["casodpoctu"]), $this->aOdecet["odecet"], $this->aOdecet["poznamka"], $this->aOdecet["id"], $this->aZarizeni["id"], $this->aUser["id"]);
+        db::q($q, utils::formatDbDateTime($this->aOdecet["casodpoctu"]), $this->aOdecet["odecet"], $this->aOdecet["poznamka"], $this->aUser["id"], $this->aOdecet["id"], $this->aZarizeni["id"]);
+        //debug([$q, utils::formatDbDateTime($this->aOdecet["casodpoctu"]), $this->aOdecet["odecet"], $this->aOdecet["poznamka"], $this->aOdecet["id"], $this->aZarizeni["id"], $this->aUser["id"]]);
+        header("Location: " . c_MainUrl . "zapisOdecet.php?u=1&ido=" . $this->aOdecet["id"] . "&idz=" . $this->aZarizeni["id"]);
+        exit;
     }
 
     private function smazOdecet() {
