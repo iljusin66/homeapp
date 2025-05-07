@@ -36,7 +36,7 @@ $oOdecet = new zapisOdecet($oUser->aUser);
                     <?php include_once 'inc/leveMenu.php'; ?>
                     <div class="col" style="min-height: 85vh">
                         <div id="dataContainer" class="row">
-                            <form class="p-1 pt-0 me-1 col-l-10 col-12" id="frmOdecetEdit" action="<?= c_ScriptBaseName ?>.php" method="POST" novalidate>
+                            <form class="p-1 pt-0 me-1 col-l-10 col-12" id="frmOdecetEdit" action="<?= c_ScriptBaseName ?>.php" method="POST">
                                 <input type="hidden" name="idz" value="<?= utils::fixFloat($oOdecet->aZarizeni['id']) ?>">
                                 <input type="hidden" name="ido" value="<?= utils::fixFloat($oOdecet->aOdecet['id']) ?>">
                                 <fieldset class="row">
