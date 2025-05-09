@@ -2,7 +2,7 @@
 <!-- Navigace s tlačítkem pro otevření menu na mobilu -->
 <nav class="navbar navbar-expand-sm bg-primary fixed-top pe-4 d-print-none">
     <button class="navbar-toggler text-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#leve-menu">
-        <i class="bi bi-list"></i> Menu
+        <i class="bi bi-list"></i>
     </button>
     <ul class="navbar-nav me-auto">
         <li class="nav-item active">
