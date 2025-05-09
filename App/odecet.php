@@ -37,8 +37,8 @@ class odecet extends zarizeni{
             JOIN cis_merne_jednotky AS mj ON mj.id = z.idjednotky
             JOIN users AS ui ON ui.id = o.zadal
             LEFT JOIN users AS uu ON uu.id = o.opravil';
-        debug([$q, [$this->aZarizeni['id'], $this->aUser['id']]]); 
             $rows = db::fa($q, [$this->aZarizeni['id'], $this->aUser['id']]);
+            debug($rows);
     }
 
     public function nactiSeznamOdectu() {
