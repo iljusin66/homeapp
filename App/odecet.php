@@ -18,7 +18,7 @@ class odecet extends zarizeni{
 
     private static $initialized = false;
     private $aUser = [];
-    private $aOdecty = [];
+    public $aOdecty = [];
 
     function __construct($aUser = []) {
         $this->aUser = $aUser;
@@ -36,9 +36,37 @@ class odecet extends zarizeni{
             JOIN role AS r ON r.id = zu.idrole
             JOIN cis_merne_jednotky AS mj ON mj.id = z.idjednotky
             JOIN users AS ui ON ui.id = o.zadal
-            LEFT JOIN users AS uu ON uu.id = o.opravil';
+            LEFT JOIN users AS uu ON uu.id = o.opravil
+            ORDER BY o.casodpoctu DESC';
             $rows = db::fa($q, [$this->aZarizeni['id'], $this->aUser['id']]);
-            debug($rows);
+            foreach ($rows as $row) :
+                $this->aOdecty[] = $row;
+            endforeach;
+    }
+
+    public function spocitejPrumernouSpotrebu($rok = 0) {
+        if ($rok == 0) $rok = date('Y');
+        if ($this->aOdecty == []) : return 0; endif;
+
+        $minHours = time() / 3600;
+        $maxHours = 0;
+        $minOdecet = 0;
+        $maxOdecet = 0;
+        foreach ($this->aOdecty as $aOdecet) :
+            if (date('Y', strtotime($aOdecet['casodpoctu'])) != $rok) :
+                continue;
+            endif; 
+            $unixHours = strtotime($aOdecet['casodpoctu']) / 3600;
+            $minHours = min($minHours, $unixHours);
+            $maxHours = max($maxHours, $unixHours);
+            $minOdecet = ($minOdecet=0) ? $aOdecet['odecet'] : min($minOdecet, $aOdecet['odecet']);
+            $maxOdecet = max($maxOdecet, $aOdecet['odecet']);
+        endforeach;
+        $spotreba = $maxOdecet - $minOdecet;
+        $pocetHodin = $maxHours - $minHours;
+        if ($pocetHodin == 0) return 0; 
+        $prumernaSpotreba = $spotreba / $pocetHodin;
+        return $prumernaSpotreba;
     }
 
     public function nactiSeznamOdectu() {

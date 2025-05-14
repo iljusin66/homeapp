@@ -41,7 +41,6 @@ $oZarizeni->nactiSeznamZarizeniUzivatele();
                     foreach ($oZarizeni->aZarizeni as $aZarizeni) :
                         if (!is_array($aZarizeni)) continue;
                     ?>
-
                         <div class="tile col-12 col-sm-2">
                             <h2 class="mb-1"><?= $aZarizeni["nazev"] ?></h2>
                             <div class="text-center"><a href="<?= c_MainUrl; ?>zapisOdecet.php?idz=<?= $aZarizeni["id"] ?>" class="btn btn-primary my-2 col-12"><i class="bi-plus-circle me-1"></i> <?= __('Nový odečet') ?></a></div>
