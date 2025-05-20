@@ -26,7 +26,9 @@ $oOdecet = new zapisOdecet($oUser->aUser);
     </style>
   </head>
   <body class="ps-3 pe-3 m-0 border-0 bg-light">
+    
         <?php include('inc/navbar-top.php') ?>
+        <?php include_once 'inc/alert.php'; ?>
         <div class="row">
             <div class="col p-3 bg-white m-2 rounded-3">
                 <div class="row">

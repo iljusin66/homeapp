@@ -11,12 +11,12 @@
     <?php endif; ?>
     <ul class="navbar-nav me-auto">
         <li class="nav-item active">
-            <a href="/" class="text-white ps-4 text-decoration-none"><i class="bi-house me-1"></i> Home</a>
+            <a href="/?<?= time() ?>" class="text-white ps-4 text-decoration-none"><i class="bi-house me-1"></i> Home</a>
         </li>
     </ul>
     <ul class="navbar-nav">
         <li class="nav-item">
-            <a href="logout.php" class="text-white ps-4 text-decoration-none"><i class="bi-person-x me-1"></i> Logout</a>
+            <a href="logout.php?<?= time() ?>" class="text-white ps-4 text-decoration-none"><i class="bi-person-x me-1"></i> Logout</a>
         </li>
     </ul>
 </nav>
