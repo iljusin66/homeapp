@@ -20,8 +20,8 @@
     <div class="offcanvas-body">
         <?php if ( $oOdecet->aZarizeni["id"] > 0) : ?>
         <ul class="nav flex-column mb-1">
-            <li class="nav-item"><a class="nav-link <?= (c_ScriptBaseName == 'zapisOdecet') ? 'active' : ''?>" href="<?= c_MainUrl; ?>zapisOdecet.php?idz=<?= $oOdecet->aZarizeni["id"]?>"><?= __('Nový odečet') ?></a></li>
-            <li class="nav-item"><a class="nav-link <?= (c_ScriptBaseName == 'zapisZarizeni') ? 'active' : ''?>" href="<?= c_MainUrl; ?>zapisZarizeni.php?idz=<?= $oOdecet->aZarizeni["id"]?>"><?= __('Nastavení') ?></a></li>
+            <li class="nav-item"><a class="nav-link <?= (c_ScriptBaseName == 'zapisOdecet') ? 'active' : ''?>" href="<?= c_MainUrl; ?>zapisOdecet.php?idz=<?= $oOdecet->aZarizeni["id"]?>&t=<?= time() ?>"><?= __('Nový odečet') ?></a></li>
+            <li class="nav-item"><a class="nav-link <?= (c_ScriptBaseName == 'zapisZarizeni') ? 'active' : ''?>" href="<?= c_MainUrl; ?>zapisZarizeni.php?idz=<?= $oOdecet->aZarizeni["id"]?>&t=<?= time() ?>"><?= __('Nastavení') ?></a></li>
         </ul>
         <?php endif; ?>
         <ul class="nav flex-column">

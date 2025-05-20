@@ -1,6 +1,10 @@
 <?php
 USE Latecka\Utils\utils;
 
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+
 require_once 'autoload.php';
 
 $oUser = new user();
@@ -54,7 +58,7 @@ $oOdecet->nactiSeznamOdectu();
                                         <div class="card-body">
                                             <h5 class="card-title"><?= utils::getLocaleDateTime($aOdecet["casodpoctu"]) ?></h5>
                                             <p class="card-text"><?= round(utils::fixFloat($aOdecet["odecet"]), 3) ?> <?= $aOdecet["jednotka"] ?></p>
-                                            <a href="<?= c_MainUrl; ?>zapisOdecet.php?idz=<?= $oOdecet->aZarizeni["id"] ?>&ido=<?= $aOdecet["id"] ?>" class="btn btn-sm btn-primary"><i class="bi-pencil-square me-1"></i> <?= __('Upravit') ?></a>
+                                            <a href="<?= c_MainUrl; ?>zapisOdecet.php?idz=<?= $oOdecet->aZarizeni["id"] ?>&ido=<?= $aOdecet["id"] ?>&<?= time() ?>" class="btn btn-sm btn-primary"><i class="bi-pencil-square me-1"></i> <?= __('Upravit') ?></a>
                                             <!-- <a href="<?= c_MainUrl; ?>zapisOdecet.php?idz=<?= $oOdecet->aZarizeni["id"] ?>&ido=<?= $aOdecet["id"] ?>&delete=1" class="btn-sm btn-danger"><i class="bi-trash me-1"></i> <?= __('Smazat') ?></a> -->
                                         </div>
                                     </div>
