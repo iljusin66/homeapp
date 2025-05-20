@@ -1,9 +1,33 @@
+<?php
+$menuZarizeniItems = [
+    [
+        'script' => 'zapisOdecet',
+        'url' => c_MainUrl . 'zapisOdecet.php?idz=' . $oOdecet->aZarizeni["id"] . '&t=' . time(),
+        'label' => __('Nový odečet')
+    ],
+    [
+        'script' => 'seznamOdectu',
+        'url' => c_MainUrl . 'seznamOdectu.php?idz=' . $oOdecet->aZarizeni["id"] . '&t=' . time(),
+        'label' => __('Zadané odečty')
+    ],
+    [
+        'script' => 'zapisZarizeni',
+        'url' => c_MainUrl . 'zapisZarizeni.php?idz=' . $oOdecet->aZarizeni["id"] . '&t=' . time(),
+        'label' => __('Nastavení')
+    ],
+
+];
+$liZarizeni = "";
+foreach ($menuZarizeniItems as $item) {
+    $liZarizeni .= '<li class="nav-item"><a class="nav-link '. ((c_ScriptBaseName == $item['script']) ? 'active' : '') .'" href="'.$item['url'].'">'.$item['label'].'</a></li>';
+}
+
+?>
 <div class="col-2 d-none d-md-block" id="sidebar"> <!-- Skryté na mobilu, viditelné na širších obrazovkách -->
     <?php if ( $oOdecet->aZarizeni["id"] > 0) : ?>
         <h6><?= $oOdecet->aZarizeni["nazev"] ?></h6>
         <ul class="nav flex-column mb-1">
-            <li class="nav-item"><a class="nav-link <?= (c_ScriptBaseName == 'zapisOdecet') ? 'active' : ''?>" href="<?= c_MainUrl; ?>zapisOdecet.php?idz=<?= $oOdecet->aZarizeni["id"]?>"><?= __('Nový odečet') ?></a></li>
-            <li class="nav-item"><a class="nav-link <?= (c_ScriptBaseName == 'zapisZarizeni') ? 'active' : ''?>" href="<?= c_MainUrl; ?>zapisZarizeni.php?idz=<?= $oOdecet->aZarizeni["id"]?>"><?= __('Nastavení') ?></a></li>
+            <?= $liZarizeni ?>
         </ul>
         <?php endif; ?>
         <ul class="nav flex-column">
@@ -20,8 +44,7 @@
     <div class="offcanvas-body">
         <?php if ( $oOdecet->aZarizeni["id"] > 0) : ?>
         <ul class="nav flex-column mb-1">
-            <li class="nav-item"><a class="nav-link <?= (c_ScriptBaseName == 'zapisOdecet') ? 'active' : ''?>" href="<?= c_MainUrl; ?>zapisOdecet.php?idz=<?= $oOdecet->aZarizeni["id"]?>&t=<?= time() ?>"><?= __('Nový odečet') ?></a></li>
-            <li class="nav-item"><a class="nav-link <?= (c_ScriptBaseName == 'zapisZarizeni') ? 'active' : ''?>" href="<?= c_MainUrl; ?>zapisZarizeni.php?idz=<?= $oOdecet->aZarizeni["id"]?>&t=<?= time() ?>"><?= __('Nastavení') ?></a></li>
+            <?= $liZarizeni ?>
         </ul>
         <?php endif; ?>
         <ul class="nav flex-column">
