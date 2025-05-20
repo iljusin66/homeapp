@@ -45,19 +45,31 @@ $oOdecet->nactiSeznamOdectu();
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h5 class="card-title"><?= __('Průměrná spotřeba') ?></h5>
-                                        <p class="card-text"><?= round($oOdecet->spocitejPrumernouSpotrebu(), 3) ?> <?= $oOdecet->aZarizeni["jednotka"] ?></p> 
+                                        <h6 class="card-title"><?= __('Průměrná denní spotřeba') ?></h6>
+                                        <p class="card-text"><?= round($oOdecet->prumernaSpotreba["den"], 3) ?> <?= $oOdecet->aZarizeni["jednotka"] ?></p> 
+                                        <h6><?= __('Průměrná hodinová spotřeba') ?></h6>
+                                        <p class="card-text"><?= round($oOdecet->prumernaSpotreba["hod"], 3) ?> <?= $oOdecet->aZarizeni["jednotka"] ?></p> 
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div id="dataContainer" class="row">
-                            <?php foreach ($oOdecet->aOdecty as $aOdecet) : ?>
+                            <?php foreach ($oOdecet->aOdecty as $aOdecet) :
+                                //debug($aOdecet);?>
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
                                     <div class="card">
                                         <div class="card-body">
-                                            <h5 class="card-title"><?= utils::getLocaleDateTime($aOdecet["casodpoctu"]) ?></h5>
-                                            <p class="card-text"><?= round(utils::fixFloat($aOdecet["odecet"]), 3) ?> <?= $aOdecet["jednotka"] ?></p>
+                                            <h6 class="card-title"><?= utils::getLocaleDateTime($aOdecet["casodpoctu"]) ?></h6>
+                                            <div class="card-text mb-1">
+                                                <?= __('Zadal') ?>: <?= $aOdecet["userZadal"] ?><br>
+                                                <?= __('Opravil') .": " . (($aOdecet["userOpravil"]=='') ? '---' : $aOdecet["userOpravil"]) ?><br>
+                                                <i><?= (($aOdecet["poznamka"]=='') ? '&nbsp;' : $aOdecet["poznamka"]) ?></i>
+                                            </div>
+                                            <div class="card-text">
+                                            <?= __('Odečet') ?>: <?= round(utils::fixFloat($aOdecet["odecet"]), 3) ?> <?= $aOdecet["jednotka"] ?><br>
+                                            <?= __('Prům. denní spotřeba') ?>: <?= round($aOdecet["spotrebaDen"], 3) ?> <?= $aOdecet["jednotka"] ?><br>
+                                            <?= __('Prům. hodinová spotřeba') ?> : <?= round($aOdecet["spotrebaHod"], 3) ?> <?= $aOdecet["jednotka"] ?><br>
+                                            </div>
                                             <a href="<?= c_MainUrl; ?>zapisOdecet.php?idz=<?= $oOdecet->aZarizeni["id"] ?>&ido=<?= $aOdecet["id"] ?>&<?= time() ?>" class="btn btn-sm btn-primary"><i class="bi-pencil-square me-1"></i> <?= __('Upravit') ?></a>
                                             <!-- <a href="<?= c_MainUrl; ?>zapisOdecet.php?idz=<?= $oOdecet->aZarizeni["id"] ?>&ido=<?= $aOdecet["id"] ?>&delete=1" class="btn-sm btn-danger"><i class="bi-trash me-1"></i> <?= __('Smazat') ?></a> -->
                                         </div>

@@ -19,6 +19,7 @@ class odecet extends zarizeni{
     private static $initialized = false;
     private $aUser = [];
     public $aOdecty = [];
+    public $prumernaSpotreba = [];
 
     function __construct($aUser = []) {
         $this->aUser = $aUser;
@@ -26,6 +27,7 @@ class odecet extends zarizeni{
             parent::__construct();
             self::$initialized = true;
         }
+        
         
     }
 
@@ -37,11 +39,12 @@ class odecet extends zarizeni{
             JOIN cis_merne_jednotky AS mj ON mj.id = z.idjednotky
             JOIN users AS ui ON ui.id = o.zadal
             LEFT JOIN users AS uu ON uu.id = o.opravil
-            ORDER BY o.casodpoctu DESC';
+            ORDER BY o.casodpoctu ASC';
             $rows = db::fa($q, [$this->aZarizeni['id'], $this->aUser['id']]);
             foreach ($rows as $row) :
                 $this->aOdecty[] = $row;
             endforeach;
+        $this->spocitejPrumernouSpotrebu();
     }
 
     public function spocitejPrumernouSpotrebu($rok = 0) {
@@ -52,21 +55,38 @@ class odecet extends zarizeni{
         $maxHours = 0;
         $minOdecet = 0;
         $maxOdecet = 0;
-        foreach ($this->aOdecty as $aOdecet) :
+        $predchoziOdecet = 0;
+        $prechoziHours = 0;
+        foreach ($this->aOdecty as $key => $aOdecet) :
             if (date('Y', strtotime($aOdecet['casodpoctu'])) != $rok) :
                 continue;
             endif; 
             $unixHours = strtotime($aOdecet['casodpoctu']) / 3600;
             $minHours = min($minHours, $unixHours);
             $maxHours = max($maxHours, $unixHours);
-            $minOdecet = ($minOdecet=0) ? $aOdecet['odecet'] : min($minOdecet, $aOdecet['odecet']);
+            $minOdecet = ($minOdecet==0) ? $aOdecet['odecet'] : min($minOdecet, $aOdecet['odecet']);
             $maxOdecet = max($maxOdecet, $aOdecet['odecet']);
+            if ($maxOdecet == $minOdecet) :
+                $this->aOdecty[$key]['spotrebaHod'] = $this->aOdecty[$key]['spotrebaDen'] = 0;
+                $predchoziOdecet = $aOdecet['odecet'];
+                $prechoziHours = $unixHours;
+                continue;
+            endif;
+            //debug(['maxOdecet' => $maxOdecet, 'minOdecet' => $minOdecet, 'maxHours' => $maxHours, 'minHours' => $minHours]);
+            $this->aOdecty[$key]['spotrebaHod'] = ($maxOdecet - $predchoziOdecet) / ($maxHours - $prechoziHours);
+            $this->aOdecty[$key]['spotrebaDen'] = ($maxOdecet - $predchoziOdecet) / (($maxHours - $prechoziHours) / 24);
+            if ($this->aOdecty[$key]['spotrebaDen'] > 1) :
+                debug(['maxOdecet' => $maxOdecet, 'predchoziOdecet' => $predchoziOdecet, 'maxHours' => $maxHours, 'prechoziHours' => $prechoziHours]);
+            endif;
+            $predchoziOdecet = $aOdecet['odecet'];
+            $prechoziHours = $unixHours;
         endforeach;
         $spotreba = $maxOdecet - $minOdecet;
         $pocetHodin = $maxHours - $minHours;
         if ($pocetHodin == 0) return 0; 
-        $prumernaSpotreba = $spotreba / $pocetHodin;
-        return $prumernaSpotreba;
+        $this->prumernaSpotreba['hod'] = $spotreba / $pocetHodin;
+        $this->prumernaSpotreba['den'] = $spotreba / ($pocetHodin / 24);
+        $this->aOdecty = array_reverse($this->aOdecty);
     }
 
     public function nactiSeznamOdectu() {
