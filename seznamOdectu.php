@@ -65,13 +65,13 @@ $oOdecet->nactiSeznamOdectu();
                                                 <?= __('Opravil') .": " . (($aOdecet["userOpravil"]=='') ? '---' : $aOdecet["userOpravil"]) ?><br>
                                                 <i><?= (($aOdecet["poznamka"]=='') ? '&nbsp;' : $aOdecet["poznamka"]) ?></i>
                                             </div>
-                                            <div class="card-text">
+                                            <div class="card-text mb-1">
                                             <?= __('Odečet') ?>: <?= round(utils::fixFloat($aOdecet["odecet"]), 3) ?> <?= $aOdecet["jednotka"] ?><br>
                                             <?= __('Prům. denní spotřeba') ?>: <?= round($aOdecet["spotrebaDen"], 3) ?> <?= $aOdecet["jednotka"] ?><br>
                                             <?= __('Prům. hodinová spotřeba') ?> : <?= round($aOdecet["spotrebaHod"], 3) ?> <?= $aOdecet["jednotka"] ?><br>
                                             </div>
                                             <a href="<?= c_MainUrl; ?>zapisOdecet.php?idz=<?= $oOdecet->aZarizeni["id"] ?>&ido=<?= $aOdecet["id"] ?>&<?= time() ?>" class="btn btn-sm btn-primary"><i class="bi-pencil-square me-1"></i> <?= __('Upravit') ?></a>
-                                            <!-- <a href="<?= c_MainUrl; ?>zapisOdecet.php?idz=<?= $oOdecet->aZarizeni["id"] ?>&ido=<?= $aOdecet["id"] ?>&delete=1" class="btn-sm btn-danger"><i class="bi-trash me-1"></i> <?= __('Smazat') ?></a> -->
+                                            <a href="<?= c_MainUrl; ?>zapisOdecet.php?idz=<?= $oOdecet->aZarizeni["id"] ?>&ido=<?= $aOdecet["id"] ?>&delete=1" class="btn-sm btn-danger"><i class="bi-trash me-1"></i> <?= __('Smazat') ?></a>
                                         </div>
                                     </div>
                                 </div>
