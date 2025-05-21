@@ -10,7 +10,7 @@ require_once 'autoload.php';
 $oUser = new user();
 $oOdecet = new odecet($oUser->aUser);
 $oOdecet->nactiSeznamOdectu();
-//debug(5666);
+
 ?><!DOCTYPE html>
 <html lang="cs">
     <head>
@@ -19,7 +19,7 @@ $oOdecet->nactiSeznamOdectu();
     <link href="<?= c_MainUrl; ?>Bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- https://icons.getbootstrap.com/ -->
     <link href="<?= c_MainUrl; ?>Bootstrap/css/icons/bootstrap-icons.css" rel="stylesheet">
-    <title><?= $oOdecet->aZarizeni['nazev'] ?>: <?= ($oOdecet->aOdecty["id"]==0) ? __('vložit odečet') : __('oprava odečtu') ?></title>
+    <title><?= $oOdecet->aMeridla['nazev'] ?>: <?= ($oOdecet->aOdecty["id"]==0) ? __('vložit odečet') : __('oprava odečtu') ?></title>
     <script src="<?= c_MainUrl; ?>inc/jquery-3.6.4.min.js"></script>
     <script src="<?= c_MainUrl; ?>Bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="<?= c_MainUrl; ?>inc/home.js?ch=<?= md5_file('inc/home.js') ?>"></script>
@@ -35,7 +35,7 @@ $oOdecet->nactiSeznamOdectu();
                 <div class="row">
                     <div class="col-2 d-print-none d-none d-md-block"></div>
                     <div class="col ps-0">
-                        <h1 class="fs-3 ps-0"><?= $oOdecet->aZarizeni['nazev'] ?></h1>
+                        <h1 class="fs-3 ps-0"><?= $oOdecet->aMeridla['nazev'] ?></h1>
                     </div>
                 </div>
                 <div class="row pt-0">
@@ -46,16 +46,15 @@ $oOdecet->nactiSeznamOdectu();
                                 <div class="card">
                                     <div class="card-body">
                                         <h6 class="card-title"><?= __('Průměrná denní spotřeba') ?></h6>
-                                        <p class="card-text"><?= round($oOdecet->prumernaSpotreba["den"], 3) ?> <?= $oOdecet->aZarizeni["jednotka"] ?></p> 
+                                        <p class="card-text"><?= round($oOdecet->prumernaSpotreba["den"], 3) ?> <?= $oOdecet->aMeridla["jednotka"] ?></p> 
                                         <h6><?= __('Průměrná hodinová spotřeba') ?></h6>
-                                        <p class="card-text"><?= round($oOdecet->prumernaSpotreba["hod"], 3) ?> <?= $oOdecet->aZarizeni["jednotka"] ?></p> 
+                                        <p class="card-text"><?= round($oOdecet->prumernaSpotreba["hod"], 3) ?> <?= $oOdecet->aMeridla["jednotka"] ?></p> 
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div id="dataContainer" class="row">
-                            <?php foreach ($oOdecet->aOdecty as $aOdecet) :
-                                //debug($aOdecet);?>
+                            <?php foreach ($oOdecet->aOdecty as $aOdecet) : ?>
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
                                     <div class="card">
                                         <div class="card-body">
@@ -70,8 +69,8 @@ $oOdecet->nactiSeznamOdectu();
                                             <?= __('Prům. denní spotřeba') ?>: <?= round($aOdecet["spotrebaDen"], 3) ?> <?= $aOdecet["jednotka"] ?><br>
                                             <?= __('Prům. hodinová spotřeba') ?> : <?= round($aOdecet["spotrebaHod"], 3) ?> <?= $aOdecet["jednotka"] ?><br>
                                             </div>
-                                            <a href="<?= c_MainUrl; ?>zapisOdecet.php?idz=<?= $oOdecet->aZarizeni["id"] ?>&ido=<?= $aOdecet["id"] ?>&<?= time() ?>" class="btn btn-sm btn-primary"><i class="bi-pencil-square me-1"></i> <?= __('Upravit') ?></a>
-                                            <a href="<?= c_MainUrl; ?>zapisOdecet.php?idz=<?= $oOdecet->aZarizeni["id"] ?>&ido=<?= $aOdecet["id"] ?>&delete=1" class="btn-sm btn-danger"><i class="bi-trash me-1"></i> <?= __('Smazat') ?></a>
+                                            <a href="<?= c_MainUrl; ?>zapisOdecet.php?idz=<?= $oOdecet->aMeridla["id"] ?>&ido=<?= $aOdecet["id"] ?>&<?= time() ?>" class="btn btn-sm btn-primary"><i class="bi-pencil-square me-1"></i> <?= __('Upravit') ?></a>
+                                            <a href="<?= c_MainUrl; ?>zapisOdecet.php?idz=<?= $oOdecet->aMeridla["id"] ?>&ido=<?= $aOdecet["id"] ?>&delete=1" class="btn-sm btn-danger"><i class="bi-trash me-1"></i> <?= __('Smazat') ?></a>
                                         </div>
                                     </div>
                                 </div>

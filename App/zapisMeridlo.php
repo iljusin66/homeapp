@@ -8,11 +8,11 @@ use Latecka\Utils\request;
 use Latecka\Utils\db;
 
 
-require_once 'zarizeni.php';
+require_once 'meridla.php';
 
 
 
-class zapisZarizeni extends zarizeni {
+class zapisMeridlo extends meridla {
 
  
 

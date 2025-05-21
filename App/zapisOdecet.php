@@ -42,8 +42,8 @@ class zapisOdecet extends odecet {
 
     private function nactiOdecetGet() {
         $this->aOdecet["id"] = request::int('ido', 'GET');
-        $q = "SELECT * FROM odecet_zarizeni WHERE id = ? AND idzarizeni = ?";
-        $this->aOdecet = db::f($q, $this->aOdecet["id"], $this->aZarizeni["id"]);
+        $q = "SELECT * FROM odecet_meridla WHERE id = ? AND idmeridla = ?";
+        $this->aOdecet = db::f($q, $this->aOdecet["id"], $this->aMeridla["id"]);
     }
 
     private function ulozOdecet() {
@@ -62,30 +62,30 @@ class zapisOdecet extends odecet {
     }
 
     private function zapisNovyOdecet() {
-            $q = "INSERT INTO odecet_zarizeni (idzarizeni, casodpoctu, odecet, poznamka, zadal) VALUES (?, ?, ?, ?, ?)";
-            db::q($q, $this->aZarizeni["id"], utils::formatDbDateTime($this->aOdecet["casodpoctu"]), $this->aOdecet["odecet"], $this->aOdecet["poznamka"], $this->aUser["id"]);
+            $q = "INSERT INTO odecet_meridla (idmeridla, casodpoctu, odecet, poznamka, zadal) VALUES (?, ?, ?, ?, ?)";
+            db::q($q, $this->aMeridla["id"], utils::formatDbDateTime($this->aOdecet["casodpoctu"]), $this->aOdecet["odecet"], $this->aOdecet["poznamka"], $this->aUser["id"]);
         
             $this->aOdecet["id"] = db::ii();
             if ($this->aOdecet["id"] == 0) {
                 $this->errors[] = "Chyba při ukládání odpočtu!";
                 return false;
             }
-            header("Location: " . c_MainUrl . "zapisOdecet.php?i=&ido=" . $this->aOdecet["id"] . "&idz=" . $this->aZarizeni["id"]."&status=success");
+            header("Location: " . c_MainUrl . "zapisOdecet.php?i=&ido=" . $this->aOdecet["id"] . "&idz=" . $this->aMeridla["id"]."&status=success");
             exit;        
     }
 
     private function opravOdecet() {
         
-        $q = "UPDATE odecet_zarizeni SET casodpoctu = ?, odecet = ?, poznamka = ?, opravil = ? WHERE id = ? AND idzarizeni = ?";
-        db::q($q, utils::formatDbDateTime($this->aOdecet["casodpoctu"]), $this->aOdecet["odecet"], $this->aOdecet["poznamka"], $this->aUser["id"], $this->aOdecet["id"], $this->aZarizeni["id"]);
-        //debug([$q, utils::formatDbDateTime($this->aOdecet["casodpoctu"]), $this->aOdecet["odecet"], $this->aOdecet["poznamka"], $this->aOdecet["id"], $this->aZarizeni["id"], $this->aUser["id"]]);
-        header("Location: " . c_MainUrl . "zapisOdecet.php?u=1&ido=" . $this->aOdecet["id"] . "&idz=" . $this->aZarizeni["id"]."&status=success");
+        $q = "UPDATE odecet_meridla SET casodpoctu = ?, odecet = ?, poznamka = ?, opravil = ? WHERE id = ? AND idmeridla = ?";
+        db::q($q, utils::formatDbDateTime($this->aOdecet["casodpoctu"]), $this->aOdecet["odecet"], $this->aOdecet["poznamka"], $this->aUser["id"], $this->aOdecet["id"], $this->aMeridla["id"]);
+        //debug([$q, utils::formatDbDateTime($this->aOdecet["casodpoctu"]), $this->aOdecet["odecet"], $this->aOdecet["poznamka"], $this->aOdecet["id"], $this->aMeridla["id"], $this->aUser["id"]]);
+        header("Location: " . c_MainUrl . "zapisOdecet.php?u=1&ido=" . $this->aOdecet["id"] . "&idz=" . $this->aMeridla["id"]."&status=success");
         exit;
     }
 
     private function smazOdecet() {
         $this->aOdecet["id"] = request::int('ido', 'POST');
-        $q = "DELETE FROM odecet_zarizeni WHERE id = ?";
+        $q = "DELETE FROM odecet_meridla WHERE id = ?";
         db::q($q, $this->aOdecet["id"]);
     }
     

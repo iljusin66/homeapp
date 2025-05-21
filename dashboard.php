@@ -8,8 +8,8 @@ header("Pragma: no-cache");
 require_once 'autoload.php';
 
 $oUser = new user();
-$oZarizeni = new zarizeni($oUser->aUser);
-$oZarizeni->nactiSeznamZarizeniUzivatele();
+$oMeridla = new meridla($oUser->aUser);
+$oMeridla->nactiSeznamMeridelUzivatele();
 ?><!DOCTYPE html>
 <html lang="cs">
     <head>
@@ -34,22 +34,22 @@ $oZarizeni->nactiSeznamZarizeniUzivatele();
         <?php include('inc/navbar-top.php') ?>
         <div class="row">
             <div class="col p-3 bg-white m-2 rounded-3">
-                <h1><?= __('Statistiky') ?></h1>
+                <h1><?= __('Měřidla') ?></h1>
                 <div class="row rounded-3">
                     <?php
-                    if (empty($oZarizeni->aZarizeni)) : ?>
+                    if (empty($oMeridla->aMeridla)) : ?>
                         <div class="alert alert-danger" role="alert">
-                            <?= __('Nemáte přidáno žádné zařízení') ?>
+                            <?= __('Nemáte přidáno žádné měřidlo') ?>
                         </div> 
                     <?php else :
-                    foreach ($oZarizeni->aZarizeni as $aZarizeni) :
-                        if (!is_array($aZarizeni)) continue;
+                    foreach ($oMeridla->aMeridla as $aMeridlo) :
+                        if (!is_array($aMeridlo)) continue;
                     ?>
                         <div class="tile col-12 col-sm-2">
-                            <h2 class="mb-1"><?= $aZarizeni["nazev"] ?></h2>
-                            <div class="text-center"><a href="<?= c_MainUrl; ?>zapisOdecet.php?idz=<?= $aZarizeni["id"] ?>&<?= time() ?>" class="btn btn-primary my-2 col-12"><i class="bi-plus-circle me-1"></i> <?= __('Nový odečet') ?></a></div>
-                            <div class="text-center"><a href="<?= c_MainUrl; ?>seznamOdectu.php?idz=<?= $aZarizeni["id"] ?>&<?= time() ?>" class="btn btn-primary my-2 col-12"><i class="bi-list-ul me-1"></i> <?= __('Zadané odečty') ?></a></div>
-                            <div class="text-center"><a href="<?= c_MainUrl; ?>nastaveniZarizeni.php?idz=<?= $aZarizeni["id"] ?>&<?= time() ?>" class="btn btn-primary my-2 col-12"><i class="bi-gear me-1"></i> <?= __('Nastavení') ?></a></div>
+                            <h2 class="mb-1"><?= $aMeridlo["nazev"] ?></h2>
+                            <div class="text-center"><a href="<?= c_MainUrl; ?>zapisOdecet.php?idz=<?= $aMeridlo["id"] ?>&<?= time() ?>" class="btn btn-primary my-2 col-12"><i class="bi-plus-circle me-1"></i> <?= __('Nový odečet') ?></a></div>
+                            <div class="text-center"><a href="<?= c_MainUrl; ?>seznamOdectu.php?idz=<?= $aMeridlo["id"] ?>&<?= time() ?>" class="btn btn-primary my-2 col-12"><i class="bi-list-ul me-1"></i> <?= __('Zadané odečty') ?></a></div>
+                            <div class="text-center"><a href="<?= c_MainUrl; ?>nastaveniMeridla.php?idz=<?= $aMeridlo["id"] ?>&<?= time() ?>" class="btn btn-primary my-2 col-12"><i class="bi-gear me-1"></i> <?= __('Nastavení') ?></a></div>
                         </div>
                     <?php endforeach;
                     endif;

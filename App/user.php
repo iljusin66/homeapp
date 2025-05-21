@@ -101,16 +101,16 @@ class user {
         $q = "SELECT u.id, u.username AS name, u.login, u.heslo, u.email FROM users AS u WHERE u.id = ?";
         $this->aUser = db::f($q, $this->aUser["id"]);
         if ($this->aUser["id"]==0) : $this->setErrorLogin(2); return; endif;
-        $this->doplnUser2Zarizeni();
+        $this->doplnUser2Meridla();
     }
 
-    private function doplnUser2Zarizeni() {
-        $this->aUser["zarizeniRole"] = [];
-        $q = "SELECT idzarizeni, idrole FROM zarizeni2users WHERE iduser = ?";
+    private function doplnUser2Meridla() {
+        $this->aUser["meridlaRole"] = [];
+        $q = "SELECT idmeridla, idrole FROM meridla2users WHERE iduser = ?";
         $r = db::fa($q, $this->aUser["id"]);
         
         foreach ($r as $row) {
-            $this->aUser["zarizeniRole"][$row["idzarizeni"]] = $row["idrole"];
+            $this->aUser["meridlaRole"][$row["idmeridla"]] = $row["idrole"];
         }
         
     }

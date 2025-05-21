@@ -1,33 +1,33 @@
 <?php
-$menuZarizeniItems = [
+$menuMeridlaItems = [
     [
         'script' => 'zapisOdecet',
-        'url' => c_MainUrl . 'zapisOdecet.php?idz=' . $oOdecet->aZarizeni["id"] . '&t=' . time(),
+        'url' => c_MainUrl . 'zapisOdecet.php?idz=' . $oOdecet->aMeridla["id"] . '&t=' . time(),
         'label' => __('Nový odečet')
     ],
     [
         'script' => 'seznamOdectu',
-        'url' => c_MainUrl . 'seznamOdectu.php?idz=' . $oOdecet->aZarizeni["id"] . '&t=' . time(),
+        'url' => c_MainUrl . 'seznamOdectu.php?idz=' . $oOdecet->aMeridla["id"] . '&t=' . time(),
         'label' => __('Zadané odečty')
     ],
     [
-        'script' => 'zapisZarizeni',
-        'url' => c_MainUrl . 'zapisZarizeni.php?idz=' . $oOdecet->aZarizeni["id"] . '&t=' . time(),
+        'script' => 'zapisMeridlo',
+        'url' => c_MainUrl . 'zapisMeridlo.php?idz=' . $oOdecet->aMeridla["id"] . '&t=' . time(),
         'label' => __('Nastavení')
     ],
 
 ];
-$liZarizeni = "";
-foreach ($menuZarizeniItems as $item) {
-    $liZarizeni .= '<li class="nav-item"><a class="nav-link '. ((c_ScriptBaseName == $item['script']) ? 'active' : '') .'" href="'.$item['url'].'">'.$item['label'].'</a></li>';
+$liMeridla = "";
+foreach ($menuMeridlaItems as $item) {
+    $liMeridla .= '<li class="nav-item"><a class="nav-link '. ((c_ScriptBaseName == $item['script']) ? 'active' : '') .'" href="'.$item['url'].'">'.$item['label'].'</a></li>';
 }
 
 ?>
 <div class="col-2 d-none d-md-block" id="sidebar"> <!-- Skryté na mobilu, viditelné na širších obrazovkách -->
-    <?php if ( $oOdecet->aZarizeni["id"] > 0) : ?>
-        <h6><?= $oOdecet->aZarizeni["nazev"] ?></h6>
+    <?php if ( $oOdecet->aMeridla["id"] > 0) : ?>
+        <h6><?= $oOdecet->aMeridla["nazev"] ?></h6>
         <ul class="nav flex-column mb-1">
-            <?= $liZarizeni ?>
+            <?= $liMeridla ?>
         </ul>
         <?php endif; ?>
         <ul class="nav flex-column">
@@ -38,13 +38,13 @@ foreach ($menuZarizeniItems as $item) {
 <!-- Offcanvas menu pro mobilní zobrazení -->
 <div class="offcanvas offcanvas-start d-md-none" id="leve-menu">
     <div class="offcanvas-header">
-        <h5 class="offcanvas-title"><?= $oOdecet->aZarizeni["nazev"] ?></h5>
+        <h5 class="offcanvas-title"><?= $oOdecet->aMeridla["nazev"] ?></h5>
         <button title="Close" type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
     </div>
     <div class="offcanvas-body">
-        <?php if ( $oOdecet->aZarizeni["id"] > 0) : ?>
+        <?php if ( $oOdecet->aMeridla["id"] > 0) : ?>
         <ul class="nav flex-column mb-1">
-            <?= $liZarizeni ?>
+            <?= $liMeridla ?>
         </ul>
         <?php endif; ?>
         <ul class="nav flex-column">

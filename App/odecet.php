@@ -14,7 +14,7 @@ new config();
 
 
 
-class odecet extends zarizeni{
+class odecet extends meridla{
 
     private static $initialized = false;
     private $aUser = [];
@@ -32,15 +32,15 @@ class odecet extends zarizeni{
     }
 
     private function nactiOdecty() {
-        $q = 'SELECT o.*, z.nazev, r.role, mj.jednotka, ui.username AS userZadal, uu.username AS userOpravil FROM odecet_zarizeni AS o
-            JOIN zarizeni AS z ON z.id = o.idzarizeni AND z.id = ?
-            JOIN zarizeni2users AS zu ON z.id = zu.idzarizeni AND zu.iduser = ?
+        $q = 'SELECT o.*, z.nazev, r.role, mj.jednotka, ui.username AS userZadal, uu.username AS userOpravil FROM odecet_meridla AS o
+            JOIN meridla AS z ON z.id = o.idmeridla AND z.id = ?
+            JOIN meridla2users AS zu ON z.id = zu.idmeridla AND zu.iduser = ?
             JOIN role AS r ON r.id = zu.idrole
             JOIN cis_merne_jednotky AS mj ON mj.id = z.idjednotky
             JOIN users AS ui ON ui.id = o.zadal
             LEFT JOIN users AS uu ON uu.id = o.opravil
             ORDER BY o.casodpoctu ASC';
-            $rows = db::fa($q, [$this->aZarizeni['id'], $this->aUser['id']]);
+            $rows = db::fa($q, [$this->aMeridla['id'], $this->aUser['id']]);
             foreach ($rows as $row) :
                 $this->aOdecty[] = $row;
             endforeach;
@@ -75,9 +75,6 @@ class odecet extends zarizeni{
             //debug(['maxOdecet' => $maxOdecet, 'minOdecet' => $minOdecet, 'maxHours' => $maxHours, 'minHours' => $minHours]);
             $this->aOdecty[$key]['spotrebaHod'] = ($maxOdecet - $predchoziOdecet) / ($maxHours - $prechoziHours);
             $this->aOdecty[$key]['spotrebaDen'] = ($maxOdecet - $predchoziOdecet) / (($maxHours - $prechoziHours) / 24);
-            if ($this->aOdecty[$key]['spotrebaDen'] > 1) :
-                debug(['maxOdecet' => $maxOdecet, 'predchoziOdecet' => $predchoziOdecet, 'maxHours' => $maxHours, 'prechoziHours' => $prechoziHours]);
-            endif;
             $predchoziOdecet = $aOdecet['odecet'];
             $prechoziHours = $unixHours;
         endforeach;
