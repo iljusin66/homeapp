@@ -11,9 +11,13 @@ require_once 'autoload.php';
 
 new config();
 
-
-
-
+/*
+ * Třída pro práci s odečty měřidel
+ * 
+ * @author Ivan La.
+ * @version 1.0
+ * @package App
+ */
 class odecet extends meridla{
 
     private static $initialized = false;

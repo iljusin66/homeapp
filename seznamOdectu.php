@@ -10,7 +10,6 @@ require_once 'autoload.php';
 $oUser = new user();
 $oOdecet = new odecet($oUser->aUser);
 $oOdecet->nactiSeznamOdectu();
-
 ?><!DOCTYPE html>
 <html lang="cs">
     <head>
@@ -69,8 +68,25 @@ $oOdecet->nactiSeznamOdectu();
                                             <?= __('Prům. denní spotřeba') ?>: <?= round($aOdecet["spotrebaDen"], 3) ?> <?= $aOdecet["jednotka"] ?><br>
                                             <?= __('Prům. hodinová spotřeba') ?> : <?= round($aOdecet["spotrebaHod"], 3) ?> <?= $aOdecet["jednotka"] ?><br>
                                             </div>
-                                            <a href="<?= c_MainUrl; ?>zapisOdecet.php?idz=<?= $oOdecet->aMeridla["id"] ?>&ido=<?= $aOdecet["id"] ?>&<?= time() ?>" class="btn btn-sm btn-primary"><i class="bi-pencil-square me-1"></i> <?= __('Upravit') ?></a>
-                                            <a href="<?= c_MainUrl; ?>zapisOdecet.php?idz=<?= $oOdecet->aMeridla["id"] ?>&ido=<?= $aOdecet["id"] ?>&delete=1" class="btn-sm btn-danger"><i class="bi-trash me-1"></i> <?= __('Smazat') ?></a>
+                                            <?php
+                                            //Jen group writer muze zapisovat
+                                            if (in_array($oUser->aUser["meridlaRole"][$oOdecet->aMeridla["id"]], ca_RoleGroup["writer"])) : ?>
+                                                <a href="<?= c_MainUrl; ?>zapisOdecet.php?idz=<?= $oOdecet->aMeridla["id"] ?>&ido=<?= $aOdecet["id"] ?>&<?= time() ?>" class="btn btn-sm btn-primary"><i class="bi-pencil-square me-1"></i> <?= __('Upravit') ?></a>
+                                            <?php
+                                            endif;
+                                            
+                                            //Jen group editor muze mazat
+                                            if (in_array($oUser->aUser["meridlaRole"][$oOdecet->aMeridla["id"]], ca_RoleGroup["editor"])) : ?>
+                                            <!-- Button trigger modal -->
+                                            <a href="#" class="btn-sm btn-danger smazatOdecet" data-bs-toggle="modal"
+                                                data-bs-target="#modalConfirmDelete"
+                                                data-bs-ido="<?= $aOdecet["id"] ?>"
+                                                data-bs-idz="<?= $oOdecet->aMeridla["id"] ?>">
+                                                <i class="bi-trash me-1"></i> <?= __('Smazat') ?>
+                                            </a>
+                                            <?php
+                                            endif;
+                                            ?>
                                         </div>
                                     </div>
                                 </div>

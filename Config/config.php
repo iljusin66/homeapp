@@ -14,6 +14,43 @@ define('c_bNoTranslate', true); //Pokud je true, tak se preklady neprovadi, ale 
 define('c_RequestPost', $_SERVER['REQUEST_METHOD'] == 'POST');
 define('c_RequestGet', $_SERVER['REQUEST_METHOD'] == 'GET');
 
+/*
+ * Role
+ * <p>Definuje role uzivatelu a jejich prava</p>
+ * <p>ID rolí odpovídají tomu co je v d v tabulce role</p>
+ * <p>reader - Smi cist<br>
+ * writer - Smi cist a zapisovat<br
+ * editor - Smi cist, zapisovat a editovat<br
+ * admin - Smi vsechno</p>
+ * <p>Vsechny role jsou vzdy vetsi nez ta predchozi, tj. pokud je uzivatel reader, tak je i writer, editor a admin</p>
+ * <p>Pokud je uzivatel admin, tak je i writer, editor a reader</p>
+ * @author ivan la.
+ */
+define('ca_Role', [
+    'reader' => 1, //Smi jen cist
+    'writer' => 2, //Smi cist a zapisovat
+    'editor' => 3, //Smi cist, zapisovat a editovat
+    'admin' => 4 //Smi vsechno
+]);
+
+/*
+ * RoleGroup
+ * <p>Definuje skupiny uzivatelu a jejich prava</p>
+ * <p>reader - Smi cist<br>
+ * writer - Smi cist a zapisovat<br
+ * editor - Smi cist, zapisovat a editovat<br
+ * admin - Smi vsechno</p>
+ * <p>Vsechny role jsou vzdy vetsi nez ta predchozi, tj. pokud je uzivatel reader, tak je i writer, editor a admin</p>
+ * <p>Pokud je uzivatel admin, tak je i writer, editor a reader</p>
+ * @author ivan la.
+ */
+define('ca_RoleGroup', [
+    'reader' => [ca_Role['reader'], ca_Role['writer'], ca_Role['editor'], ca_Role['admin']], //Smi cist
+    'writer' => [ca_Role['writer'], ca_Role['editor'], ca_Role['admin']], //Smi cist a zapisovat
+    'editor' => [ca_Role['editor'], ca_Role['admin']], //Smi cist, zapisovat a editovat
+    'admin' => [ca_Role['admin']] //Smi vsechno
+]);
+
 /**
  * Main Class
  * Config

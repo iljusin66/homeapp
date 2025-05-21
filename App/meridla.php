@@ -7,9 +7,17 @@ use Latecka\Utils\utils;
 use Latecka\Utils\request;
 use Latecka\Utils\db;
 
-
 require_once 'autoload.php';
 
+new config();
+
+/*
+ * Třída pro práci s měřidly
+ * 
+ * @author Ivan La.
+ * @version 1.0
+ * @package App
+ */
 class meridla {
 
     private static $initialized = false;
