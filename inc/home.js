@@ -36,12 +36,13 @@ const smazOdecet = function (el) {
     });
 };
 
-$document.ready(function () {
 
+
+// Zpracování události po načtení DOM
+$(document).ready(function () {
     $('.smazatOdecet').on('click', function (e) {
         e.preventDefault();
         smazOdecet(this);
     });
-
 
 });
