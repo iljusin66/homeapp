@@ -19,8 +19,8 @@ $oOdecet->nactiSeznamOdectu();
     <!-- https://icons.getbootstrap.com/ -->
     <link href="<?= c_MainUrl; ?>Bootstrap/css/icons/bootstrap-icons.css" rel="stylesheet">
     <title><?= $oOdecet->aMeridla['nazev'] ?>: <?= ($oOdecet->aOdecty["id"]==0) ? __('vložit odečet') : __('oprava odečtu') ?></title>
-    <script src="<?= c_MainUrl; ?>inc/jquery-3.6.4.min.js"></script>
     <script src="<?= c_MainUrl; ?>Bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="<?= c_MainUrl; ?>inc/jquery-3.6.4.min.js"></script>
     <script src="<?= c_MainUrl; ?>inc/home.js?ch=<?= md5_file('inc/home.js') ?>"></script>
     <link href="<?= c_MainUrl; ?>inc/css/home.css?ch=<?= md5_file(c_FileRoot.'inc/home.css') ?>" rel="stylesheet">
     <style>
@@ -78,10 +78,10 @@ $oOdecet->nactiSeznamOdectu();
                                             //Jen group editor muze mazat
                                             if (in_array($oUser->aUser["meridlaRole"][$oOdecet->aMeridla["id"]], ca_RoleGroup["editor"])) : ?>
                                             <!-- Button trigger modal -->
-                                            <a href="#" class="btn-sm btn-danger smazatOdecet" data-bs-toggle="modal"
+                                            <a href="#" class="btn-sm btn-danger smazatOdecet"
                                                 data-bs-target="#modalConfirmDelete"
-                                                data-bs-ido="<?= $aOdecet["id"] ?>"
-                                                data-bs-idz="<?= $oOdecet->aMeridla["id"] ?>">
+                                                data-ido="<?= $aOdecet["id"] ?>"
+                                                data-idz="<?= $oOdecet->aMeridla["id"] ?>">
                                                 <i class="bi-trash me-1"></i> <?= __('Smazat') ?>
                                             </a>
                                             <?php
@@ -103,7 +103,7 @@ $oOdecet->nactiSeznamOdectu();
 
             </div>
         </div>
-        <?php include_once 'inc/modalInfo.php'; ?>
+        <?php include_once 'inc/modalConfirmDelete.php'; ?>
         <script src="<?= c_MainUrl; ?>inc/validation-form.js"></script>
     </body>
 </html>

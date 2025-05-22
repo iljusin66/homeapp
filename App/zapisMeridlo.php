@@ -25,9 +25,10 @@ class zapisMeridlo extends meridla {
     public function smazMeridlo() {
         $this->aMeridla["id"] = request::int('id', 'POST');
         if ($this->aMeridla["id"] == 0) :
-            return;
+            return false;
         endif;
         $q = "DELETE FROM meridla WHERE id = ?";
         db::q($q, $this->aMeridla["id"]);
+        return true;
     }
 }

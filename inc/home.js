@@ -1,39 +1,68 @@
+const _hostname = window.location.protocol + '//' + window.location.hostname + '/';
+
 const smazOdecet = function (el) {
     spinnerButtonOn(el);
 
-    var modalWindow = $('#modalInfo');
+    var modalWindow = $('#modalConfirmDelete');
     var myModal = new bootstrap.Modal(modalWindow, {
         keyboard: false,
         backdrop: true,
         focus: true
     });
 
+    myModal.show();
+    spinnerButtonOff(el);
+    var ido = el.attr('data-ido');
+    var idz = el.attr('data-idz');
+    
+    //Akce po potvrzení. Zavolám AJAX na smazání
+    modalWindow.find('.confirm').off('click').on('click', function() {
+        smazOdecetAjax(ido, idz, el);
+    });
 
+};
+
+const smazOdecetAjax = function (ido, idz, el) {
     $.ajax({
-        url: _hostname + 'ajaxSmazOdecet.php'
+        url: _hostname + 'ajaxSmazOdecet.php?ido=' + ido + '&idz=' + idz
         , type: 'GET'
         , dataType: "json"
         , error: function (jqXHR, textStatus, errorThrown) {
-            $('.modal-title', modalWindow).text('Chyba požadavku!!');
+            $('.modal-title', modalWindow).text('Chyba volání vzdáleného požadavku!');
             $('.modal-body', modalWindow).html('<p class="text-danger-emphasis">Chyba #AJAX004 při zpracování požadavku!</p><br><p>Text chyby: ' + textStatus + '</p>\n\
 <br><p>jqXHR:<pre>' + JSON.stringify(jqXHR) + '</pre></p><br><p>errorThrown:<pre>' + JSON.stringify(errorThrown) + '</pre></p>');
-            myModal.show();
             spinnerButtonOff(el);
         }
         , success: function (data) {
-            if (data.status === "ok") {
+            if (data.status === "success") {
                 $('.modal-title', modalWindow).text(data.modalTitle);
                 $('.modal-body', modalWindow).html(data.modalBody);
+                myModal.hide();
             } else {
-                $('.modal-title', modalWindow).text('Chyba importu mezd!!');
+                $('.modal-title', modalWindow).text('Chyba v odpovědi požadavku!');
                 $('.modal-body', modalWindow).html('<p class="text-danger-emphasis">Chyba #AJAX003 při zpracování importu mezd!</p><br><p>Navrácená data:<pre>' + JSON.stringify(data) + '</pre></p>');
 
             }
             ;
-            myModal.show();
+
             spinnerButtonOff(el);
         }
     });
+}
+
+const spinnerButtonOn = function (el, spinnerText = ' strpení prosím...', disable = true) {
+    el.attr('data-text-orig', el.html());
+    var spinner = '<span class="spinner-border spinner-border-sm"></span>';
+    el.html(spinner + spinnerText);
+    if (disable) {
+        el.attr('disabled', 'disabled');
+}
+};
+
+const spinnerButtonOff = function (el) {
+    el.html(el.attr('data-text-orig'));
+    el.removeAttr('disabled');
+    el.removeAttr('data-text-orig');
 };
 
 
@@ -42,7 +71,7 @@ const smazOdecet = function (el) {
 $(document).ready(function () {
     $('.smazatOdecet').on('click', function (e) {
         e.preventDefault();
-        smazOdecet(this);
+        smazOdecet($(this));
     });
 
 });

@@ -7,6 +7,19 @@ header("Pragma: no-cache");
 
 require_once 'autoload.php';
 $oUser = new user();
-$oMeridlo = new zapisMeridlo($oUser->aUser);
-$oMeridlo->smazMeridlo();
+$oOdecet = new zapisOdecet($oUser->aUser);
+$response = $oOdecet->smazOdecet();
+if ($response) :
+    $response = [
+        'status' => 'success',
+        'message' => __('Záznam byl úspěšně smazán.'),
+    ];
+else :
+    $response = [
+        'status' => 'error',
+        'message' => __('Záznam se nepodařilo smazat.'),
+        'errors' => $oOdecet->errors,
+    ];
+endif;
+die(json_encode($response));
 ?>

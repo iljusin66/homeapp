@@ -51,7 +51,7 @@ class zapisOdecet extends odecet {
         $this->aOdecet["odecet"] = request::float('odecet', 'POST');
         $this->aOdecet["poznamka"] = request::string('poznamka', 'POST');
         if (!$this->validujOdecet()) {
-            debug($this->errors);
+            debug(['ulozOdecet()->validujOdecet(): ' => $this->errors]);
             return;
         }
         if ($this->aOdecet["id"] == 0) :
@@ -83,10 +83,29 @@ class zapisOdecet extends odecet {
         exit;
     }
 
-    private function smazOdecet() {
-        $this->aOdecet["id"] = request::int('ido', 'POST');
-        $q = "DELETE FROM odecet_meridla WHERE id = ?";
-        db::q($q, $this->aOdecet["id"]);
+    public function smazOdecet() {
+        $ido = request::int('ido', 'GET');
+        $idz = request::int('idz', 'GET');
+        $this->errors[] = $ido . ' / ' . $idz;
+        if ($ido == 0 || $idz == 0) :
+            $this->errors[] = "Chyba při mazání odpočtu! Chybí ID!";
+            return false;
+        endif;
+
+        $q = "DELETE FROM odecet_meridla WHERE id = ? AND idmeridla = ?";
+        $this->errors[] = $q;
+        try {
+            db::q($q, $ido, $idz);
+            if (db::nr() == 0) :
+                $this->errors[] = "Chyba při mazání odpočtu! Existuje záznam s tímto ID?";
+                return false;
+            endif;
+            $this->errors[] = "Odpočet byl úspěšně smazán.";
+            return true;
+        } catch (Exception $e) {
+            $this->errors[] = "Chyba db při mazání odpočtu!";
+            return false;
+        }
     }
     
     private function validujOdecet() {
