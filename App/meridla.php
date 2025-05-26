@@ -47,7 +47,7 @@ class meridla {
         if ($this->aMeridla["id"] == 0) :
             return;
         endif;
-        $q = "SELECT * FROM meridla WHERE id = ? AND aktivni >= ?";
+        $q = "SELECT m.*, mj.jednotka FROM meridla AS m JOIN cis_merne_jednotky AS mj ON m.idjednotky = mj.id WHERE m.id = ? AND aktivni >= ?";
         $this->aMeridla = db::f($q, $this->aMeridla["id"], $this->jenAktivniMeridla);
         if (empty($this->aMeridla)) :
             $this->aMeridla = [];
