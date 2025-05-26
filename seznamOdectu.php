@@ -45,9 +45,9 @@ $oOdecet->nactiSeznamOdectu();
                                 <div class="card">
                                     <div class="card-body">
                                         <h6 class="card-title"><?= __('Průměrná denní spotřeba') ?></h6>
-                                        <p class="card-text"><?= round($oOdecet->prumernaSpotreba["den"], 3) ?> <?= $oOdecet->aMeridla["jednotka"] ?></p> 
+                                        <p class="card-text"><?= round($oOdecet->prumernaSpotrebaDen, 3) ?> <?= $oOdecet->aMeridla["jednotka"] ?></p> 
                                         <h6><?= __('Průměrná hodinová spotřeba') ?></h6>
-                                        <p class="card-text"><?= round($oOdecet->prumernaSpotreba["hod"], 3) ?> <?= $oOdecet->aMeridla["jednotka"] ?></p> 
+                                        <p class="card-text"><?= round($oOdecet->prumernaSpotrebaHodina, 3) ?> <?= $oOdecet->aMeridla["jednotka"] ?></p> 
                                     </div>
                                 </div>
                             </div>
@@ -65,8 +65,8 @@ $oOdecet->nactiSeznamOdectu();
                                             </div>
                                             <div class="card-text mb-1">
                                             <?= __('Odečet') ?>: <?= round(utils::fixFloat($aOdecet["odecet"]), 3) ?> <?= $aOdecet["jednotka"] ?><br>
-                                            <?= __('Prům. denní spotřeba') ?>: <?= round($aOdecet["spotrebaDen"], 3) ?> <?= $aOdecet["jednotka"] ?><br>
-                                            <?= __('Prům. hodinová spotřeba') ?> : <?= round($aOdecet["spotrebaHod"], 3) ?> <?= $aOdecet["jednotka"] ?><br>
+                                            <?= __('Prům. denní spotřeba') ?>: <?= round($aOdecet["prumernaSpotrebaDen"], 3) ?> <?= $aOdecet["jednotka"] ?><br>
+                                            <?= __('Prům. hodinová spotřeba') ?> : <?= round($aOdecet["prumernaSpotrebaHodina"], 3) ?> <?= $aOdecet["jednotka"] ?><br>
                                             </div>
                                             <?php
                                             //Jen group writer muze zapisovat

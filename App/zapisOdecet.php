@@ -42,7 +42,7 @@ class zapisOdecet extends odecet {
 
     private function nactiOdecetGet() {
         $this->aOdecet["id"] = request::int('ido', 'GET');
-        $q = "SELECT * FROM odecet_meridla WHERE id = ? AND idmeridla = ?";
+        $q = "SELECT * FROM odecty WHERE id = ? AND idmeridla = ?";
         $this->aOdecet = db::f($q, $this->aOdecet["id"], $this->aMeridla["id"]);
     }
 
@@ -62,7 +62,7 @@ class zapisOdecet extends odecet {
     }
 
     private function zapisNovyOdecet() {
-            $q = "INSERT INTO odecet_meridla (idmeridla, casodectu, odecet, poznamka, zadal) VALUES (?, ?, ?, ?, ?)";
+            $q = "INSERT INTO odecty (idmeridla, casodectu, odecet, poznamka, zadal) VALUES (?, ?, ?, ?, ?)";
             db::q($q, $this->aMeridla["id"], utils::formatDbDateTime($this->aOdecet["casodectu"]), $this->aOdecet["odecet"], $this->aOdecet["poznamka"], $this->aUser["id"]);
         
             $this->aOdecet["id"] = db::ii();
@@ -76,7 +76,7 @@ class zapisOdecet extends odecet {
 
     private function opravOdecet() {
         
-        $q = "UPDATE odecet_meridla SET casodectu = ?, odecet = ?, poznamka = ?, opravil = ? WHERE id = ? AND idmeridla = ?";
+        $q = "UPDATE odecty SET casodectu = ?, odecet = ?, poznamka = ?, opravil = ? WHERE id = ? AND idmeridla = ?";
         db::q($q, utils::formatDbDateTime($this->aOdecet["casodectu"]), $this->aOdecet["odecet"], $this->aOdecet["poznamka"], $this->aUser["id"], $this->aOdecet["id"], $this->aMeridla["id"]);
         //debug([$q, utils::formatDbDateTime($this->aOdecet["casodectu"]), $this->aOdecet["odecet"], $this->aOdecet["poznamka"], $this->aOdecet["id"], $this->aMeridla["id"], $this->aUser["id"]]);
         header("Location: " . c_MainUrl . "zapisOdecet.php?u=1&ido=" . $this->aOdecet["id"] . "&idz=" . $this->aMeridla["id"]."&status=success");
@@ -92,7 +92,7 @@ class zapisOdecet extends odecet {
             return false;
         endif;
 
-        $q = "DELETE FROM odecet_meridla WHERE id = ? AND idmeridla = ?";
+        $q = "DELETE FROM odecty WHERE id = ? AND idmeridla = ?";
         $this->errors[] = $q;
         try {
             db::q($q, $ido, $idz);

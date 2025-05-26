@@ -44,8 +44,8 @@ CREATE TABLE `langstrings` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_czech_ci;
 
 
-DROP TABLE IF EXISTS `odecet_meridla`;
-CREATE TABLE `odecet_meridla` (
+DROP TABLE IF EXISTS `odecty`;
+CREATE TABLE `odecty` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `idmeridla` int(11) NOT NULL,
   `odecet` float(12,6) NOT NULL,
@@ -57,12 +57,12 @@ CREATE TABLE `odecet_meridla` (
   KEY `zadal` (`zadal`),
   KEY `idmeridla` (`idmeridla`),
   KEY `opravil` (`opravil`),
-  CONSTRAINT `odecet_meridla_ibfk_2` FOREIGN KEY (`zadal`) REFERENCES `users` (`id`) ON DELETE SET NULL,
-  CONSTRAINT `odecet_meridla_ibfk_3` FOREIGN KEY (`idmeridla`) REFERENCES `meridla` (`id`),
-  CONSTRAINT `odecet_meridla_ibfk_4` FOREIGN KEY (`opravil`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+  CONSTRAINT `odecty_ibfk_2` FOREIGN KEY (`zadal`) REFERENCES `users` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `odecty_ibfk_3` FOREIGN KEY (`idmeridla`) REFERENCES `meridla` (`id`),
+  CONSTRAINT `odecty_ibfk_4` FOREIGN KEY (`opravil`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_czech_ci;
 
-INSERT INTO `odecet_meridla` (`id`, `idmeridla`, `odecet`, `casodectu`, `poznamka`, `zadal`, `opravil`) VALUES
+INSERT INTO `odecty` (`id`, `idmeridla`, `odecet`, `casodectu`, `poznamka`, `zadal`, `opravil`) VALUES
 (1,	1,	487.540009,	'2025-05-06 19:30:00',	'Hokus pokus',	1,	1);
 
 DROP TABLE IF EXISTS `role`;
