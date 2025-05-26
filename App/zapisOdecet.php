@@ -47,7 +47,7 @@ class zapisOdecet extends odecet {
     }
 
     private function ulozOdecet() {
-        $this->aOdecet["casodpoctu"] = request::string('casodpoctu', 'POST');
+        $this->aOdecet["casodectu"] = request::string('casodectu', 'POST');
         $this->aOdecet["odecet"] = request::float('odecet', 'POST');
         $this->aOdecet["poznamka"] = request::string('poznamka', 'POST');
         if (!$this->validujOdecet()) {
@@ -62,8 +62,8 @@ class zapisOdecet extends odecet {
     }
 
     private function zapisNovyOdecet() {
-            $q = "INSERT INTO odecet_meridla (idmeridla, casodpoctu, odecet, poznamka, zadal) VALUES (?, ?, ?, ?, ?)";
-            db::q($q, $this->aMeridla["id"], utils::formatDbDateTime($this->aOdecet["casodpoctu"]), $this->aOdecet["odecet"], $this->aOdecet["poznamka"], $this->aUser["id"]);
+            $q = "INSERT INTO odecet_meridla (idmeridla, casodectu, odecet, poznamka, zadal) VALUES (?, ?, ?, ?, ?)";
+            db::q($q, $this->aMeridla["id"], utils::formatDbDateTime($this->aOdecet["casodectu"]), $this->aOdecet["odecet"], $this->aOdecet["poznamka"], $this->aUser["id"]);
         
             $this->aOdecet["id"] = db::ii();
             if ($this->aOdecet["id"] == 0) {
@@ -76,9 +76,9 @@ class zapisOdecet extends odecet {
 
     private function opravOdecet() {
         
-        $q = "UPDATE odecet_meridla SET casodpoctu = ?, odecet = ?, poznamka = ?, opravil = ? WHERE id = ? AND idmeridla = ?";
-        db::q($q, utils::formatDbDateTime($this->aOdecet["casodpoctu"]), $this->aOdecet["odecet"], $this->aOdecet["poznamka"], $this->aUser["id"], $this->aOdecet["id"], $this->aMeridla["id"]);
-        //debug([$q, utils::formatDbDateTime($this->aOdecet["casodpoctu"]), $this->aOdecet["odecet"], $this->aOdecet["poznamka"], $this->aOdecet["id"], $this->aMeridla["id"], $this->aUser["id"]]);
+        $q = "UPDATE odecet_meridla SET casodectu = ?, odecet = ?, poznamka = ?, opravil = ? WHERE id = ? AND idmeridla = ?";
+        db::q($q, utils::formatDbDateTime($this->aOdecet["casodectu"]), $this->aOdecet["odecet"], $this->aOdecet["poznamka"], $this->aUser["id"], $this->aOdecet["id"], $this->aMeridla["id"]);
+        //debug([$q, utils::formatDbDateTime($this->aOdecet["casodectu"]), $this->aOdecet["odecet"], $this->aOdecet["poznamka"], $this->aOdecet["id"], $this->aMeridla["id"], $this->aUser["id"]]);
         header("Location: " . c_MainUrl . "zapisOdecet.php?u=1&ido=" . $this->aOdecet["id"] . "&idz=" . $this->aMeridla["id"]."&status=success");
         exit;
     }
@@ -109,8 +109,8 @@ class zapisOdecet extends odecet {
     }
     
     private function validujOdecet() {
-        //debug([$this->aOdecet["casodpoctu"], utils::formatDbDateTime($this->aOdecet["casodpoctu"])]);
-        if (empty(utils::formatDbDateTime($this->aOdecet["casodpoctu"]))) {
+        //debug([$this->aOdecet["casodectu"], utils::formatDbDateTime($this->aOdecet["casodectu"])]);
+        if (empty(utils::formatDbDateTime($this->aOdecet["casodectu"]))) {
             $this->errors[] = "Neplatný datum a čas odpočtu!";
             return false;
         }

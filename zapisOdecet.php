@@ -59,8 +59,8 @@ $oOdecet = new zapisOdecet($oUser->aUser);
                                         <!-- Druhé pole -->
                                         <div class="me-3 mb-2" style="max-width: 400px; width: 100%;">
                                             <div class="d-flex flex-column flex-sm-row align-items-sm-center">
-                                            <label for="casodpoctu" class="me-sm-2 mb-1 mb-sm-0" style="width: 100px; flex-shrink: 0;"><?= __('Datum a čas') ?></label>
-                                            <input type="datetime-local" class="form-control" id="casodpoctu" value="<?= utils::safeForm($oOdecet->aOdecet["casodpoctu"]) ?>" name="casodpoctu" required>
+                                            <label for="casodectu" class="me-sm-2 mb-1 mb-sm-0" style="width: 100px; flex-shrink: 0;"><?= __('Datum a čas') ?></label>
+                                            <input type="datetime-local" class="form-control" id="casodectu" value="<?= utils::safeForm($oOdecet->aOdecet["casodectu"]) ?>" name="casodectu" required>
                                             </div>
                                         </div>
                                     </div>

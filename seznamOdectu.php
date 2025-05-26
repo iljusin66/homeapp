@@ -57,7 +57,7 @@ $oOdecet->nactiSeznamOdectu();
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
                                     <div class="card">
                                         <div class="card-body">
-                                            <h6 class="card-title"><?= utils::getLocaleDateTime($aOdecet["casodpoctu"]) ?></h6>
+                                            <h6 class="card-title"><?= utils::getLocaleDateTime($aOdecet["casodectu"]) ?></h6>
                                             <div class="card-text mb-1">
                                                 <?= __('Zadal') ?>: <?= $aOdecet["userZadal"] ?><br>
                                                 <?= __('Opravil') .": " . (($aOdecet["userOpravil"]=='') ? '---' : $aOdecet["userOpravil"]) ?><br>

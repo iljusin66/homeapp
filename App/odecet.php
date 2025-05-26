@@ -43,7 +43,7 @@ class odecet extends meridla{
             JOIN cis_merne_jednotky AS mj ON mj.id = z.idjednotky
             JOIN users AS ui ON ui.id = o.zadal
             LEFT JOIN users AS uu ON uu.id = o.opravil
-            ORDER BY o.casodpoctu ASC';
+            ORDER BY o.casodectu ASC';
             $rows = db::fa($q, [$this->aMeridla['id'], $this->aUser['id']]);
             foreach ($rows as $row) :
                 $this->aOdecty[] = $row;
@@ -62,10 +62,10 @@ class odecet extends meridla{
         $predchoziOdecet = 0;
         $prechoziHours = 0;
         foreach ($this->aOdecty as $key => $aOdecet) :
-            if (date('Y', strtotime($aOdecet['casodpoctu'])) != $rok) :
+            if (date('Y', strtotime($aOdecet['casodectu'])) != $rok) :
                 continue;
             endif; 
-            $unixHours = strtotime($aOdecet['casodpoctu']) / 3600;
+            $unixHours = strtotime($aOdecet['casodectu']) / 3600;
             $minHours = min($minHours, $unixHours);
             $maxHours = max($maxHours, $unixHours);
             $minOdecet = ($minOdecet==0) ? $aOdecet['odecet'] : min($minOdecet, $aOdecet['odecet']);
