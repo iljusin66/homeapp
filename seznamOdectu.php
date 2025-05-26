@@ -44,10 +44,12 @@ $oOdecet->nactiSeznamOdectu();
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h6 class="card-title"><?= __('Průměrná denní spotřeba') ?></h6>
-                                        <p class="card-text"><?= round($oOdecet->prumernaSpotrebaDen, 3) ?> <?= $oOdecet->aMeridla["jednotka"] ?></p> 
-                                        <h6><?= __('Průměrná hodinová spotřeba') ?></h6>
-                                        <p class="card-text"><?= round($oOdecet->prumernaSpotrebaHodina, 3) ?> <?= $oOdecet->aMeridla["jednotka"] ?></p> 
+                                        <p class="card-text">
+                                            <strong><?= __('Celková spotřeba') ?></strong>: <?= round($oOdecet->celkovaSpotreba, 3) ?> <?= $oOdecet->aMeridla["jednotka"] ?><br> 
+                                            <strong><?= __('Celkové náklady') ?></strong>: <?= round($oOdecet->celkoveNaklady, 3) ?> <?= c_Mena ?><br>
+                                            <strong><?= __('Průměrná denní spotřeba') ?></strong>: <?= round($oOdecet->prumernaSpotrebaDen, 3) ?> <?= $oOdecet->aMeridla["jednotka"] ?><br>
+                                            <strong><?= __('Průměrná hodinová spotřeba') ?></strong>: <?= round($oOdecet->prumernaSpotrebaHodina, 3) ?> <?= $oOdecet->aMeridla["jednotka"] ?>
+                                        </p> 
                                     </div>
                                 </div>
                             </div>
@@ -65,6 +67,8 @@ $oOdecet->nactiSeznamOdectu();
                                             </div>
                                             <div class="card-text mb-1">
                                             <?= __('Odečet') ?>: <?= round(utils::fixFloat($aOdecet["odecet"]), 3) ?> <?= $aOdecet["jednotka"] ?><br>
+                                            <?= __('Spotřeba') ?>: <?= round($aOdecet["spotreba"], 3) ?> <?= $aOdecet["jednotka"] ?><br>
+                                            <?= __('Náklady') ?>: <?= round($aOdecet["naklady"], 3) ?> <?= c_Mena ?><br>
                                             <?= __('Prům. denní spotřeba') ?>: <?= round($aOdecet["prumernaSpotrebaDen"], 3) ?> <?= $aOdecet["jednotka"] ?><br>
                                             <?= __('Prům. hodinová spotřeba') ?> : <?= round($aOdecet["prumernaSpotrebaHodina"], 3) ?> <?= $aOdecet["jednotka"] ?><br>
                                             </div>
