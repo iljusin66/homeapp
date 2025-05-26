@@ -13,18 +13,18 @@ const smazOdecet = function (el) {
     myModal.show();
     spinnerButtonOff(el);
     var ido = el.attr('data-ido');
-    var idz = el.attr('data-idz');
+    var idm = el.attr('data-idm');
     
     //Akce po potvrzení. Zavolám AJAX na smazání
     modalWindow.find('.confirm').off('click').on('click', function() {
-        smazOdecetAjax(ido, idz, el);
+        smazOdecetAjax(ido, idm, el);
     });
 
 };
 
-const smazOdecetAjax = function (ido, idz, el) {
+const smazOdecetAjax = function (ido, idm, el) {
     $.ajax({
-        url: _hostname + 'ajaxSmazOdecet.php?ido=' + ido + '&idz=' + idz
+        url: _hostname + 'ajaxSmazOdecet.php?ido=' + ido + '&idm=' + idm
         , type: 'GET'
         , dataType: "json"
         , error: function (jqXHR, textStatus, errorThrown) {

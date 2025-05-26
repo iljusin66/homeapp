@@ -70,7 +70,7 @@ class zapisOdecet extends odecet {
                 $this->errors[] = "Chyba při ukládání odpočtu!";
                 return false;
             }
-            header("Location: " . c_MainUrl . "zapisOdecet.php?i=&ido=" . $this->aOdecet["id"] . "&idz=" . $this->aMeridla["id"]."&status=success");
+            header("Location: " . c_MainUrl . "zapisOdecet.php?i=&ido=" . $this->aOdecet["id"] . "&idm=" . $this->aMeridla["id"]."&status=success");
             exit;        
     }
 
@@ -79,15 +79,15 @@ class zapisOdecet extends odecet {
         $q = "UPDATE odecty SET casodectu = ?, odecet = ?, poznamka = ?, opravil = ? WHERE id = ? AND idmeridla = ?";
         db::q($q, utils::formatDbDateTime($this->aOdecet["casodectu"]), $this->aOdecet["odecet"], $this->aOdecet["poznamka"], $this->aUser["id"], $this->aOdecet["id"], $this->aMeridla["id"]);
         //debug([$q, utils::formatDbDateTime($this->aOdecet["casodectu"]), $this->aOdecet["odecet"], $this->aOdecet["poznamka"], $this->aOdecet["id"], $this->aMeridla["id"], $this->aUser["id"]]);
-        header("Location: " . c_MainUrl . "zapisOdecet.php?u=1&ido=" . $this->aOdecet["id"] . "&idz=" . $this->aMeridla["id"]."&status=success");
+        header("Location: " . c_MainUrl . "zapisOdecet.php?u=1&ido=" . $this->aOdecet["id"] . "&idm=" . $this->aMeridla["id"]."&status=success");
         exit;
     }
 
     public function smazOdecet() {
         $ido = request::int('ido', 'GET');
-        $idz = request::int('idz', 'GET');
-        $this->errors[] = $ido . ' / ' . $idz;
-        if ($ido == 0 || $idz == 0) :
+        $idm = request::int('idm', 'GET');
+        $this->errors[] = $ido . ' / ' . $idm;
+        if ($ido == 0 || $idm == 0) :
             $this->errors[] = "Chyba při mazání odpočtu! Chybí ID!";
             return false;
         endif;
@@ -95,7 +95,7 @@ class zapisOdecet extends odecet {
         $q = "DELETE FROM odecty WHERE id = ? AND idmeridla = ?";
         $this->errors[] = $q;
         try {
-            db::q($q, $ido, $idz);
+            db::q($q, $ido, $idm);
             if (db::nr() == 0) :
                 $this->errors[] = "Chyba při mazání odpočtu! Existuje záznam s tímto ID?";
                 return false;

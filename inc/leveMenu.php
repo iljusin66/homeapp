@@ -2,17 +2,17 @@
 $menuMeridlaItems = [
     [
         'script' => 'zapisOdecet',
-        'url' => c_MainUrl . 'zapisOdecet.php?idz=' . $oOdecet->aMeridla["id"] . '&t=' . time(),
+        'url' => c_MainUrl . 'zapisOdecet.php?idm=' . $oOdecet->aMeridla["id"] . '&t=' . time(),
         'label' => __('Nový odečet')
     ],
     [
         'script' => 'seznamOdectu',
-        'url' => c_MainUrl . 'seznamOdectu.php?idz=' . $oOdecet->aMeridla["id"] . '&t=' . time(),
+        'url' => c_MainUrl . 'seznamOdectu.php?idm=' . $oOdecet->aMeridla["id"] . '&t=' . time(),
         'label' => __('Zadané odečty')
     ],
     [
         'script' => 'zapisMeridlo',
-        'url' => c_MainUrl . 'zapisMeridlo.php?idz=' . $oOdecet->aMeridla["id"] . '&t=' . time(),
+        'url' => c_MainUrl . 'zapisMeridlo.php?idm=' . $oOdecet->aMeridla["id"] . '&t=' . time(),
         'label' => __('Nastavení')
     ],
 

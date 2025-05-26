@@ -42,7 +42,7 @@ $oOdecet = new zapisOdecet($oUser->aUser);
                     <div class="col" style="min-height: 85vh">
                         <div id="dataContainer" class="row">
                             <form class="p-1 pt-0 me-1 col-l-10 col-12" id="frmOdecetEdit" action="<?= c_ScriptBaseName ?>.php" method="POST">
-                                <input type="hidden" name="idz" value="<?= utils::fixFloat($oOdecet->aMeridla['id']) ?>">
+                                <input type="hidden" name="idm" value="<?= utils::fixFloat($oOdecet->aMeridla['id']) ?>">
                                 <input type="hidden" name="ido" value="<?= utils::fixFloat($oOdecet->aOdecet['id']) ?>">
                                 <fieldset class="row">
                                     <legend class="form-label"><?= ($oOdecet->aOdecet["id"]==0) ? __('Vložit odečet') : __('Oprava odečtu') ?></legend>

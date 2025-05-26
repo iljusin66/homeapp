@@ -47,9 +47,9 @@ $oMeridla->nactiSeznamMeridelUzivatele();
                     ?>
                         <div class="tile col-12 col-sm-2">
                             <h2 class="mb-1"><?= $aMeridlo["nazev"] ?></h2>
-                            <div class="text-center"><a href="<?= c_MainUrl; ?>zapisOdecet.php?idz=<?= $aMeridlo["id"] ?>&<?= time() ?>" class="btn btn-primary my-2 col-12"><i class="bi-plus-circle me-1"></i> <?= __('Nový odečet') ?></a></div>
-                            <div class="text-center"><a href="<?= c_MainUrl; ?>seznamOdectu.php?idz=<?= $aMeridlo["id"] ?>&<?= time() ?>" class="btn btn-primary my-2 col-12"><i class="bi-list-ul me-1"></i> <?= __('Zadané odečty') ?></a></div>
-                            <div class="text-center"><a href="<?= c_MainUrl; ?>nastaveniMeridla.php?idz=<?= $aMeridlo["id"] ?>&<?= time() ?>" class="btn btn-primary my-2 col-12"><i class="bi-gear me-1"></i> <?= __('Nastavení') ?></a></div>
+                            <div class="text-center"><a href="<?= c_MainUrl; ?>zapisOdecet.php?idm=<?= $aMeridlo["id"] ?>&<?= time() ?>" class="btn btn-primary my-2 col-12"><i class="bi-plus-circle me-1"></i> <?= __('Nový odečet') ?></a></div>
+                            <div class="text-center"><a href="<?= c_MainUrl; ?>seznamOdectu.php?idm=<?= $aMeridlo["id"] ?>&<?= time() ?>" class="btn btn-primary my-2 col-12"><i class="bi-list-ul me-1"></i> <?= __('Zadané odečty') ?></a></div>
+                            <div class="text-center"><a href="<?= c_MainUrl; ?>nastaveniMeridla.php?idm=<?= $aMeridlo["id"] ?>&<?= time() ?>" class="btn btn-primary my-2 col-12"><i class="bi-gear me-1"></i> <?= __('Nastavení') ?></a></div>
                         </div>
                     <?php endforeach;
                     endif;

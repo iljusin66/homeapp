@@ -33,7 +33,6 @@ class odecet extends meridla{
             self::$initialized = true;
         }
         
-        
     }
 
     private function nactiOdecty() {
