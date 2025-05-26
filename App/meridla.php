@@ -62,7 +62,7 @@ class meridla {
             JOIN cis_merne_jednotky AS mj ON mj.id = m.idjednotky
             JOIN role AS r ON r.id = mu.idrole
             WHERE mu.iduser = ? ORDER BY id";
-        $rows = db::fa($q, $this->jenAktivniUzivatele, $this->$this->aUser["id"]);
+        $rows = db::fa($q, $this->jenAktivniUzivatele, $this->aUser["id"]);
         
         foreach ($rows as $row) :
             $this->aMeridla[$row["id"]] = $row;

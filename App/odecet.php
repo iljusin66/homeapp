@@ -35,13 +35,13 @@ class odecet extends meridla{
         
     }
 
-    private function nactiOdecty() {
+    private function nactiOdectyRok() {
         $q = 'SELECT * FROM v_spotrebascenami AS s
             JOIN meridla2users AS mu ON mu.idmeridla = s.idmeridla AND mu.iduser = ?
             JOIN role AS r ON r.id = mu.idrole
-            WHERE s.idmeridla = ?
+            WHERE s.idmeridla = ? AND YEAR(s.casodectu) = ? 
             ORDER BY s.casodectu DESC';
-            $rows = db::fa($q, [$this->aUser['id'], $this->aMeridla['id']]);
+            $rows = db::fa($q, [$this->aUser['id'], $this->aMeridla['id'], $this->rokOdectu]);
             foreach ($rows as $row) :
                 $this->aOdecty[] = $row;
             endforeach;
@@ -64,7 +64,7 @@ class odecet extends meridla{
     }
 
     public function nactiSeznamOdectu() {
-        $this->nactiOdecty();
+        $this->nactiOdectyRok();
         if (empty($this->aOdecty)) return false;
         return $this->aOdecty;
     }
