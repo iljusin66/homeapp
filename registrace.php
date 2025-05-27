@@ -21,8 +21,8 @@ $oUser = new user();
               <input type="hidden" name="action" value="registrace">
                 <div class="m-3">
                   <label for="login" class="form-label"><?= __('Zadejte přihlašovací jméno') ?>:</label>
-                  <input type="text" id="login" class="form-control" name="login" value="<?= $oUser->aUser["login"] ?>" required pattern="^[a-zA-Z0-9]{5,}$">
-                  <small class="form-text text-muted ps-2"><?= __('Minimálně 5 znaků') ?></small>
+                  <input type="text" id="login" class="form-control" name="login" value="<?= $oUser->aUser["login"] ?>" required pattern="^[a-zA-Z0-9]{4,}$">
+                  <small class="form-text text-muted ps-2"><?= __('Minimálně 4 znaky') ?></small>
                   <div class="invalid-feedback mt-3 ps-2" style="display:block;"> <?= implode(', ', (array)$oUser->aErr['login']) ?> </div>
                 </div>
                 <div class="m-3">
