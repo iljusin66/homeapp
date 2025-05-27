@@ -25,10 +25,16 @@ class user {
         $this->cookieTime = time() + (60*60*6); //6 hodin
         if (request::string('action', 'POST')=='login') :
             $this->login();
+        elseif (c_ScriptBaseName=='registrace') :
+            $this->registrace();
         elseif($bCheckLogin):
             $this->checkLogin();
         endif;
         
+    }
+
+    private function registrace() {
+
     }
     
     private function login() {

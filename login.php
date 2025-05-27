@@ -17,7 +17,7 @@ $oUser = new user();
   </head>
     <body>
         <div class="row text-center mt-5">
-        <form method="post" action="login.php" id="frmLogin" class="col-8 col-sm-3 m-auto text-start" style="background-color: bisque;">
+        <form method="post" action="login.php" id="frmLogin" class="col-8 col-sm-3 m-auto text-start">
             <input type="hidden" name="action" value="login">
             <div class="m-3">
                 <label for="login" class="form-label"><?= __('Přihlašovací jméno') ?>:</label>
@@ -31,6 +31,9 @@ $oUser = new user();
               
               <button type="submit" class="btn btn-primary m-3"><?= __('Přihlásit') ?></button>
         </form>
+        <div class="mt-3">
+          <a href="/registrace.php"><?= __('Nemáte ještě účet? Zaregistrujte se.') ?></a>
+        </div>
         </div>
     </body>
 </html>
