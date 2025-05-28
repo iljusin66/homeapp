@@ -8,6 +8,7 @@ define('c_ScriptBaseName', $scriptBaseName);
 define('c_MainUrl', (stripos($_SERVER['REQUEST_SCHEME'],'https') === 0 ? 'https://' : 'http://'). $_SERVER["SERVER_NAME"] . c_SubfolderURL);
 define('c_bWork', ($_SERVER["SERVER_NAME"]=='homeapp'));
 define('c_Mena', 'Kč');
+define('c_AppName', 'Blinkr'); //Jmeno aplikace
 
 define('c_DefaultLang', 'cs');
 define('c_bNoTranslate', true); //Pokud je true, tak se preklady neprovadi, ale jen se presmerovavaji retezce na output a sanitizeHTMLm funkce

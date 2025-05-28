@@ -10,7 +10,7 @@ $oUser = new user();
     <link href="<?= c_MainUrl; ?>Bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- https://icons.getbootstrap.com/ -->
     <link href="<?= c_MainUrl; ?>Bootstrap/css/icons/bootstrap-icons.css" rel="stylesheet">
-    <title><?= __('Registrace do aplikace Home') ?></title>
+    <title><?= c_AppName . ' / ' .__('Registrace do aplikace') ?></title>
     <script src="<?= c_MainUrl; ?>inc/jquery-3.6.4.min.js"></script>
     <script src="<?= c_MainUrl; ?>Bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="<?= c_MainUrl; ?>inc/home.js?ch=<?= md5_file('inc/home.js') ?>"></script>
@@ -18,11 +18,15 @@ $oUser = new user();
   </head>
     <body>
         <div class="row text-center mt-5">
+          <div class="col-8 col-sm-3 m-auto text-start">
+            <p class="lead"><?= __('Vytvořte si účet v aplikaci') . ' ' . c_AppName ?></p>
+          </div>
+          <div class="clearfix"></div>
           <form method="post" action="registrace.php" id="frmLogin" class="col-8 col-sm-3 m-auto text-start">
               <input type="hidden" name="action" value="registrace">
                 <div class="m-3">
                   <label for="login" class="form-label"><?= __('Zadejte přihlašovací jméno') ?>:</label>
-                  <input type="text" id="login" class="form-control" name="login" value="<?= $oUser->aUser["login"] ?>" data-required data-pattern="^[a-zA-Z0-9]{4,}$" title="<?= __('Přihlašovací jméno musí mít alespoň 4 znaky: běžná písmena nebo čísla') ?>">
+                  <input type="text" id="login" class="form-control" name="login" value="<?= $oUser->aUser["login"] ?>" data-required data-pattern="^[a-zA-Z0-9_\.-]{4,}$" title="<?= __('Přihlašovací jméno musí mít alespoň 4 znaky: běžná písmena nebo čísla') ?>">
                   <small class="form-text text-muted ps-2"><?= __('Minimálně 4 znaky') ?></small>
                   <div class="invalid-feedback mt-3 ps-2" style="display:block;"> <?= implode(', ', (array)$oUser->aErr['login']) ?> </div>
                 </div>

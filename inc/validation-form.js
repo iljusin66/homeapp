@@ -29,20 +29,26 @@ class FormValidace {
     validace(event, form) {
         event.preventDefault();
         console.log('Spouštím validaci formuláře');
-        this.validaceDataPattern(form);
-        this.validaceRequired(form);
+        this.validaceDataPatternForm(form);
+        this.validaceRequiredForm(form);
     }
 
-    validaceRequired(form) {
+    validaceRequiredForm(form) {
         // Projdu všechny vstupy s atributem required v rámci daného formuláře
         $('input[data-required]', form).each((index, element) => {
-            const chyba = $(element).attr('title') || 'Toto pole je povinné.';
-            console.log('Validace pro: ' + element.name);
-            if (element.value.trim() === '') {
-                console.error(element.name, chyba);
-                $(element).addClass('is-invalid');
-            }
+            this.validateRequiredElement(element);
         });
+    }
+
+    validateRequiredElement(element) {
+        console.log('Validuji povinný prvek: ' + element.name);
+        let chyba = $(element).attr('title') || 'Toto pole je povinné.';
+        if (element.value.trim() === '') {
+            console.error(element.name, chyba);
+            $(element).addClass('is-invalid');
+        }else{
+            $(element).addClass('is-valid');
+        }
     }
 
     validaceMinLength(length, minLength) {
@@ -50,49 +56,60 @@ class FormValidace {
         return (length >= minLength);
     }
 
-    validaceDataPattern(form) {
+    validaceDataPatternForm(form) {
         console.log('Spouštím validaci data-pattern');
 
         $('input[data-pattern]', form).each((index, element) => {
-            const chyba = $(element).attr('title') || 'Neplatný formát.';
-            const dataPattern = $(element).data('pattern');
-            let pattern = null;
-
-            if (element.value.trim() === '') {
-                return; // přeskočíme prázdné hodnoty
-            }
-
-            // Validace e-mailu
-            if (dataPattern === 'email') {
-                pattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
-
-            // Validace opakovaného hesla
-            } else if (dataPattern === 'password2') {
-                if (!this.validaceShodnychHesel()) {
-                    console.error(element.name, chyba);
-                    $(element).addClass('is-invalid');
-                }
-
-            // Validace délky (např. data-pattern="8")
-            } else if (!isNaN(dataPattern)) {
-                if (!this.validaceMinLength(element.value.length, parseInt(dataPattern))) {
-                    console.error(element.name, chyba);
-                    $(element).addClass('is-invalid');
-                }
-
-            } else {
-                pattern = dataPattern; // Použiji hodnotu z atributu jako regex pattern
-            }
-
-            if (pattern) {
-                console.log('Používám vzor: ' + pattern + ' pro validaci: ' + element.name);
-                const value = $(element).val();
-                if (!this.validaceRegExp(value, pattern)) {
-                    console.error(element.name, chyba);
-                    $(element).addClass('is-invalid');
-                }
-            }
+            this.validaceDataPatternElement(element);
         });
+    }
+
+    validaceDataPatternElement(element) {
+        console.log('Spouštím validaci data-pattern pro element: ' + element.name);
+        let chyba = $(element).attr('title') || 'Neplatný formát.';
+        let dataPattern = $(element).data('pattern');
+        let pattern = null;
+
+        if (element.value.trim() === '') {
+            return; // přeskočíme prázdné hodnoty
+        }
+
+        // Validace e-mailu
+        if (dataPattern === 'email') {
+            pattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+
+        // Validace opakovaného hesla
+        } else if (dataPattern === 'password2') {
+            if (!this.validaceShodnychHesel()) {
+                console.error(element.name, chyba);
+                $(element).addClass('is-invalid');
+            }else{
+                $(element).addClass('is-valid');
+            }
+
+        // Validace délky (např. data-pattern="8")
+        } else if (!isNaN(dataPattern)) {
+            if (!this.validaceMinLength(element.value.length, parseInt(dataPattern))) {
+                console.error(element.name, chyba);
+                $(element).addClass('is-invalid');
+            }else{
+                $(element).addClass('is-valid');
+            }
+
+        } else {
+            pattern = dataPattern; // Použiji hodnotu z atributu jako regex pattern
+        }
+
+        if (pattern) {
+            console.log('Používám vzor: ' + pattern + ' pro validaci: ' + element.name);
+            const value = $(element).val();
+            if (!this.validaceRegExp(value, pattern)) {
+                console.error(element.name, chyba);
+                $(element).addClass('is-invalid');
+            }else{
+                $(element).addClass('is-valid');
+            }
+        }
     }
 
     validaceRegExp(value, pattern) {
