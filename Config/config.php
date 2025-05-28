@@ -14,6 +14,9 @@ define('c_bNoTranslate', true); //Pokud je true, tak se preklady neprovadi, ale 
 define('c_RequestPost', $_SERVER['REQUEST_METHOD'] == 'POST');
 define('c_RequestGet', $_SERVER['REQUEST_METHOD'] == 'GET');
 
+//Maximalni pololeny pocet pokusu o prihlaseni, nez dojde k blokaci
+define('c_MaxLoginPokusu', 10);
+
 /*
  * Role
  * <p>Definuje role uzivatelu a jejich prava</p>
@@ -51,9 +54,27 @@ define('ca_RoleGroup', [
     'admin' => [ca_Role['admin']] //Smi vsechno
 ]);
 
+//Unikatni razitko prohlizece. Pouzije se pro identifikaci uzivatele a jeho prohlizece
+//Prohlizec je identifikovan podle IP adresy, User-Agent, Accept-Language, Accept-Encoding, HTTP_VIA a X-Forwarded-For
+$browserUID = md5(
+    ($_SERVER['REMOTE_ADDR'] ?? '') . '|' .
+    ($_SERVER['HTTP_USER_AGENT'] ?? '') . '|' .
+    ($_SERVER['HTTP_ACCEPT_LANGUAGE'] ?? '') . '|' .
+    ($_SERVER['HTTP_ACCEPT_ENCODING'] ?? '') . '|' .
+    ($_SERVER['HTTP_VIA'] ?? '') . '|' .
+    ($_SERVER['HTTP_X_FORWARDED_FOR'] ?? '')
+);
+define('c_BrowserUID', $browserUID);
+
+// IP adresa uzivatele. Pouzije se pro identifikaci uzivatele
+$userIP = $_SERVER['REMOTE_ADDR'] ?? $_SERVER['HTTP_VIA'] ?? $_SERVER['HTTP_X_FORWARDED_FOR'] ?? '';
+define('c_UserIP', $userIP);
+
 /**
- * Main Class
  * Config
+ * <p>Hlavni konfiguracni trida aplikace</p>
+ * <p>Obsahuje nastaveni pro pripojeni k databazi, jazyk, slozku pro maily a dalsi konfiguracni hodnoty</p>
+ * @package Config
  * @author ivan la.
  */
 class config{

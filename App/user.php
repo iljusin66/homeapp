@@ -34,10 +34,93 @@ class user {
     }
 
     private function registrace() {
+        $this->aUser["login"] = request::string('login', 'POST');
+        $heslo = request::string('password', 'POST');
+        $heslo2 = request::string('password2', 'POST');
+        $email = request::string('email', 'POST');
+        
+        if ($this->aUser["login"] == '' || $heslo == '' || $heslo2 == '' || $email == '') : 
+            $this->setErrorLogin(1); return; 
+        endif;
+        
+        if ($heslo != $heslo2) : 
+            $this->setErrorLogin(3); return; 
+        endif;
+        
+        if (db::f("SELECT id FROM users WHERE login = ?", $this->aUser["login"]) > 0) :
+            $this->setErrorLogin(4); return; 
+        endif;
+        
+        //Registrace uzivatele
+        db::q("INSERT INTO users (login, heslo, email) VALUES (?, ?, ?)", [
+            $this->aUser["login"], utils::getHashHeslo($heslo, self::SaltMd5), $email
+        ]);
+        
+        //Nacteni noveho uzivatele
+        $this->aUser["id"] = db::ii();
+        if ($this->aUser["id"]==0) : $this->setErrorLogin(2); return; endif;
+        
+        utils::setCookie('username', $this->aUser["login"], $this->cookieTime);
+        utils::setCookie('iduser', $this->aUser["id"], $this->cookieTime);
+        utils::setCookie('hash', utils::getHash([$this->aUser["login"], $this->aUser["id"]], self::SaltMd5), $this->cookieTime);
+        
+        header('Location: /?e=regOk');
+        die();
+    }
+    
+    private function jeLoginBlokovan(): bool {
+        $casTed = time();
 
+        //Defaultni doba blokace ja na minutu
+        //Pouzije se i pro pokusy, ktere jeste uzivatele neblokuji, ale hodnota
+        //se pro neblokovane uzivatele nevyhodnocuje. slouzi k promazani db pri jakemkoli volani teto funkce (viz Smazat staré záznamy)
+        $blokaceDoDB = date('Y-m-d H:i:s', strtotime('+1 minute'));
+
+        // Smazat staré záznamy
+        $q = "DELETE FROM login_pokusy WHERE blokacedo < ?";
+        db::q($q, date('Y-m-d H:i:s', $casTed));
+
+        // Načíst záznam pro dané UID
+        $q = "SELECT pocet, blokacedo FROM login_pokusy WHERE `uid` = ?";
+        $row = db::f($q, c_BrowserUID);
+
+        $pocet = 0;
+        $jeBlokovan = false;
+
+        if ($row) {
+            $pocet = (int)$row['pocet'];
+            $blokaceDoUnix = strtotime($row['blokacedo']);
+            if ($blokaceDoUnix > $casTed) {
+                $jeBlokovan = true;
+            }
+        }
+
+
+
+
+        // Nastavení nové blokace dle počtu pokusů
+        if ($pocet >= (c_MaxLoginPokusu * 5)) {
+            $blokaceDoDB = date('Y-m-d H:i:s', strtotime('+1 day'));
+            return true; //Pri petinasobku povolenych pokusu o prihlaseni je blokace na den a nedelam update db
+        } elseif ($pocet >= c_MaxLoginPokusu) {    
+            $jeBlokovan = true;
+        }
+
+        // Zápis nebo update pokusu
+        $q = "INSERT INTO login_pokusy (`uid`, ip, pocet, blokacedo) 
+            VALUES (?, ?, 1, ?) 
+            ON DUPLICATE KEY UPDATE pocet = pocet + 1, blokacedo = ?";
+        db::q($q, c_BrowserUID, c_UserIP, $blokaceDoDB, $blokaceDoDB);
+
+        return $jeBlokovan;
     }
     
     private function login() {
+        //Kontrola bruteforce pokusu o prihlaseni
+        if ($this->jeLoginBlokovan()) :
+            $this->setErrorLogin(3); return;
+        endif;
+
         $this->aUser["login"] = $login = request::string('login', 'POST');
         $heslo = request::string('password', 'POST');
         
@@ -62,6 +145,8 @@ class user {
             $err = 'Login a heslo jsou povinné údaje.';
         elseif ($numErr === 2) :
             $err = 'Neplatné přihlašovací údaje.';
+        elseif ($numErr === 2) :
+            $err = 'Příliš mnoho pokusů o přihlášení. Zkuste to později';
         endif;
             
         $this->aErr[] = $err;
