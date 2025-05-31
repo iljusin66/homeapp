@@ -16,7 +16,7 @@ $oOdecet = new zapisOdecet($oUser->aUser);
     <link href="<?= c_MainUrl; ?>Bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- https://icons.getbootstrap.com/ -->
     <link href="<?= c_MainUrl; ?>Bootstrap/css/icons/bootstrap-icons.css" rel="stylesheet">
-    <title><?= $oOdecet->aMeridla['nazev'] ?>: <?= ($oOdecet->aOdecet["id"]==0) ? __('vložit odečet') : __('oprava odečtu') ?></title>
+    <title><?= $oOdecet->aMeridlo['nazev'] ?>: <?= ($oOdecet->aOdecet["id"]==0) ? __('vložit odečet') : __('oprava odečtu') ?></title>
     <script src="<?= c_MainUrl; ?>inc/jquery-3.6.4.min.js"></script>
     <script src="<?= c_MainUrl; ?>Bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="<?= c_MainUrl; ?>inc/home.js?ch=<?= md5_file('inc/home.js') ?>"></script>
@@ -34,7 +34,7 @@ $oOdecet = new zapisOdecet($oUser->aUser);
                 <div class="row">
                     <div class="col-2 d-print-none d-none d-md-block"></div>
                     <div class="col ps-0">
-                        <h1 class="fs-3 ps-0"><?= $oOdecet->aMeridla['nazev'] ?></h1>
+                        <h1 class="fs-3 ps-0"><?= $oOdecet->aMeridlo['nazev'] ?></h1>
                     </div>
                 </div>
                 <div class="row pt-0">
@@ -42,7 +42,7 @@ $oOdecet = new zapisOdecet($oUser->aUser);
                     <div class="col" style="min-height: 85vh">
                         <div id="dataContainer" class="row">
                             <form class="p-1 pt-0 me-1 col-l-10 col-12" id="frmOdecetEdit" action="<?= c_ScriptBaseName ?>.php" method="POST">
-                                <input type="hidden" name="idm" value="<?= utils::fixFloat($oOdecet->aMeridla['id']) ?>">
+                                <input type="hidden" name="idm" value="<?= utils::fixFloat($oOdecet->aMeridlo['id']) ?>">
                                 <input type="hidden" name="ido" value="<?= utils::fixFloat($oOdecet->aOdecet['id']) ?>">
                                 <fieldset class="row">
                                     <legend class="form-label"><?= ($oOdecet->aOdecet["id"]==0) ? __('Vložit odečet') : __('Oprava odečtu') ?></legend>

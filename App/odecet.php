@@ -29,12 +29,13 @@ class odecet extends meridla{
     public $prumernaSpotrebaDen = 0;
 
     function __construct($aUser = []) {
+        
         $this->aUser = $aUser;
+        
         if (!self::$initialized) {
-            parent::__construct();
+            parent::__construct($this->aUser);
             self::$initialized = true;
         }
-        
     }
 
     private function nactiOdectyRok() {
@@ -43,7 +44,7 @@ class odecet extends meridla{
             JOIN role AS r ON r.id = mu.idrole
             WHERE s.idmeridla = ? AND YEAR(s.casodectu) = ? 
             ORDER BY s.casodectu DESC';
-            $rows = db::fa($q, [$this->aUser['id'], $this->aMeridla['id'], $this->rokOdectu]);
+            $rows = db::fa($q, [$this->aUser['id'], $this->aMeridlo['id'], $this->rokOdectu]);
             foreach ($rows as $row) :
                 $this->aOdecty[] = $row;
             endforeach;
