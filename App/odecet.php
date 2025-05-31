@@ -38,7 +38,7 @@ class odecet extends meridla{
     }
 
     private function nactiOdectyRok() {
-        $q = 'SELECT * FROM v_spotrebascenami AS s
+        $q = 'SELECT s.* FROM v_spotrebascenami AS s
             JOIN meridla2users AS mu ON mu.idmeridla = s.idmeridla AND mu.iduser = ?
             JOIN role AS r ON r.id = mu.idrole
             WHERE s.idmeridla = ? AND YEAR(s.casodectu) = ? 

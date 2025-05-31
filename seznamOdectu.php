@@ -55,7 +55,9 @@ $oOdecet->nactiSeznamOdectu();
                             </div>
                         </div>
                         <div id="dataContainer" class="row">
-                            <?php foreach ($oOdecet->aOdecty as $aOdecet) : ?>
+                            <?php
+                            //debug($oOdecet->aOdecty);
+                            foreach ($oOdecet->aOdecty as $aOdecet) : ?>
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
                                     <div class="card">
                                         <div class="card-body">
@@ -74,18 +76,18 @@ $oOdecet->nactiSeznamOdectu();
                                             </div>
                                             <?php
                                             //Jen group writer muze zapisovat
-                                            if (in_array($oUser->aUser["meridlaRole"][$oOdecet->aMeridla["id"]], ca_RoleGroup["writer"])) : ?>
-                                                <a href="<?= c_MainUrl; ?>zapisOdecet.php?idm=<?= $oOdecet->aMeridla["id"] ?>&ido=<?= $aOdecet["id"] ?>&<?= time() ?>" class="btn btn-sm btn-primary"><i class="bi-pencil-square me-1"></i> <?= __('Upravit') ?></a>
+                                            if (in_array($oUser->aUser["meridlaRole"][$aOdecet["idmeridla"]], ca_RoleGroup["writer"])) : ?>
+                                                <a href="<?= c_MainUrl; ?>zapisOdecet.php?idm=<?= $aOdecet["idmeridla"] ?>&ido=<?= $aOdecet["idodectu"] ?>&<?= time() ?>" class="btn btn-sm btn-primary"><i class="bi-pencil-square me-1"></i> <?= __('Upravit') ?></a>
                                             <?php
                                             endif;
                                             
                                             //Jen group editor muze mazat
-                                            if (in_array($oUser->aUser["meridlaRole"][$oOdecet->aMeridla["id"]], ca_RoleGroup["editor"])) : ?>
+                                            if (in_array($oUser->aUser["meridlaRole"][$aOdecet["idmeridla"]], ca_RoleGroup["editor"])) : ?>
                                             <!-- Button trigger modal -->
                                             <a href="#" class="btn-sm btn-danger smazatOdecet"
                                                 data-bs-target="#modalConfirmDelete"
                                                 data-ido="<?= $aOdecet["id"] ?>"
-                                                data-idm="<?= $oOdecet->aMeridla["id"] ?>">
+                                                data-idm="<?= $aOdecet["idmeridla"] ?>">
                                                 <i class="bi-trash me-1"></i> <?= __('Smazat') ?>
                                             </a>
                                             <?php
