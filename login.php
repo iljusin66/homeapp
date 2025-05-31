@@ -24,16 +24,16 @@ $oUser = new user();
         <form method="post" action="login.php" id="frmLogin" class="col-8 col-sm-3 m-auto text-start">
             <input type="hidden" name="action" value="login">
             <div class="m-3">
-                <label for="login" class="form-label"><?= __('Přihlašovací jméno') ?>:</label>
-                <input type="text" id="login" class="form-control" name="login" value="<?= $oUser->aUser["login"] ?>">
-              </div>
-              <div class="m-3">
-                <label for="password" class="form-label"><?= __('Heslo') ?>:</label>
-                <input type="password" class="form-control" id="password" name="password">
-                <div class="invalid-feedback mt-3" style="display:block;"> <?= implode(', ', (array)$oUser->aErr) ?> </div>
-              </div>
-              
-              <button type="submit" class="btn btn-primary m-3"><?= __('Přihlásit') ?></button>
+              <label for="email" class="form-label"><?= __('E-mail') ?>:</label>
+              <input type="text" id="email" class="form-control" name="email" value="<?= $oUser->aUser["email"] ?>">
+            </div>
+            <div class="m-3">
+              <label for="password" class="form-label"><?= __('Heslo') ?>:</label>
+              <input type="password" class="form-control" id="password" name="password">
+              <div class="invalid-feedback mt-3" style="display:block;"> <?= implode(', ', (array)$oUser->aErr) ?> </div>
+            </div>
+            
+            <button type="submit" class="btn btn-primary m-3"><?= __('Přihlásit') ?></button>
         </form>
         <div class="mt-3">
           <a href="/registrace.php"><?= __('Nemáte ještě účet? Zaregistrujte se.') ?></a>
