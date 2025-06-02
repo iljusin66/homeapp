@@ -41,15 +41,30 @@ $oOdecet->nactiSeznamOdectu();
                     <?php include_once 'inc/leveMenu.php'; ?>
                     <div class="col" style="min-height: 85vh">
                         <div class="row">
-                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                            <div class="col-12 col-sm-6 col-md-4 mb-3">
                                 <div class="card">
                                     <div class="card-body">
-                                        <p class="card-text">
-                                            <strong><?= __('Celková spotřeba') ?></strong>: <?= round($oOdecet->celkovaSpotreba, 3) ?> <?= $oOdecet->aMeridlo["jednotka"] ?><br> 
+                                        <div class="d-flex justify-content-between">
+                                            <strong><?= __('Celková spotřeba') ?>:</strong>
+                                            <span><?= round($oOdecet->celkovaSpotreba, 3) ?> <?= $oOdecet->aMeridlo["jednotka"] ?></span>
+                                        </div>
+                                        <div class="d-flex justify-content-between">
+                                            <strong><?= __('Celkové náklady') ?>:</strong>
+                                            <span><?= round($oOdecet->celkoveNaklady, 3) ?> <?= c_Mena ?></span>
+                                        </div> 
+                                        <div class="d-flex justify-content-between">
+                                            <strong><?= __('Průměrná denní spotřeba') ?>:</strong>
+                                            <span><?= round($oOdecet->prumernaSpotrebaDen, 3) ?> <?= $oOdecet->aMeridlo["jednotka"] ?></span>
+                                        </div> 
+                                        <div class="d-flex justify-content-between">
+                                            <strong><?= __('Průměrná hodinová spotřeba') ?>:</strong>
+                                            <span><?= round($oOdecet->prumernaSpotrebaHodina, 3) ?> <?= $oOdecet->aMeridlo["jednotka"] ?></span>
+                                        </div> 
+
+                                            <!--<strong><?= __('Celková spotřeba') ?></strong>: <?= round($oOdecet->celkovaSpotreba, 3) ?> <?= $oOdecet->aMeridlo["jednotka"] ?><br> 
                                             <strong><?= __('Celkové náklady') ?></strong>: <?= round($oOdecet->celkoveNaklady, 3) ?> <?= c_Mena ?><br>
                                             <strong><?= __('Průměrná denní spotřeba') ?></strong>: <?= round($oOdecet->prumernaSpotrebaDen, 3) ?> <?= $oOdecet->aMeridlo["jednotka"] ?><br>
-                                            <strong><?= __('Průměrná hodinová spotřeba') ?></strong>: <?= round($oOdecet->prumernaSpotrebaHodina, 3) ?> <?= $oOdecet->aMeridlo["jednotka"] ?>
-                                        </p> 
+                                            <strong><?= __('Průměrná hodinová spotřeba') ?></strong>: <?= round($oOdecet->prumernaSpotrebaHodina, 3) ?> <?= $oOdecet->aMeridlo["jednotka"] ?>-->
                                     </div>
                                 </div>
                             </div>
@@ -58,7 +73,7 @@ $oOdecet->nactiSeznamOdectu();
                             <?php
                             //debug($oOdecet->aOdecty);
                             foreach ($oOdecet->aOdecty as $aOdecet) : ?>
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-4 mb-3 odecty">
+                                <div class="col-12 col-sm-6 col-md-4 mb-3 odecty">
                                     
                                     <?php
                                     //Jen group editor nebo vyssi muze editovat
