@@ -9,7 +9,7 @@ require_once 'autoload.php';
 
 $oUser = new user();
 $oMeridla = new meridla($oUser->aUser);
-$oMeridla->nactiSeznamMeridelUzivatele();
+//$oMeridla->nactiSeznamMeridelUzivatele();
 ?><!DOCTYPE html>
 <html lang="cs">
     <head>

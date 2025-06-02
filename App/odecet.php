@@ -52,17 +52,16 @@ class odecet extends meridla{
     }
 
     public function spocitejPrumernouSpotrebu() {
-        //debug(array_sum(array_column($this->aOdecty, 'spotreba')));
         $this->celkovaSpotreba = array_sum(array_column($this->aOdecty, 'spotreba'));
         $this->celkoveNaklady = array_sum(array_column($this->aOdecty, 'naklady'));
-        if ($this->celkovaSpotreba == 0) :
+        $minCas = min(array_column($this->aOdecty, 'casodectu'));
+        $maxCas = max(array_column($this->aOdecty, 'casodectu'));
+        $pocetHodin = (strtotime($maxCas) - strtotime($minCas)) / 3600;
+        if ($this->celkovaSpotreba == 0 || $pocetHodin == 0):
             $this->prumernaSpotrebaHodina = 0;
             $this->prumernaSpotrebaDen = 0;
             return;
         endif;
-        $minCas = min(array_column($this->aOdecty, 'casodectu'));
-        $maxCas = max(array_column($this->aOdecty, 'casodectu'));
-        $pocetHodin = (strtotime($maxCas) - strtotime($minCas)) / 3600;
         $this->prumernaSpotrebaHodina = $this->celkovaSpotreba / $pocetHodin;
         $this->prumernaSpotrebaDen = $this->celkovaSpotreba / ($pocetHodin / 24);
     }
