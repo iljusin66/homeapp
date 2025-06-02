@@ -18,7 +18,7 @@ class zapisOdecet extends odecet {
     public $aUser = [];
 
     function __construct($aUser) {
-        parent::__construct();
+        parent::__construct($aUser);
         $this->aUser = $aUser;
         $this->nactiOdecet();
     }

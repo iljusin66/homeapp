@@ -26,10 +26,10 @@ $oUser = new user();
               <input type="hidden" name="action" value="registrace">
               <input type="hidden" name="valid" id="valid">
                 <div class="m-3">
-                  <label for="login" class="form-label"><?= __('Zadejte přihlašovací jméno') ?>:</label>
-                  <input type="text" id="login" class="form-control" name="login" value="<?= $oUser->aUser["login"] ?>" data-required data-pattern="^[a-zA-Z0-9_\.-]{4,}$" title="<?= __('Přihlašovací jméno musí mít alespoň 4 znaky: běžná písmena nebo čísla') ?>">
-                  <small class="form-text text-muted ps-2"><?= __('Minimálně 4 znaky') ?></small>
-                  <div class="invalid-feedback mt-3 ps-2" style="display:block;"> <?= implode(', ', (array)$oUser->aErr['login']) ?> </div>
+                  <label for="email" class="form-label"><?= __('E-mail') ?>:</label>
+                  <input type="text" id="email" class="form-control" name="email" value="<?= htmlspecialchars($oUser->aUser["email"] ?? '') ?>" data-required data-pattern="email" title="<?= __('Zadejte platný e-mail') ?>">
+                  <small class="form-text text-muted ps-2"><?= __('Zadejte platný e-mail') ?></small>
+                  <div class="invalid-feedback mt-3 ps-2" style="display:block;"> <?= implode(', ', (array)$oUser->aErr['email']) ?> </div>
                 </div>
                 <div class="m-3">
                   <label for="password" class="form-label"><?= __('Zadejte heslo') ?>:</label>
@@ -42,12 +42,6 @@ $oUser = new user();
                   <input type="password" class="form-control" id="password2" name="password2" data-required data-pattern="password2" title="<?= __('Hesla se musí shodovat') ?>">
                   <small class="form-text text-muted ps-2"><?= __('Zadejte heslo znovu') ?></small>
                   <div class="invalid-feedback mt-3 ps-2" style="display:block;"> <?= implode(', ', (array)$oUser->aErr['password2']) ?> </div>
-                </div>
-                <div class="m-3">
-                  <label for="email" class="form-label"><?= __('E-mail') ?>:</label>
-                  <input type="text" id="email" class="form-control" name="email" value="<?= htmlspecialchars($oUser->aUser["email"] ?? '') ?>" data-required data-pattern="email" title="<?= __('Zadejte platný e-mail') ?>">
-                  <small class="form-text text-muted ps-2"><?= __('Zadejte platný e-mail') ?></small>
-                  <div class="invalid-feedback mt-3 ps-2" style="display:block;"> <?= implode(', ', (array)$oUser->aErr['email']) ?> </div>
                 </div>
                 
                 <button type="submit" class="btn btn-primary m-3"><?= __('Zaregistrovat') ?></button>

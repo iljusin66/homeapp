@@ -26,7 +26,8 @@ class user {
         if (request::string('action', 'POST')=='login') :
             $this->login();
         elseif (c_ScriptBaseName=='registrace') :
-            $this->registrace();
+            //Registrace uzivatele
+            $this->registrace();            
         elseif($bCheckLogin):
             $this->checkLogin();
         endif;
@@ -34,37 +35,36 @@ class user {
     }
 
     private function registrace() {
-        $this->aUser["login"] = request::string('login', 'POST');
+        if (!request::string('action', 'POST')=='registrace') :
+            return;
+        endif;
+
+
+        //$email = request::string('email', 'POST');
         $heslo = request::string('password', 'POST');
-        $heslo2 = request::string('password2', 'POST');
-        $email = request::string('email', 'POST');
+        $email = request::mail('email', 'POST');
         
-        if ($this->aUser["login"] == '' || $heslo == '' || $heslo2 == '' || $email == '') : 
-            $this->setErrorLogin(1); return; 
+        //debug("Registrace uzivatele: $heslo, $email");
+        
+        if (utils::fixInt(db::r(0, "SELECT id FROM users WHERE email = ?", $email)) > 0) :
+            $this->setErrorRegistrace(1); return false; //Uzivatel s timto e-mailem uz existuje
         endif;
         
-        if ($heslo != $heslo2) : 
-            $this->setErrorLogin(3); return; 
-        endif;
-        
-        if (db::f("SELECT id FROM users WHERE login = ?", $this->aUser["login"]) > 0) :
-            $this->setErrorLogin(4); return; 
-        endif;
-        
+//;
+
         //Registrace uzivatele
-        db::q("INSERT INTO users (login, heslo, email) VALUES (?, ?, ?)", [
-            $this->aUser["login"], utils::getHashHeslo($heslo, self::SaltMd5), $email
-        ]);
+        $q = "INSERT INTO users (uuid, heslo, email, ip) VALUES (UNHEX(REPLACE(UUID(), '-', '')), ?, ?, ?, ?)";
+        db::q($q, utils::getHashHeslo($heslo, self::SaltMd5), $email, c_UserIP);
         
         //Nacteni noveho uzivatele
         $this->aUser["id"] = db::ii();
-        if ($this->aUser["id"]==0) : $this->setErrorLogin(2); return; endif;
+        if ($this->aUser["id"]==0) : $this->setErrorRegistrace(2); return; endif;
         
-        utils::setCookie('username', $this->aUser["login"], $this->cookieTime);
+        utils::setCookie('email', $this->aUser["email"], $this->cookieTime);
         utils::setCookie('iduser', $this->aUser["id"], $this->cookieTime);
-        utils::setCookie('hash', utils::getHash([$this->aUser["login"], $this->aUser["id"]], self::SaltMd5), $this->cookieTime);
+        utils::setCookie('hash', utils::getHash([$this->aUser["email"], $this->aUser["id"]], self::SaltMd5), $this->cookieTime);
         
-        header('Location: /?e=regOk');
+        header('Location: /?s=regOk');
         die();
     }
     
@@ -86,16 +86,10 @@ class user {
 
         $pocet = 0;
         $jeBlokovan = false;
-
         if ($row) {
             $pocet = (int)$row['pocet'];
             $blokaceDoUnix = strtotime($row['blokacedo']);
-            if ($blokaceDoUnix > $casTed) {
-                $jeBlokovan = true;
-            }
         }
-
-
 
 
         // Nastavení nové blokace dle počtu pokusů
@@ -105,7 +99,6 @@ class user {
         } elseif ($pocet >= c_MaxLoginPokusu) {    
             $jeBlokovan = true;
         }
-
         // Zápis nebo update pokusu
         $q = "INSERT INTO login_pokusy (`uid`, ip, pocet, blokacedo) 
             VALUES (?, ?, 1, ?) 
@@ -121,18 +114,19 @@ class user {
             $this->setErrorLogin(3); return;
         endif;
 
-        $this->aUser["login"] = $login = request::string('login', 'POST');
+        $this->aUser["email"] = $email = request::string('email', 'POST');
         $heslo = request::string('password', 'POST');
         
-        if ($login == '' || $heslo == '') : $this->setErrorLogin(1); return; endif;
+        if ($email == '' || $heslo == '') : $this->setErrorLogin(1); return; endif;
 
-        $q = "SELECT u.id, u.username AS name FROM users AS u WHERE u.login = ? AND u.heslo = ?";
-        $this->aUser = db::f($q, $login, utils::getHashHeslo($heslo, self::SaltMd5));
-        $this->aUser["login"] = $login;
+        $q = "SELECT u.id, u.username AS name, u.email FROM users AS u WHERE u.email = ? AND u.heslo = ? AND aktivni > 0";
+        $this->aUser = db::f($q, $email, utils::getHashHeslo($heslo, self::SaltMd5));
+        //debug($this->aUser);
+        //$this->aUser["email"] = $email;
         if ($this->aUser["id"]==0) : $this->setErrorLogin(2); return; endif;
-        utils::setCookie('username', $this->aUser["name"], $this->cookieTime);
+        utils::setCookie('email', $this->aUser["email"], $this->cookieTime);
         utils::setCookie('iduser', $this->aUser["id"], $this->cookieTime);
-        utils::setCookie('hash', utils::getHash([$this->aUser["name"], $this->aUser["id"]], self::SaltMd5), $this->cookieTime);
+        utils::setCookie('hash', utils::getHash([$this->aUser["email"], $this->aUser["id"]], self::SaltMd5), $this->cookieTime);
         header('Location: /');
         die();
     }
@@ -142,23 +136,36 @@ class user {
     private function setErrorLogin($numErr = 1) {
         utils::fixIntRef($numErr);
         if ($numErr === 1) :
-            $err = 'Login a heslo jsou povinné údaje.';
+            $err = __('E-mail a heslo jsou povinné údaje.');
         elseif ($numErr === 2) :
-            $err = 'Neplatné přihlašovací údaje.';
-        elseif ($numErr === 2) :
-            $err = 'Příliš mnoho pokusů o přihlášení. Zkuste to později';
+            $err = __('Neplatné přihlašovací údaje.');
+        elseif ($numErr === 3) :
+            $err = __('Příliš mnoho pokusů o přihlášení. Zkuste to později');
         endif;
             
         $this->aErr[] = $err;
     }
     
+    private function setErrorRegistrace($numErr = 1) {
+        utils::fixIntRef($numErr);
+        if ($numErr === 1) :
+            $err = __('Uživatel s tímto e-mailem již existuje.');
+        elseif ($numErr === 2) :
+            $err = __('Chyba při registraci uživatele. Zkuste to prosím znovu.');
+        elseif ($numErr === 3) :
+            $err = '';
+        endif;
+            
+        $this->aErr[] = $err;
+    }
+
     public function checkLogin($bRedirect = true) {
         
 
-        $this->aUser["name"] = request::string('username', 'COOKIE');
+        $this->aUser["email"] = request::string('email', 'COOKIE');
         $this->aUser["id"] = request::int('iduser', 'COOKIE');
 
-        if ($this->aUser["name"]=='') : 
+        if ($this->aUser["email"]=='') : 
             if (c_ScriptBaseName != 'index') :
                 header('Location: /');
                 die();
@@ -167,7 +174,7 @@ class user {
             return;
         endif;
                 
-        if (utils::getHash([$this->aUser["name"], $this->aUser["id"]], self::SaltMd5) != request::string('hash', 'COOKIE')) : 
+        if (utils::getHash([$this->aUser["email"], $this->aUser["id"]], self::SaltMd5) != request::string('hash', 'COOKIE')) : 
             $this->logout('badHash', $bRedirect);
         endif;
         
@@ -183,13 +190,13 @@ class user {
     public function logout($err = '', $bRedirect = true) {
         if (!$bRedirect) : die('Chyba #21 : Neopravneny pristup'); endif;
         
-        utils::clearCookiesArray(['username', 'iduser', 'hash']);
+        utils::clearCookiesArray(['email', 'iduser', 'hash']);
         header('Location: /?e=' . $err);
         die();
     }
 
     private function doplnVsechnaUserData() {
-        $q = "SELECT u.id, u.username AS name, u.login, u.heslo, u.email FROM users AS u WHERE u.id = ?";
+        $q = "SELECT u.id, u.username AS name, u.heslo, u.email FROM users AS u WHERE u.id = ?";
         $this->aUser = db::f($q, $this->aUser["id"]);
         if ($this->aUser["id"]==0) : $this->setErrorLogin(2); return; endif;
         $this->doplnUser2Meridla();

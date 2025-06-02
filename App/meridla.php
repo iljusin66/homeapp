@@ -26,12 +26,14 @@ class meridla {
     private $jenAktivniUzivatele = 1; // 1 - jen aktivní, 0 - všichni
     
     public $aMeridla = [];
+    public $aMeridlo = []; // Seznam měřidel uživatele
     private $aUser = [];
 
     function __construct($aUser = []) {
         $this->aUser = $aUser;
         $this->rokOdectu = date("Y");
         if (!self::$initialized) {
+            $this->nactiSeznamMeridelUzivatele();
             $this->nactiMeridlo();
             self::$initialized = true;
         }
@@ -43,20 +45,18 @@ class meridla {
      * @return void 
      */
     private function nactiMeridlo() {
-        $this->aMeridla["id"] = max(0, request::int("idm", "REQUEST"));
-        if ($this->aMeridla["id"] == 0) :
+        $idm = max(0, request::int("idm", "REQUEST"));
+        $this->aMeridlo = $this->aMeridla[$idm] ?? [];
+        if (empty($this->aMeridlo)) :
+            $this->aMeridlo["id"] = 0;
             return;
-        endif;
-        $q = "SELECT m.*, mj.jednotka FROM meridla AS m JOIN cis_merne_jednotky AS mj ON m.idjednotky = mj.id WHERE m.id = ? AND aktivni >= ?";
-        $this->aMeridla = db::f($q, $this->aMeridla["id"], $this->jenAktivniMeridla);
-        if (empty($this->aMeridla)) :
-            $this->aMeridla = [];
-            $this->aMeridla["id"] = 0;
-           return;
+        elseif ($this->jenAktivniMeridla && $this->aMeridlo["aktivni"] < 1) :
+            $this->aMeridlo["id"] = 0;
+            return;
         endif;
     }
 
-    public function nactiSeznamMeridelUzivatele() : array {
+    private function nactiSeznamMeridelUzivatele() : array {
         $q = "SELECT m.*, r.role, mj.jednotka FROM meridla AS m
             JOIN meridla2users AS mu ON m.id = mu.idmeridla AND m.aktivni >= ?
             JOIN cis_merne_jednotky AS mj ON mj.id = m.idjednotky

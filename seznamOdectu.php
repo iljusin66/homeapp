@@ -18,7 +18,7 @@ $oOdecet->nactiSeznamOdectu();
     <link href="<?= c_MainUrl; ?>Bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- https://icons.getbootstrap.com/ -->
     <link href="<?= c_MainUrl; ?>Bootstrap/css/icons/bootstrap-icons.css" rel="stylesheet">
-    <title><?= c_AppName . ' / ' . $oOdecet->aMeridla['nazev'] ?>: <?= ($oOdecet->aOdecty["id"]==0) ? __('vložit odečet') : __('oprava odečtu') ?></title>
+    <title><?= c_AppName . ' / ' . $oOdecet->aMeridlo['nazev'] ?>: <?= ($oOdecet->aOdecty["id"]==0) ? __('vložit odečet') : __('oprava odečtu') ?></title>
     <script src="<?= c_MainUrl; ?>Bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="<?= c_MainUrl; ?>inc/jquery-3.6.4.min.js"></script>
     <script src="<?= c_MainUrl; ?>inc/home.js?ch=<?= md5_file('inc/home.js') ?>"></script>
@@ -34,7 +34,7 @@ $oOdecet->nactiSeznamOdectu();
                 <div class="row">
                     <div class="col-2 d-print-none d-none d-md-block"></div>
                     <div class="col ps-0">
-                        <h1 class="fs-3 ps-0"><?= $oOdecet->aMeridla['nazev'] ?> - <?= __('rok') ?> <?= $oOdecet->rokOdectu ?></h1>
+                        <h1 class="fs-3 ps-0"><?= $oOdecet->aMeridlo['nazev'] ?> - <?= __('rok') ?> <?= $oOdecet->rokOdectu ?></h1>
                     </div>
                 </div>
                 <div class="row pt-0">
@@ -45,17 +45,19 @@ $oOdecet->nactiSeznamOdectu();
                                 <div class="card">
                                     <div class="card-body">
                                         <p class="card-text">
-                                            <strong><?= __('Celková spotřeba') ?></strong>: <?= round($oOdecet->celkovaSpotreba, 3) ?> <?= $oOdecet->aMeridla["jednotka"] ?><br> 
+                                            <strong><?= __('Celková spotřeba') ?></strong>: <?= round($oOdecet->celkovaSpotreba, 3) ?> <?= $oOdecet->aMeridlo["jednotka"] ?><br> 
                                             <strong><?= __('Celkové náklady') ?></strong>: <?= round($oOdecet->celkoveNaklady, 3) ?> <?= c_Mena ?><br>
-                                            <strong><?= __('Průměrná denní spotřeba') ?></strong>: <?= round($oOdecet->prumernaSpotrebaDen, 3) ?> <?= $oOdecet->aMeridla["jednotka"] ?><br>
-                                            <strong><?= __('Průměrná hodinová spotřeba') ?></strong>: <?= round($oOdecet->prumernaSpotrebaHodina, 3) ?> <?= $oOdecet->aMeridla["jednotka"] ?>
+                                            <strong><?= __('Průměrná denní spotřeba') ?></strong>: <?= round($oOdecet->prumernaSpotrebaDen, 3) ?> <?= $oOdecet->aMeridlo["jednotka"] ?><br>
+                                            <strong><?= __('Průměrná hodinová spotřeba') ?></strong>: <?= round($oOdecet->prumernaSpotrebaHodina, 3) ?> <?= $oOdecet->aMeridlo["jednotka"] ?>
                                         </p> 
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div id="dataContainer" class="row">
-                            <?php foreach ($oOdecet->aOdecty as $aOdecet) : ?>
+                            <?php
+                            //debug($oOdecet->aOdecty);
+                            foreach ($oOdecet->aOdecty as $aOdecet) : ?>
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
                                     <div class="card">
                                         <div class="card-body">
@@ -70,22 +72,22 @@ $oOdecet->nactiSeznamOdectu();
                                             <?= __('Spotřeba') ?>: <?= round($aOdecet["spotreba"], 3) ?> <?= $aOdecet["jednotka"] ?><br>
                                             <?= __('Náklady') ?>: <?= round($aOdecet["naklady"], 3) ?> <?= c_Mena ?><br>
                                             <?= __('Prům. denní spotřeba') ?>: <?= round($aOdecet["prumernaSpotrebaDen"], 3) ?> <?= $aOdecet["jednotka"] ?><br>
-                                            <?= __('Prům. hodinová spotřeba') ?> : <?= round($aOdecet["prumernaSpotrebaHodina"], 3) ?> <?= $aOdecet["jednotka"] ?><br>
+                                            <!-- <?= __('Prům. hodinová spotřeba') ?> : <?= round($aOdecet["prumernaSpotrebaHodina"], 3) ?> <?= $aOdecet["jednotka"] ?><br> -->
                                             </div>
                                             <?php
                                             //Jen group writer muze zapisovat
-                                            if (in_array($oUser->aUser["meridlaRole"][$oOdecet->aMeridla["id"]], ca_RoleGroup["writer"])) : ?>
-                                                <a href="<?= c_MainUrl; ?>zapisOdecet.php?idm=<?= $oOdecet->aMeridla["id"] ?>&ido=<?= $aOdecet["id"] ?>&<?= time() ?>" class="btn btn-sm btn-primary"><i class="bi-pencil-square me-1"></i> <?= __('Upravit') ?></a>
+                                            if (in_array($oUser->aUser["meridlaRole"][$aOdecet["idmeridla"]], ca_RoleGroup["writer"])) : ?>
+                                                <a href="<?= c_MainUrl; ?>zapisOdecet.php?idm=<?= $aOdecet["idmeridla"] ?>&ido=<?= $aOdecet["idodectu"] ?>&<?= time() ?>" class="btn btn-sm btn-primary"><i class="bi-pencil-square me-1"></i> <?= __('Upravit') ?></a>
                                             <?php
                                             endif;
                                             
                                             //Jen group editor muze mazat
-                                            if (in_array($oUser->aUser["meridlaRole"][$oOdecet->aMeridla["id"]], ca_RoleGroup["editor"])) : ?>
+                                            if (in_array($oUser->aUser["meridlaRole"][$aOdecet["idmeridla"]], ca_RoleGroup["editor"])) : ?>
                                             <!-- Button trigger modal -->
                                             <a href="#" class="btn-sm btn-danger smazatOdecet"
                                                 data-bs-target="#modalConfirmDelete"
                                                 data-ido="<?= $aOdecet["id"] ?>"
-                                                data-idm="<?= $oOdecet->aMeridla["id"] ?>">
+                                                data-idm="<?= $aOdecet["idmeridla"] ?>">
                                                 <i class="bi-trash me-1"></i> <?= __('Smazat') ?>
                                             </a>
                                             <?php
