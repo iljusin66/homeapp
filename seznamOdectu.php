@@ -58,19 +58,27 @@ $oOdecet->nactiSeznamOdectu();
                             <?php
                             //debug($oOdecet->aOdecty);
                             foreach ($oOdecet->aOdecty as $aOdecet) : ?>
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-4 mb-3 odecty">
                                     
                                     <?php
                                     //Jen group editor nebo vyssi muze editovat
                                     if (in_array($oUser->aUser["meridlaRole"][$aOdecet["idmeridla"]], ca_RoleGroup["writer"])) : ?>
-                                    <a href="<?= c_MainUrl; ?>zapisOdecet.php?idm=<?= $aOdecet["idmeridla"] ?>&ido=<?= $aOdecet["idodectu"] ?>&<?= time() ?>" class="card text-decoration-none text-body mb-2">
+                                    <a href="<?= c_MainUrl; ?>zapisOdecet.php?idm=<?= $aOdecet["idmeridla"] ?>&ido=<?= $aOdecet["idodectu"] ?>&<?= time() ?>" class="card text-decoration-none text-body bg-light card-hover mb-2">
                                     <?php endif; ?>
                                         <div class="card-body p-2">
                                             
                                             <!-- Datum nahoře -->
-                                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <div class="card-header-custom d-flex justify-content-between align-items-center mb-2">
                                             <h6 class="mb-0"><?= utils::getLocaleDateTime($aOdecet["casodectu"]) ?></h6>
-                                            <small class="text-muted">XX dny</small>
+                                            <small class="text-muted">
+                                                <?php
+                                                if (utils::fixInt($aOdecet["rozdilDnu"]) > 0) {
+                                                    echo __('Dnů') . ': +' . utils::fixInt($aOdecet["rozdilDnu"]);
+                                                } elseif (utils::fixInt($aOdecet["rozdilHodin"]) > 0) {
+                                                    echo __('Hodin') . ': +' . utils::fixInt($aOdecet["rozdilHodin"]);
+                                                }
+                                                ?>
+                                            </small>
                                             </div>
 
                                             <!-- Dvě sloupce vedle sebe -->
@@ -83,7 +91,7 @@ $oOdecet->nactiSeznamOdectu();
                                                     <span><?= round(utils::fixFloat($aOdecet["odecet"]), 3) ?> <?= $aOdecet["jednotka"] ?></span>
                                                     </div>
                                                     <div class="d-flex justify-content-between">
-                                                    <span class="text-muted">><?= __('Zadal') ?>:</span>
+                                                    <span class="text-muted"><?= __('Zadal') ?>:</span>
                                                     <span><?= $aOdecet["userZadal"] ?></span>
                                                     </div>
                                                     <?php if ($aOdecet["userOpravil"] != '') : ?>
@@ -97,17 +105,17 @@ $oOdecet->nactiSeznamOdectu();
                                                 <!-- Pravý sloupec -->
                                                 <div class="col-6">
                                                     <div class="d-flex justify-content-between">
-                                                    <span class="text-muted">><?= __('Spotřeba') ?></span>
+                                                    <span class="text-muted"><?= __('Spotřeba') ?></span>
                                                     <span><?= round($aOdecet["spotreba"], 3) ?> <?= $aOdecet["jednotka"] ?></span>
                                                     </div>
                                                     <?php if ($aOdecet["naklady"] > 0) : ?>
                                                     <div class="d-flex justify-content-between">
-                                                    <span class="text-muted">><?= __('Náklady') ?></span>
+                                                    <span class="text-muted"><?= __('Náklady') ?></span>
                                                     <span><?= round($aOdecet["naklady"], 3) ?> <?= c_Mena ?></span>
                                                     </div>
                                                     <?php endif; ?>
                                                     <div class="d-flex justify-content-between">
-                                                    <span class="text-muted">><?= __('Denní &oslash;') ?></span>
+                                                    <span class="text-muted"><?= __('Denní &oslash;') ?></span>
                                                     <span><?= round($aOdecet["prumernaSpotrebaDen"], 3) ?> <?= $aOdecet["jednotka"] ?></span>
                                                     </div>
                                                 </div>

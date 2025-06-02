@@ -37,3 +37,18 @@ input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
+
+  .odecty a.card-hover {
+    transition: box-shadow 0.2s, background-color 0.2s;
+  }
+
+  .odecty a.card-hover:hover {
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    background-color: #f8f9fa; /* jemné zvýraznění */
+  }
+
+  .odecty a.card-hover .card-body .card-header-custom {
+    background-color: #e9ecef; /* Bootstrap $gray-200 */
+    padding: 0.5rem;
+    border-radius: 0.25rem 0.25rem 0 0;
+  }
