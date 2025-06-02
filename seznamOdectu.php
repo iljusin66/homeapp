@@ -59,44 +59,73 @@ $oOdecet->nactiSeznamOdectu();
                             //debug($oOdecet->aOdecty);
                             foreach ($oOdecet->aOdecty as $aOdecet) : ?>
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <h6 class="card-title"><?= utils::getLocaleDateTime($aOdecet["casodectu"]) ?></h6>
-                                            <div class="card-text mb-1">
-                                                <?= __('Zadal') ?>: <?= $aOdecet["userZadal"] ?><br>
-                                                <?= __('Opravil') .": " . (($aOdecet["userOpravil"]=='') ? '---' : $aOdecet["userOpravil"]) ?><br>
-                                                <i><?= (($aOdecet["poznamka"]=='') ? '&nbsp;' : $aOdecet["poznamka"]) ?></i>
-                                            </div>
-                                            <div class="card-text mb-1">
-                                            <?= __('Odečet') ?>: <?= round(utils::fixFloat($aOdecet["odecet"]), 3) ?> <?= $aOdecet["jednotka"] ?><br>
-                                            <?= __('Spotřeba') ?>: <?= round($aOdecet["spotreba"], 3) ?> <?= $aOdecet["jednotka"] ?><br>
-                                            <?= __('Náklady') ?>: <?= round($aOdecet["naklady"], 3) ?> <?= c_Mena ?><br>
-                                            <?= __('Prům. denní spotřeba') ?>: <?= round($aOdecet["prumernaSpotrebaDen"], 3) ?> <?= $aOdecet["jednotka"] ?><br>
-                                            <!-- <?= __('Prům. hodinová spotřeba') ?> : <?= round($aOdecet["prumernaSpotrebaHodina"], 3) ?> <?= $aOdecet["jednotka"] ?><br> -->
-                                            </div>
-                                            <?php
-                                            //Jen group writer muze zapisovat
-                                            if (in_array($oUser->aUser["meridlaRole"][$aOdecet["idmeridla"]], ca_RoleGroup["writer"])) : ?>
-                                                <a href="<?= c_MainUrl; ?>zapisOdecet.php?idm=<?= $aOdecet["idmeridla"] ?>&ido=<?= $aOdecet["idodectu"] ?>&<?= time() ?>" class="btn btn-sm btn-primary"><i class="bi-pencil-square me-1"></i> <?= __('Upravit') ?></a>
-                                            <?php
-                                            endif;
+                                    
+                                    <?php
+                                    //Jen group editor nebo vyssi muze editovat
+                                    if (in_array($oUser->aUser["meridlaRole"][$aOdecet["idmeridla"]], ca_RoleGroup["writer"])) : ?>
+                                    <a href="<?= c_MainUrl; ?>zapisOdecet.php?idm=<?= $aOdecet["idmeridla"] ?>&ido=<?= $aOdecet["idodectu"] ?>&<?= time() ?>" class="card text-decoration-none text-body mb-2">
+                                    <?php endif; ?>
+                                        <div class="card-body p-2">
                                             
-                                            //Jen group editor muze mazat
-                                            if (in_array($oUser->aUser["meridlaRole"][$aOdecet["idmeridla"]], ca_RoleGroup["editor"])) : ?>
-                                            <!-- Button trigger modal -->
-                                            <a href="#" class="btn-sm btn-danger smazatOdecet"
-                                                data-bs-target="#modalConfirmDelete"
-                                                data-ido="<?= $aOdecet["id"] ?>"
-                                                data-idm="<?= $aOdecet["idmeridla"] ?>">
-                                                <i class="bi-trash me-1"></i> <?= __('Smazat') ?>
-                                            </a>
-                                            <?php
-                                            endif;
-                                            ?>
+                                            <!-- Datum nahoře -->
+                                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <h6 class="mb-0"><?= utils::getLocaleDateTime($aOdecet["casodectu"]) ?></h6>
+                                            <small class="text-muted">XX dny</small>
+                                            </div>
+
+                                            <!-- Dvě sloupce vedle sebe -->
+                                            <div class="row small">
+                                            
+                                                <!-- Levý sloupec -->
+                                                <div class="col-6">
+                                                    <div class="d-flex justify-content-between">
+                                                    <span class="text-muted"><?= __('Odečet') ?>:</span>
+                                                    <span><?= round(utils::fixFloat($aOdecet["odecet"]), 3) ?> <?= $aOdecet["jednotka"] ?></span>
+                                                    </div>
+                                                    <div class="d-flex justify-content-between">
+                                                    <span class="text-muted">><?= __('Zadal') ?>:</span>
+                                                    <span><?= $aOdecet["userZadal"] ?></span>
+                                                    </div>
+                                                    <?php if ($aOdecet["userOpravil"] != '') : ?>
+                                                    <div class="d-flex justify-content-between">
+                                                    <span class="text-muted"><?= __('Opravil') ?>:</span>
+                                                    <span><?= $aOdecet["userOpravil"] ?></span>
+                                                    </div>
+                                                    <?php endif; ?>
+                                                </div>
+
+                                                <!-- Pravý sloupec -->
+                                                <div class="col-6">
+                                                    <div class="d-flex justify-content-between">
+                                                    <span class="text-muted">><?= __('Spotřeba') ?></span>
+                                                    <span><?= round($aOdecet["spotreba"], 3) ?> <?= $aOdecet["jednotka"] ?></span>
+                                                    </div>
+                                                    <?php if ($aOdecet["naklady"] > 0) : ?>
+                                                    <div class="d-flex justify-content-between">
+                                                    <span class="text-muted">><?= __('Náklady') ?></span>
+                                                    <span><?= round($aOdecet["naklady"], 3) ?> <?= c_Mena ?></span>
+                                                    </div>
+                                                    <?php endif; ?>
+                                                    <div class="d-flex justify-content-between">
+                                                    <span class="text-muted">><?= __('Denní &oslash;') ?></span>
+                                                    <span><?= round($aOdecet["prumernaSpotrebaDen"], 3) ?> <?= $aOdecet["jednotka"] ?></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12">
+                                                    <i class="text-muted"><?= ($aOdecet["poznamka"] == '') ? '&nbsp;' : $aOdecet["poznamka"] ?></i>
+                                                </div>
+                                            </div>
+
                                         </div>
-                                    </div>
+                                        <?php
+                                    //Jen group editor nebo vyssi muze editovat
+                                    if (in_array($oUser->aUser["meridlaRole"][$aOdecet["idmeridla"]], ca_RoleGroup["writer"])) : ?>
+                                    </a>
+                                    <?php endif; ?>
                                 </div>
                                 <?php endforeach; ?>
+
+
                             <?php if (empty($oOdecet->aOdecty)) : ?>
                                 <div class="alert alert-danger" role="alert">
                                     <?= __('Zatím není zapsán žádný odečet') ?>
