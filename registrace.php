@@ -22,8 +22,9 @@ $oUser = new user();
             <p class="lead"><?= __('Vytvořte si účet v aplikaci') . ' ' . c_AppName ?></p>
           </div>
           <div class="clearfix"></div>
-          <form method="post" action="registrace.php" id="frmLogin" class="col-8 col-sm-3 m-auto text-start">
+          <form method="get" action="registrace.php" id="frmLogin" class="col-8 col-sm-3 m-auto text-start">
               <input type="hidden" name="action" value="registrace">
+              <input type="hidden" name="valid" id="valid">
                 <div class="m-3">
                   <label for="email" class="form-label"><?= __('E-mail') ?>:</label>
                   <input type="text" id="email" class="form-control" name="email" value="<?= htmlspecialchars($oUser->aUser["email"] ?? '') ?>" data-required data-pattern="email" title="<?= __('Zadejte platný e-mail') ?>">

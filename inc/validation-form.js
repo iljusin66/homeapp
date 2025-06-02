@@ -16,12 +16,15 @@ class FormValidace {
             const form = event.currentTarget;
 
             $('input', form).removeClass('is-invalid');
+            $('input', form).removeClass('is-valid');
 
             this.validace(event, form); // předáme form, který validujeme
 
             // Kontrola, zda existují nevalidní inputy
             if ($(form).find('.is-invalid').length === 0) {
-                form.submit(); // ručně odešleme formulář
+                $('#valid', form).val(1);
+                $(form).attr('method', 'post'); // nastavíme metodu formuláře na POST
+ //               form.submit(); // ručně odešleme formulář
             }
         });
     }
