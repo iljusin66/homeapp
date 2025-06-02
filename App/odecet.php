@@ -48,6 +48,10 @@ class odecet extends meridla{
             foreach ($rows as $row) :
                 $this->aOdecty[] = $row;
             endforeach;
+            // Přidání rozdílu spotřeby do pole
+            for ($i = 0; $i < count($this->aOdecty) - 1; $i++) {
+                $this->aOdecty[$i]['rozdilSpotreby'] = $this->aOdecty[$i]['prumernaSpotrebaDen'] - $this->aOdecty[$i + 1]['prumernaSpotrebaDen'];
+            }
         $this->spocitejPrumernouSpotrebu();
     }
 

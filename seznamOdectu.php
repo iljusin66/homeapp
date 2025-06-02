@@ -41,7 +41,7 @@ $oOdecet->nactiSeznamOdectu();
                     <?php include_once 'inc/leveMenu.php'; ?>
                     <div class="col" style="min-height: 85vh">
                         <div class="row">
-                            <div class="col-12 col-sm-6 col-md-4 mb-3">
+                            <div class="col-12 col-md-6 col-lg-4 mb-3">
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between">
@@ -53,18 +53,13 @@ $oOdecet->nactiSeznamOdectu();
                                             <span><?= round($oOdecet->celkoveNaklady, 3) ?> <?= c_Mena ?></span>
                                         </div> 
                                         <div class="d-flex justify-content-between">
-                                            <strong><?= __('Průměrná denní spotřeba') ?>:</strong>
-                                            <span><?= round($oOdecet->prumernaSpotrebaDen, 3) ?> <?= $oOdecet->aMeridlo["jednotka"] ?></span>
+                                            <strong><?= __('Průměrná spotřeba') ?>:</strong>
+                                            <span><?= round($oOdecet->prumernaSpotrebaDen, 3) ?> <?= $oOdecet->aMeridlo["jednotka"] ?> / <?= __('den') ?></span>
                                         </div> 
-                                        <div class="d-flex justify-content-between">
-                                            <strong><?= __('Průměrná hodinová spotřeba') ?>:</strong>
+                                        <!--<div class="d-flex justify-content-between">
+                                            <strong><?= __('Průměrná hod. spotřeba') ?>:</strong>
                                             <span><?= round($oOdecet->prumernaSpotrebaHodina, 3) ?> <?= $oOdecet->aMeridlo["jednotka"] ?></span>
-                                        </div> 
-
-                                            <!--<strong><?= __('Celková spotřeba') ?></strong>: <?= round($oOdecet->celkovaSpotreba, 3) ?> <?= $oOdecet->aMeridlo["jednotka"] ?><br> 
-                                            <strong><?= __('Celkové náklady') ?></strong>: <?= round($oOdecet->celkoveNaklady, 3) ?> <?= c_Mena ?><br>
-                                            <strong><?= __('Průměrná denní spotřeba') ?></strong>: <?= round($oOdecet->prumernaSpotrebaDen, 3) ?> <?= $oOdecet->aMeridlo["jednotka"] ?><br>
-                                            <strong><?= __('Průměrná hodinová spotřeba') ?></strong>: <?= round($oOdecet->prumernaSpotrebaHodina, 3) ?> <?= $oOdecet->aMeridlo["jednotka"] ?>-->
+                                        </div>-->
                                     </div>
                                 </div>
                             </div>
@@ -73,7 +68,7 @@ $oOdecet->nactiSeznamOdectu();
                             <?php
                             //debug($oOdecet->aOdecty);
                             foreach ($oOdecet->aOdecty as $aOdecet) : ?>
-                                <div class="col-12 col-sm-6 col-md-4 mb-3 odecty">
+                                <div class="col-12 col-md-6 col-lg-4 mb-3 odecty">
                                     
                                     <?php
                                     //Jen group editor nebo vyssi muze editovat
@@ -132,6 +127,17 @@ $oOdecet->nactiSeznamOdectu();
                                                     <div class="d-flex justify-content-between">
                                                     <span class="text-muted"><?= __('Denní &oslash;') ?></span>
                                                     <span><?= round($aOdecet["prumernaSpotrebaDen"], 3) ?> <?= $aOdecet["jednotka"] ?></span>
+                                                    </div>
+                                                    <div class="text-end">
+                                                    <?php if ($aOdecet["rozdilSpotreby"] < 0) : ?>
+                                                        <span class="text-success">
+                                                            <i class="bi bi-arrow-down"> </i><?= round($aOdecet["rozdilSpotreby"], 3) ?>
+                                                        </span>
+                                                    <?php elseif ($aOdecet["rozdilSpotreby"] > 0) : ?>
+                                                        <span class="text-danger">
+                                                            <i class="bi bi-arrow-up"> </i><?= round($aOdecet["rozdilSpotreby"], 3) ?>
+                                                        </span>
+                                                    <?php endif; ?>
                                                     </div>
                                                 </div>
                                                 <div class="col-12">
