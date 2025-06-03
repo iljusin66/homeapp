@@ -20,3 +20,4 @@
         </li>
     </ul>
 </nav>
+<?php include_once 'inc/alert.php'; ?>

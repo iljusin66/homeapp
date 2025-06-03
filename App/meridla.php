@@ -21,7 +21,7 @@ new config();
 class meridla {
 
     private static $initialized = false;
-    public $rokOdectu = 0;
+    public $obdobiOdectu = '';
     private $jenAktivniMeridla = 1; // 1 - jen aktivní, 0 - všechny
     private $jenAktivniUzivatele = 1; // 1 - jen aktivní, 0 - všichni
     
@@ -31,7 +31,6 @@ class meridla {
 
     function __construct($aUser = []) {
         $this->aUser = $aUser;
-        $this->rokOdectu = date("Y");
         if (!self::$initialized) {
             $this->nactiSeznamMeridelUzivatele();
             $this->nactiMeridlo();

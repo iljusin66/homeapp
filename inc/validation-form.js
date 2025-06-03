@@ -24,7 +24,7 @@ class FormValidace {
             if ($(form).find('.is-invalid').length === 0) {
                 $('#valid', form).val(1);
                 $(form).attr('method', 'post'); // nastavíme metodu formuláře na POST
- //               form.submit(); // ručně odešleme formulář
+                form.submit(); // ručně odešleme formulář
             }
         });
     }

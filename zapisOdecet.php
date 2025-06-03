@@ -28,7 +28,6 @@ $oOdecet = new zapisOdecet($oUser->aUser);
   <body class="ps-3 pe-3 m-0 border-0 bg-light">
     
         <?php include('inc/navbar-top.php') ?>
-        <?php include_once 'inc/alert.php'; ?>
         <div class="row">
             <div class="col p-3 bg-white m-2 rounded-3">
                 <div class="row">
@@ -51,21 +50,36 @@ $oOdecet = new zapisOdecet($oUser->aUser);
                                         <!-- První pole -->
                                         <div class="me-3 mb-2" style="max-width: 400px; width: 100%;">
                                             <div class="d-flex flex-column flex-sm-row align-items-sm-center">
-                                            <label for="odecet" class="me-sm-2 mb-1 mb-sm-0" style="width: 100px; flex-shrink: 0;"><?= __('Hodnota') ?></label>
-                                            <input type="number" placeholder="0.000" step=".001" class="form-control" id="odecet" name="odecet" value="<?= utils::fixFloat(round($oOdecet->aOdecet["odecet"], 3), false) ?>" required>
+                                                <label for="odecet" class="me-sm-2 mb-1 mb-sm-0" style="width: 100px; flex-shrink: 0;">
+                                                    <?= __('Hodnota') ?>
+                                                </label>
+                                                <input type="number" placeholder="0.000" step=".001" class="form-control" id="odecet" name="odecet" value="<?= utils::fixFloat(round($oOdecet->aOdecet["odecet"], 3), false) ?>" required>
                                             </div>
                                         </div>
 
                                         <!-- Druhé pole -->
                                         <div class="me-3 mb-2" style="max-width: 400px; width: 100%;">
                                             <div class="d-flex flex-column flex-sm-row align-items-sm-center">
-                                            <label for="casodectu" class="me-sm-2 mb-1 mb-sm-0" style="width: 100px; flex-shrink: 0;"><?= __('Datum a čas') ?></label>
-                                            <input type="datetime-local" class="form-control" id="casodectu" value="<?= utils::safeForm($oOdecet->aOdecet["casodectu"]) ?>" name="casodectu" required>
+                                                <label for="casodectu" class="me-sm-2 mb-1 mb-sm-0" style="width: 100px; flex-shrink: 0;">
+                                                    <?= __('Datum a čas') ?>
+                                                </label>
+                                                <input type="datetime-local" class="form-control" id="casodectu" value="<?= utils::safeForm($oOdecet->aOdecet["casodectu"]) ?>" name="casodectu" required>
+                                            </div>
+                                        </div>
+
+                                        <!-- Třetí pole (opraveno) -->
+                                        <div class="me-3 mb-2" style="max-width: 400px; width: 100%;">
+                                            <div class="d-flex flex-column flex-sm-row align-items-sm-center">
+                                                <label class="me-sm-2 mb-1 mb-sm-0" style="width: 100px; flex-shrink: 0;"></label>
+                                                <div class="form-check m-0 pt-sm-1">
+                                                    <input type="checkbox" class="form-check-input me-2" id="zacatekobdobi" value="1" name="zacatekobdobi" <?= ($oOdecet->aOdecet["zacatekobdobi"] == 1) ? 'checked' : '' ?>>
+                                                    <label class="form-check-label" for="zacatekobdobi"><?= __('Jedná se o začátek období?') ?></label>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <!-- Třetí pole přes celou šířku -->
+                                    <!-- Čtvrté pole přes celou šířku -->
                                     <div class="mb-2">
                                         <div class="d-flex flex-column flex-sm-row align-items-sm-center">
                                             <label for="poznamka" class="me-sm-2 mb-1 mb-sm-0" style="width: 100px; flex-shrink: 0;"><?= __('Poznámka') ?></label>

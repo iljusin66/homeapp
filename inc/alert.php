@@ -3,9 +3,8 @@ use Latecka\Utils\request;
 $status = request::string('status', 'GET');
 $message = '';
 $alertType = '';
-
 if ($status === 'success') {
-    if (c_ScriptBaseName == 'zapisOdecet') {
+    if (c_ScriptBaseName == 'zapisOdecet' || c_ScriptBaseName == 'seznamOdectu') {
         $message = __('Odečet byl úspěšně uložen.');
     } else {
         $message = __('Záznam byl úspěšně uložen.');
@@ -13,7 +12,7 @@ if ($status === 'success') {
     $message = __('Odečet byl úspěšně uložen.');
     $alertType = 'alert-success';
 } elseif ($status === 'error') {
-    if (c_ScriptBaseName == 'zapisOdecet') {
+    if (c_ScriptBaseName == 'zapisOdecet' || c_ScriptBaseName == 'seznamOdectu') {
         $message = __('Chyba při ukládání odečtu');
     } else {
         $message = __('Záznam se nepodařilo uložit.');

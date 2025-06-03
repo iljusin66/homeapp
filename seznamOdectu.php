@@ -34,7 +34,7 @@ $oOdecet->nactiSeznamOdectu();
                 <div class="row">
                     <div class="col-2 d-print-none d-none d-md-block"></div>
                     <div class="col ps-0">
-                        <h1 class="fs-3 ps-0"><?= $oOdecet->aMeridlo['nazev'] ?> - <?= __('rok') ?> <?= $oOdecet->rokOdectu ?></h1>
+                        <h1 class="fs-3 ps-0"><?= $oOdecet->aMeridlo['nazev'] ?> - <?= __('od') ?> <?= utils::getLocaleDate($oOdecet->zacatekObdobiOdectu) ?></h1>
                     </div>
                 </div>
                 <div class="row pt-0">

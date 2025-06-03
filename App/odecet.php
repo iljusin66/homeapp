@@ -27,6 +27,7 @@ class odecet extends meridla{
     public $celkoveNaklady = 0;
     public $prumernaSpotrebaHodina = 0;
     public $prumernaSpotrebaDen = 0;
+    public $zacatekObdobiOdectu = '';
 
     function __construct($aUser = []) {
         
@@ -36,15 +37,57 @@ class odecet extends meridla{
             parent::__construct($this->aUser);
             self::$initialized = true;
         }
+        $this->posledniObdobiOdectu();
     }
 
-    private function nactiOdectyRok() {
+    private function posledniObdobiOdectu() {
+        if (
+            (empty($this->aMeridlo) || $this->aMeridlo['id'] == 0)
+            || (empty($this->aUser) || $this->aUser['id'] == 0)
+            ) :
+            $this->aOdecty = [];
+            return;
+        endif;
+        $q = 'SELECT s.casodectu AS posledniObdobiOdectu FROM v_spotrebascenami AS s
+            JOIN meridla2users AS mu ON mu.idmeridla = s.idmeridla AND mu.iduser = ?
+            WHERE s.idmeridla = ? AND zacatekobdobi = 1 ORDER BY s.casodectu DESC LIMIT 0, 1';
+            $row = db::f($q, [$this->aUser['id'], $this->aMeridlo['id']]);
+        //Paklize nebyl nalezen zadny rozhodny odečet, vezmeme poslední odečet
+        // a pokud ani ten neexistuje, nastavíme období na aktuální čas
+        if (empty($row['posledniObdobiOdectu'])) :
+            $q = 'SELECT MIN(s.casodectu) AS posledniObdobiOdectu FROM v_spotrebascenami AS s
+            JOIN meridla2users AS mu ON mu.idmeridla = s.idmeridla AND mu.iduser = ?
+            WHERE s.idmeridla = ?';
+            $row = db::f($q, [$this->aUser['id'], $this->aMeridlo['id']]);
+            //Zaznam nalezen nebyl, nastavíme období na aktuální čas
+            if (empty($row['posledniObdobiOdectu'])) :
+                $this->zacatekObdobiOdectu = date('Y-m-d H:i:s');
+            else:
+               $this->zacatekObdobiOdectu = $row['posledniObdobiOdectu'];
+            endif;
+        else :
+            $this->zacatekObdobiOdectu = $row['posledniObdobiOdectu'];
+        endif;
+    }
+
+    private function nactiOdectyObdobi() {
+        if (
+            (empty($this->aMeridlo) || $this->aMeridlo['id'] == 0)
+            || (empty($this->aUser) || $this->aUser['id'] == 0)
+            ) :
+            $this->aOdecty = [];
+            return;
+        endif;
+
         $q = 'SELECT s.* FROM v_spotrebascenami AS s
             JOIN meridla2users AS mu ON mu.idmeridla = s.idmeridla AND mu.iduser = ?
             JOIN role AS r ON r.id = mu.idrole
-            WHERE s.idmeridla = ? AND YEAR(s.casodectu) = ? 
+            WHERE s.idmeridla = ? AND s.casodectu >= ? 
             ORDER BY s.casodectu DESC';
-            $rows = db::fa($q, [$this->aUser['id'], $this->aMeridlo['id'], $this->rokOdectu]);
+
+        $q = 'CALL SpotrebaOd(?, ?, ?);';            
+            $rows = db::fa($q, [$this->aUser['id'], $this->aMeridlo['id'], $this->zacatekObdobiOdectu]);
+            
             foreach ($rows as $row) :
                 $this->aOdecty[] = $row;
             endforeach;
@@ -71,7 +114,7 @@ class odecet extends meridla{
     }
 
     public function nactiSeznamOdectu() {
-        $this->nactiOdectyRok();
+        $this->nactiOdectyObdobi();
         if (empty($this->aOdecty)) return false;
         return $this->aOdecty;
     }
