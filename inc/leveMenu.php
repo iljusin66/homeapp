@@ -27,15 +27,15 @@ $homeLink = '<a class="nav-link '. ((c_ScriptBaseName == 'index') ? 'active' : '
                 <div class="accordion-body p-2">
                     <ul class="nav flex-column mb-3">
                         <li class="nav-item">
-                            <a class="nav-link pb-1 pt-1 <?= (c_ScriptBaseName == "zapisOdecet" && $id == $oOdecet->aMeridlo["id"] ? 'active' : '') ?>"
-                               href="<?= c_MainUrl . 'zapisOdecet.php?idm=' . $id . '&t=' . time() ?>">
-                                <?= __('Nový odečet') ?>
-                            </a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link pb-1 pt-1 <?= (c_ScriptBaseName == "seznamOdectu" && $id == $oOdecet->aMeridlo["id"] ? 'active' : '') ?>"
                                href="<?= c_MainUrl . 'seznamOdectu.php?idm=' . $id . '&t=' . time() ?>">
                                 <?= __('Seznam odečtů') ?>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link pb-1 pt-1 <?= (c_ScriptBaseName == "zapisOdecet" && $id == $oOdecet->aMeridlo["id"] ? 'active' : '') ?>"
+                               href="<?= c_MainUrl . 'zapisOdecet.php?idm=' . $id . '&t=' . time() ?>">
+                                <?= __('Nový odečet') ?>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -78,15 +78,15 @@ $homeLink = '<a class="nav-link '. ((c_ScriptBaseName == 'index') ? 'active' : '
             <div id="<?= $collapseId ?>" class="collapse <?= $isActive ? 'show' : '' ?>" data-bs-parent=".offcanvas-body">
                 <ul class="nav flex-column px-3 pb-2">
                     <li class="nav-item">
-                        <a class="nav-link pb-1 pt-1 <?= (c_ScriptBaseName == "zapisOdecet" && $id == $oOdecet->aMeridlo["id"] ? 'active' : '') ?>"
-                            href="<?= c_MainUrl . 'zapisOdecet.php?idm=' . $id . '&t=' . time() ?>">
-                            <?= __('Nový odečet') ?>
-                        </a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link pb-1 pt-1 <?= (c_ScriptBaseName == "seznamOdectu" && $id == $oOdecet->aMeridlo["id"] ? 'active' : '') ?>"
                             href="<?= c_MainUrl . 'seznamOdectu.php?idm=' . $id . '&t=' . time() ?>">
                             <?= __('Seznam odečtů') ?>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link pb-1 pt-1 <?= (c_ScriptBaseName == "zapisOdecet" && $id == $oOdecet->aMeridlo["id"] ? 'active' : '') ?>"
+                            href="<?= c_MainUrl . 'zapisOdecet.php?idm=' . $id . '&t=' . time() ?>">
+                            <?= __('Nový odečet') ?>
                         </a>
                     </li>
                     <li class="nav-item">

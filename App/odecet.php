@@ -28,7 +28,9 @@ class odecet extends meridla{
     public $prumernaSpotrebaHodina = 0;
     public $prumernaSpotrebaDen = 0;
     public $zacatekObdobiOdectu = '';
+    public $konecObdobiOdectu = null;
 
+    
     function __construct($aUser = []) {
         
         $this->aUser = $aUser;
@@ -37,6 +39,7 @@ class odecet extends meridla{
             parent::__construct($this->aUser);
             self::$initialized = true;
         }
+        $this->konecObdobiOdectu = date('Y-m-d H:i:s');
         $this->posledniObdobiOdectu();
     }
 
@@ -79,14 +82,15 @@ class odecet extends meridla{
             return;
         endif;
 
+        /*
         $q = 'SELECT s.* FROM v_spotrebascenami AS s
             JOIN meridla2users AS mu ON mu.idmeridla = s.idmeridla AND mu.iduser = ?
             JOIN role AS r ON r.id = mu.idrole
             WHERE s.idmeridla = ? AND s.casodectu >= ? 
             ORDER BY s.casodectu DESC';
-
-        $q = 'CALL SpotrebaOd(?, ?, ?);';            
-            $rows = db::fa($q, [$this->aUser['id'], $this->aMeridlo['id'], $this->zacatekObdobiOdectu]);
+*/
+        $q = 'CALL SpotrebaOd(?, ?, ?, ?);';            
+            $rows = db::fa($q, [$this->aUser['id'], $this->aMeridlo['id'], $this->zacatekObdobiOdectu, $this->konecObdobiOdectu]);
             
             foreach ($rows as $row) :
                 $this->aOdecty[] = $row;

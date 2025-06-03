@@ -10,10 +10,16 @@ define('c_bWork', ($_SERVER["SERVER_NAME"]=='homeapp'));
 define('c_Mena', 'Kč');
 define('c_AppName', 'Blinkr'); //Jmeno aplikace
 
+//Defaultni jazyk aplikace
 define('c_DefaultLang', 'cs');
-define('c_bNoTranslate', true); //Pokud je true, tak se preklady neprovadi, ale jen se presmerovavaji retezce na output a sanitizeHTMLm funkce
-define('c_RequestPost', $_SERVER['REQUEST_METHOD'] == 'POST');
-define('c_RequestGet', $_SERVER['REQUEST_METHOD'] == 'GET');
+
+//Pokud je true, tak se preklady neprovadi, ale jen se presmerovavaji retezce na output a sanitizeHTMLm funkce
+define('c_bNoTranslate', true);
+
+//Typ requestu
+//Pokud je true, tak se pouziva POST request, jinak GET
+define('c_RequestPost', $_SERVER["REQUEST_METHOD"] == "POST" || $_SERVER['REQUEST_METHOD'] == 'PUT');
+
 
 //Maximalni pololeny pocet pokusu o prihlaseni, nez dojde k blokaci
 define('c_MaxLoginPokusu', 10);
@@ -50,9 +56,9 @@ define('ca_Role', [
  */
 define('ca_RoleGroup', [
     'reader' => [ca_Role['reader'], ca_Role['writer'], ca_Role['editor'], ca_Role['admin']], //Smi cist
-    'writer' => [ca_Role['writer'], ca_Role['editor'], ca_Role['admin']], //Smi cist a zapisovat
-    'editor' => [ca_Role['editor'], ca_Role['admin']], //Smi cist, zapisovat a editovat
-    'admin' => [ca_Role['admin']] //Smi vsechno
+    'writer' => [ca_Role['writer'], ca_Role['editor'], ca_Role['admin']], //Smi cist a zapisovat meridla. Reader uz v ni neni, protoze ten nema opravneni zapisovat
+    'editor' => [ca_Role['editor'], ca_Role['admin']], //Smi cist, zapisovat a editovat meridla (vcetne mazani). Reader a writer uz v ni neni, protoze ti nemaji opravneni editovat
+    'admin' => [ca_Role['admin']] //Smi vsechno. Reader, writer a editor uz v ni neni, protoze ti nemaji opravneni adminovat
 ]);
 
 //Unikatni razitko prohlizece. Pouzije se pro identifikaci uzivatele a jeho prohlizece

@@ -65,11 +65,21 @@ $oOdecet->nactiSeznamOdectu();
                             </div>
                         </div>
                         <div id="dataContainer" class="row">
+                                <div class="col-12 col-md-6 col-lg-4 mb-3 odecty">
+                                    <a href="<?= c_MainUrl; ?>zapisOdecet.php?idm=<?= $aOdecet["idmeridla"] ?>&<?= time() ?>"
+                                    class="card text-decoration-none text-body mb-2 bg-lightgreen text-center d-flex align-items-center justify-content-center"
+                                    style="height: 9.8rem;">
+                                        <div class="d-flex flex-column align-items-center">
+                                            <i class="bi bi-plus-circle text-success" style="font-size: 5rem; font-weight: bold;"></i>
+                                            <div class="mt-0 text-success" style="position:relative;top:-0.5rem"><?= __('Přidat nový odečet') ?></div>
+                                        </div>
+                                    </a>
+                                </div>
+
                             <?php
                             //debug($oOdecet->aOdecty);
                             foreach ($oOdecet->aOdecty as $aOdecet) : ?>
                                 <div class="col-12 col-md-6 col-lg-4 mb-3 odecty">
-                                    
                                     <?php
                                     //Jen group editor nebo vyssi muze editovat
                                     if (in_array($oUser->aUser["meridlaRole"][$aOdecet["idmeridla"]], ca_RoleGroup["writer"])) : ?>
@@ -91,7 +101,7 @@ $oOdecet->nactiSeznamOdectu();
                                             </small>
                                             </div>
 
-                                            <!-- Dvě sloupce vedle sebe -->
+                                            <!-- Dva sloupce vedle sebe -->
                                             <div class="row small">
                                             
                                                 <!-- Levý sloupec -->

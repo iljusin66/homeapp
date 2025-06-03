@@ -1,11 +1,14 @@
 <?php
+USE Latecka\Utils\utils;
+
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 
 require_once 'autoload.php';
-
 $oUser = new user();
+$oMeridlo = new meridla($oUser->aUser);
+$oOdecet = new odecet($oUser->aUser);
 ?><!DOCTYPE html>
 <html lang="cs">
     <head>
@@ -25,21 +28,79 @@ $oUser = new user();
         p { min-height:3em; display: inline-block; }
     </style>
   </head>
-    <body>
-        <div class="row text-center mt-5">
-        <form method="post" action="login.php" id="frmLogin" class="col-3 m-auto text-start">
-            <div class="m-3">
-                <label for="login" class="form-label">Přihlašovací jméno:</label>
-                <input type="text" id="user" class="form-control" name="user" value="<?= $oUser->aUser ?>">
-              </div>
-              <div class="m-3">
-                <label for="password" class="form-label">Heslo:</label>
-                <input type="password" class="form-control" id="password" name="password">
-                <div class="invalid-feedback mt-3" style="display:block;"> <?= implode(', ', (array)$oUser->aErr) ?> </div>
-              </div>
-              
-              <button type="submit" class="btn btn-primary m-3">Přihlásit</button>
-        </form>
+    <body class="ps-3 pe-3 m-0 border-0 bg-light">
+    
+        <?php include('inc/navbar-top.php') ?>
+        <div class="row">
+            <div class="col p-3 bg-white m-2 rounded-3">
+                <div class="row">
+                    <div class="col-2 d-print-none d-none d-md-block"></div>
+                    <div class="col ps-0">
+                        <h1 class="fs-3 ps-0"><?= $oOdecet->aMeridlo['nazev'] ?></h1>
+                    </div>
+                </div>
+                <div class="row pt-0">
+                    <?php include_once 'inc/leveMenu.php'; ?>
+                    <div class="col" style="min-height: 85vh">
+                        <div id="dataContainer" class="row">
+                            <form class="p-1 pt-0 me-1 col-l-10 col-12" id="frmOdecetEdit" action="<?= c_ScriptBaseName ?>.php" method="POST">
+                                <input type="hidden" name="idm" value="<?= utils::fixFloat($oMeridlo->aMeridlo['id']) ?>">
+                                <fieldset class="row">
+                                    <legend class="form-label"><?= ($oMeridlo->aMeridlo["id"]==0) ? __('Vložit měřidlo') : __('Oprava měřidla') ?></legend>
+                                    <div class="row">
+                                    <div class="d-flex flex-wrap">
+                                        <!-- První pole -->
+                                        <div class="me-3 mb-2" style="max-width: 400px; width: 100%;">
+                                            <div class="d-flex flex-column flex-sm-row align-items-sm-center">
+                                                <label for="odecet" class="me-sm-2 mb-1 mb-sm-0" style="width: 100px; flex-shrink: 0;">
+                                                    <?= __('Hodnota') ?>
+                                                </label>
+                                                <input type="number" placeholder="0.000" step=".001" class="form-control" id="odecet" name="odecet" value="<?= utils::fixFloat(round($oMeridlo->aMeridlo["odecet"], 3), false) ?>" required>
+                                            </div>
+                                        </div>
+
+                                        <!-- Druhé pole -->
+                                        <div class="me-3 mb-2" style="max-width: 400px; width: 100%;">
+                                            <div class="d-flex flex-column flex-sm-row align-items-sm-center">
+                                                <label for="casodectu" class="me-sm-2 mb-1 mb-sm-0" style="width: 100px; flex-shrink: 0;">
+                                                    <?= __('Datum a čas') ?>
+                                                </label>
+                                                <input type="datetime-local" class="form-control" id="casodectu" value="<?= utils::safeForm($oMeridlo->aMeridlo["id"]) ?>" name="casodectu" required>
+                                            </div>
+                                        </div>
+
+                                        <!-- Třetí pole -->
+                                        <div class="me-3 mb-2" style="max-width: 400px; width: 100%;">
+                                            <div class="d-flex flex-column flex-sm-row align-items-sm-center">
+                                                <label class="me-sm-2 mb-1 mb-sm-0" style="width: 100px; flex-shrink: 0;"></label>
+                                                <div class="form-check m-0 pt-sm-1">
+                                                    <input type="checkbox" class="form-check-input me-2" id="zacatekobdobi" value="1" name="zacatekobdobi" <?= ($oMeridlo->aMeridlo["id"] == 1) ? 'checked' : '' ?>>
+                                                    <label class="form-check-label" for="zacatekobdobi"><?= __('Chci něco zaškrtnout?') ?></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Čtvrté pole přes celou šířku -->
+                                    <div class="mb-2">
+                                        <div class="d-flex flex-column flex-sm-row align-items-sm-center">
+                                            <label for="poznamka" class="me-sm-2 mb-1 mb-sm-0" style="width: 100px; flex-shrink: 0;"><?= __('Poznámka') ?></label>
+                                            <input type="text" class="form-control" id="poznamka" value="<?= utils::safeForm($oMeridlo->aMeridlo["poznamka"]) ?>" name="poznamka">
+                                    </div>
+                                    </div>
+
+                                                                      
+                                </fieldset>
+                                <input type="submit" name="ulozit" value="<?= __('Uložit') ?>" class="btn btn-primary">
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
         </div>
+        <?php include_once 'inc/modalInfo.php'; ?>
+        <script src="<?= c_MainUrl; ?>inc/validation-form.js"></script>
     </body>
 </html>

@@ -67,13 +67,13 @@ $oOdecet = new zapisOdecet($oUser->aUser);
                                             </div>
                                         </div>
 
-                                        <!-- Třetí pole (opraveno) -->
+                                        <!-- Třetí pole -->
                                         <div class="me-3 mb-2" style="max-width: 400px; width: 100%;">
                                             <div class="d-flex flex-column flex-sm-row align-items-sm-center">
                                                 <label class="me-sm-2 mb-1 mb-sm-0" style="width: 100px; flex-shrink: 0;"></label>
                                                 <div class="form-check m-0 pt-sm-1">
                                                     <input type="checkbox" class="form-check-input me-2" id="zacatekobdobi" value="1" name="zacatekobdobi" <?= ($oOdecet->aOdecet["zacatekobdobi"] == 1) ? 'checked' : '' ?>>
-                                                    <label class="form-check-label" for="zacatekobdobi"><?= __('Jedná se o začátek období?') ?></label>
+                                                    <label class="form-check-label" for="zacatekobdobi"><?= __('Jedná se o začátek měřeného období?') ?></label>
                                                 </div>
                                             </div>
                                         </div>

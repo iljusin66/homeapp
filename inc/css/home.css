@@ -16,6 +16,11 @@ tr.table-secondary td:first-child { padding-left: 1em; }
 tr.table-secondary td { font-weight: bold; }
 tr.table-warning td:first-child { padding-left: 1.5em; font-weight: bold; }
 
+
+.bg-lightgreen {
+    background-color: #d4edda; /* Bootstrap-like světle zelená */
+}
+
 legend { font-size: 1.1rem !important; font-weight: 600; }
 .input-group-sm>.btn, .input-group-sm>.form-control, .input-group-sm>.form-select, .input-group-sm>.input-group-text {
     padding: .15rem .5rem !important;
