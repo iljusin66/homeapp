@@ -1,15 +1,24 @@
 <?php
 use Latecka\Utils\request;
 $status = request::string('status', 'GET');
+$akce = request::string('akce', 'GET');
 $message = '';
 $alertType = '';
+
 if ($status === 'success') {
     if (c_ScriptBaseName == 'zapisOdecet' || c_ScriptBaseName == 'seznamOdectu') {
-        $message = __('Odečet byl úspěšně uložen.');
+        if ($akce === 'delete') {
+            $message = __('Odečet byl úspěšně smazán.');
+        } else {
+            $message = __('Odečet byl úspěšně uložen.');
+        }
     } else {
-        $message = __('Záznam byl úspěšně uložen.');
+        if ($akce === 'delete') {
+            $message = __('Záznam byl úspěšně smazán.');
+        } else {
+            $message = __('Záznam byl úspěšně uložen.');
+        }
     }
-    $message = __('Odečet byl úspěšně uložen.');
     $alertType = 'alert-success';
 } elseif ($status === 'error') {
     if (c_ScriptBaseName == 'zapisOdecet' || c_ScriptBaseName == 'seznamOdectu') {

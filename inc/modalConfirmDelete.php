@@ -4,13 +4,13 @@
     <div class="modal-content">
         <div class="modal-header">
         <h5 class="modal-title" id="modalConfirmDeleteLabel"><?= __('Potvrzení smazání') ?></h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="<?= __('Zavřít') ?>"></button>
+        <button type="button" class="btn-sm btn-close" data-bs-dismiss="modal" aria-label="<?= __('Zavřít') ?>"></button>
         </div>
         <div class="modal-body">
-        <?= __('Opravdu chcete tento záznam?') ?>
+        <?= __('Opravdu chcete smazat tento záznam?') ?>
         </div>
         <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><?= __('Zrušit') ?></button>
+        <button type="button" class="btn btn-sm btn-secondary cancel" data-bs-dismiss="modal"><?= __('Zrušit') ?></button>
         <a href="#" class="btn btn-danger confirm"><?= __('Smazat') ?></a>
         </div>
     </div>

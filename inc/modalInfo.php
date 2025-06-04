@@ -6,7 +6,7 @@
       <!-- Modal Header -->
       <div class="modal-header">
         <h4 class="modal-title">Modal Heading</h4>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        <button type="button" class="btn-sm btn-close" data-bs-dismiss="modal"></button>
       </div>
 
       <!-- Modal body -->
@@ -16,7 +16,7 @@
 
       <!-- Modal footer -->
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Zavřít</button>
+        <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Zavřít</button>
       </div>
 
     </div>

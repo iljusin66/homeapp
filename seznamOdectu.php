@@ -66,7 +66,7 @@ $oOdecet->nactiSeznamOdectu();
                         </div>
                         <div id="dataContainer" class="row">
                                 <div class="col-12 col-md-6 col-lg-4 mb-3 odecty">
-                                    <a href="<?= c_MainUrl; ?>zapisOdecet.php?idm=<?= $aOdecet["idmeridla"] ?>&<?= time() ?>"
+                                    <a href="<?= c_MainUrl; ?>zapisOdecet.php?idm=<?= $oOdecet->aMeridlo["id"] ?>&<?= time() ?>"
                                     class="card text-decoration-none text-body mb-2 bg-lightgreen text-center d-flex align-items-center justify-content-center"
                                     style="height: 9.8rem;">
                                         <div class="d-flex flex-column align-items-center">

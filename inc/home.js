@@ -12,16 +12,22 @@ const smazOdecet = function (el) {
 
     myModal.show();
     spinnerButtonOff(el);
-    var ido = el.attr('data-ido');
-    var idm = el.attr('data-idm');
+    var url = el.attr('data-url');
     
-    //Akce po potvrzení. Zavolám AJAX na smazání
+    //Akce po potvrzení. Přesměruju na smazani
     modalWindow.find('.confirm').off('click').on('click', function() {
-        smazOdecetAjax(ido, idm, el);
+        window.location.href=url;
+    });
+    
+    //Akce po zrušení. Zavřu modal
+    modalWindow.find('.cancel').off('click').on('click', function() {
+        spinnerButtonOff(el);
+        myModal.hide();
     });
 
 };
 
+/*
 const smazOdecetAjax = function (ido, idm, el) {
     $.ajax({
         url: _hostname + 'ajaxSmazOdecet.php?ido=' + ido + '&idm=' + idm
@@ -49,7 +55,7 @@ const smazOdecetAjax = function (ido, idm, el) {
         }
     });
 }
-
+*/
 const spinnerButtonOn = function (el, spinnerText = ' strpení prosím...', disable = true) {
     el.attr('data-text-orig', el.html());
     var spinner = '<span class="spinner-border spinner-border-sm"></span>';
