@@ -63,7 +63,7 @@ $oOdecet = new zapisOdecet($oUser->aUser);
                                                 <label for="casodectu" class="me-sm-2 mb-1 mb-sm-0" style="width: 100px; flex-shrink: 0;">
                                                     <?= __('Datum a čas') ?>
                                                 </label>
-                                                <input type="datetime-local" class="form-control" id="casodectu" value="<?= (empty(utils::safeForm($oOdecet->aOdecet["casodectu"]))) ? date('Y-m-d H:i:s') : utils::safeForm($oOdecet->aOdecet["casodectu"]) ?>" name="casodectu" required>
+                                                <input type="datetime-local" step="1" class="form-control" id="casodectu" value="<?= (empty(utils::safeForm($oOdecet->aOdecet["casodectu"]))) ? date('Y-m-d H:i:s') : utils::safeForm($oOdecet->aOdecet["casodectu"]) ?>" name="casodectu" required>
                                             </div>
                                         </div>
 
@@ -102,11 +102,11 @@ $oOdecet = new zapisOdecet($oUser->aUser);
                                 endif;
                                 ?>
 
-                                <a href="seznamOdectu.php?idm=<?= $oOdecet->aMeridlo['id'] ?>" class="btn btn-sm btn-secondary me-2"><?= __('Zrušit') ?></a>
+                                <a href="seznamOdectu.php?idm=<?= $oOdecet->aMeridlo['id'] ?>" class="btn btn-sm btn-secondary me-2"><?= __('Zpět') ?></a>
                                 <?php
                                 //Jen group writer muze zapisovat
                                 if (in_array($oUser->aUser["meridlaRole"][$oOdecet->aMeridlo['id']], ca_RoleGroup["writer"])) : ?>
-                                <input type="submit" name="ulozit" value="<?= __('Uložit') ?>" class="btn btn-sm btn-primary" id="btnUlozitOdecet">
+                                <input type="submit" name="ulozit" value="<?= __('Uložit') ?>" class="btn btn-success px-5" id="btnUlozitOdecet">
                                 <?php
                                 endif;
                                 ?>

@@ -8,26 +8,23 @@ class FormValidace {
         this.init();
     }
 
-    init() {
-        console.log('Inicializuji validaci formuláře');
-        // Musíme zachytit this třídy, jinak bude this uvnitř callbacku odkazovat na DOM prvek (form)
-        $('form').on('submit', (event) => {
-            // this = instance třídy FormValidace
-            const form = event.currentTarget;
+init() {
+    console.log('Inicializuji validaci formuláře');
+    $('form').on('submit', (event) => {
+        const form = event.currentTarget;
 
-            $('input', form).removeClass('is-invalid');
-            $('input', form).removeClass('is-valid');
+        $('input', form).removeClass('is-invalid');
+        $('input', form).removeClass('is-valid');
 
-            this.validace(event, form); // předáme form, který validujeme
+        this.validace(event, form);
 
-            // Kontrola, zda existují nevalidní inputy
-            if ($(form).find('.is-invalid').length === 0) {
-                $('#valid', form).val(1);
-                $(form).attr('method', 'post'); // nastavíme metodu formuláře na POST
-                form.submit(); // ručně odešleme formulář
-            }
-        });
-    }
+        if ($(form).find('.is-invalid').length === 0) {
+            $('#valid', form).val(1);
+            $(form).attr('method', 'post');
+            form.submit();
+        }
+    });
+}
 
     validace(event, form) {
         event.preventDefault();

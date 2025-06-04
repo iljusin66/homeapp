@@ -89,16 +89,19 @@ $oOdecet->nactiSeznamOdectu();
                                             
                                             <!-- Datum nahoře -->
                                             <div class="card-header-custom d-flex justify-content-between align-items-center mb-2">
-                                            <h6 class="mb-0"><?= utils::getLocaleDateTime($aOdecet["casodectu"]) ?></h6>
-                                            <small class="text-muted">
-                                                <?php
-                                                if (utils::fixInt($aOdecet["rozdilDnu"]) > 0) {
-                                                    echo __('Dnů') . ': +' . utils::fixInt($aOdecet["rozdilDnu"]);
-                                                } elseif (utils::fixInt($aOdecet["rozdilHodin"]) > 0) {
-                                                    echo __('Hodin') . ': +' . utils::fixInt($aOdecet["rozdilHodin"]);
-                                                }
-                                                ?>
-                                            </small>
+                                                <div>
+                                                    <span class="mb-0 fw-bold"><?= utils::getLocaleDateTime($aOdecet["casodectu"]) ?></span>
+                                                    <small class="text-muted">
+                                                        <?php
+                                                        if (utils::fixInt($aOdecet["rozdilDnu"]) > 0) {
+                                                            echo '+' . utils::fixInt($aOdecet["rozdilDnu"]).__('d');
+                                                        } elseif (utils::fixInt($aOdecet["rozdilHodin"]) > 0) {
+                                                            echo '+' . utils::fixInt($aOdecet["rozdilHodin"]).__('h');
+                                                        }
+                                                        ?>
+                                                    </small>
+                                                </div>
+                                                <div><span class="mb-0 fs-6 fw-bold"><?= round(utils::fixFloat($aOdecet["odecet"]), 3) ?> <?= $aOdecet["jednotka"] ?></span></div>
                                             </div>
 
                                             <!-- Dva sloupce vedle sebe -->
@@ -106,28 +109,31 @@ $oOdecet->nactiSeznamOdectu();
                                             
                                                 <!-- Levý sloupec -->
                                                 <div class="col-6">
+                                                    <!--<div class="d-flex justify-content-between">
+                                                        <span class="text-muted"><?= __('Odečet') ?>:</span>
+                                                        <span><?= round(utils::fixFloat($aOdecet["odecet"]), 3) ?> <?= $aOdecet["jednotka"] ?></span>
+                                                    </div>-->
                                                     <div class="d-flex justify-content-between">
-                                                    <span class="text-muted"><?= __('Odečet') ?>:</span>
-                                                    <span><?= round(utils::fixFloat($aOdecet["odecet"]), 3) ?> <?= $aOdecet["jednotka"] ?></span>
+                                                        <span class="text-muted"><?= __('Spotřeba') ?></span>
+                                                        <span><?= round($aOdecet["spotreba"], 3) ?> <?= $aOdecet["jednotka"] ?></span>
                                                     </div>
                                                     <div class="d-flex justify-content-between">
-                                                    <span class="text-muted"><?= __('Zadal') ?>:</span>
-                                                    <span><?= $aOdecet["userZadal"] ?></span>
+                                                        <span class="text-muted"><?= __('Zadal') ?>:</span>
+                                                        <span><?= $aOdecet["userZadal"] ?></span>
                                                     </div>
-                                                    <?php if ($aOdecet["userOpravil"] != '') : ?>
+                                                    
                                                     <div class="d-flex justify-content-between">
-                                                    <span class="text-muted"><?= __('Opravil') ?>:</span>
-                                                    <span><?= $aOdecet["userOpravil"] ?></span>
+                                                        <?php if ($aOdecet["userOpravil"] != '') : ?>
+                                                        <span class="text-muted"><?= __('Opravil') ?>:</span>
+                                                        <?php endif; ?>
+                                                        <span><?= $aOdecet["userOpravil"] ?></span>
                                                     </div>
-                                                    <?php endif; ?>
+                                                    
                                                 </div>
 
                                                 <!-- Pravý sloupec -->
                                                 <div class="col-6">
-                                                    <div class="d-flex justify-content-between">
-                                                    <span class="text-muted"><?= __('Spotřeba') ?></span>
-                                                    <span><?= round($aOdecet["spotreba"], 3) ?> <?= $aOdecet["jednotka"] ?></span>
-                                                    </div>
+                                                    
                                                     <?php if ($aOdecet["naklady"] > 0) : ?>
                                                     <div class="d-flex justify-content-between">
                                                     <span class="text-muted"><?= __('Náklady') ?></span>

@@ -11,7 +11,7 @@
         </div>
         <div class="modal-footer">
         <button type="button" class="btn btn-sm btn-secondary cancel" data-bs-dismiss="modal"><?= __('Zrušit') ?></button>
-        <a href="#" class="btn btn-danger confirm"><?= __('Smazat') ?></a>
+        <a href="#" class="btn btn-sm btn-danger confirm"><?= __('Smazat') ?></a>
         </div>
     </div>
     </div>
