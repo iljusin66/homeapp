@@ -12,12 +12,10 @@ require_once 'autoload.php';
 new config();
 
 /*
- * Třída pro práci s odečty měřidel
- * 
- * @author Ivan La.
- * @version 1.0
- * @package App
- */
+* Třída pro práci s odečty energií
+* @author Ivan Latečka
+* @version 1.0
+*/
 class odecet extends meridla{
 
     private static $initialized = false;
@@ -43,6 +41,10 @@ class odecet extends meridla{
         $this->posledniObdobiOdectu();
     }
 
+    /*
+    * Načte poslední období odečtu
+    * @return void
+    */
     private function posledniObdobiOdectu() {
         if (
             (empty($this->aMeridlo) || $this->aMeridlo['id'] == 0)
@@ -55,6 +57,7 @@ class odecet extends meridla{
             JOIN meridla2users AS mu ON mu.idmeridla = s.idmeridla AND mu.iduser = ?
             WHERE s.idmeridla = ? AND zacatekobdobi = 1 ORDER BY s.casodectu DESC LIMIT 0, 1';
             $row = db::f($q, [$this->aUser['id'], $this->aMeridlo['id']]);
+
         //Paklize nebyl nalezen zadny rozhodny odečet, vezmeme poslední odečet
         // a pokud ani ten neexistuje, nastavíme období na aktuální čas
         if (empty($row['posledniObdobiOdectu'])) :
@@ -73,6 +76,10 @@ class odecet extends meridla{
         endif;
     }
 
+    /*
+        * Načte odečty pro dané období
+        * @return void
+        */
     private function nactiOdectyObdobi() {
         if (
             (empty($this->aMeridlo) || $this->aMeridlo['id'] == 0)
@@ -81,14 +88,8 @@ class odecet extends meridla{
             $this->aOdecty = [];
             return;
         endif;
-
-        /*
-        $q = 'SELECT s.* FROM v_spotrebascenami AS s
-            JOIN meridla2users AS mu ON mu.idmeridla = s.idmeridla AND mu.iduser = ?
-            JOIN role AS r ON r.id = mu.idrole
-            WHERE s.idmeridla = ? AND s.casodectu >= ? 
-            ORDER BY s.casodectu DESC';
-*/
+        
+        // Získání odečtů pro dané období
         $q = 'CALL SpotrebaOd(?, ?, ?, ?);';            
             $rows = db::fa($q, [$this->aUser['id'], $this->aMeridlo['id'], $this->zacatekObdobiOdectu, $this->konecObdobiOdectu]);
             
@@ -102,6 +103,10 @@ class odecet extends meridla{
         $this->spocitejPrumernouSpotrebu();
     }
 
+    /*
+    * Vypočítá průměrnou spotřebu a náklady za dané období
+    * @return void
+    */
     public function spocitejPrumernouSpotrebu() {
         $this->celkovaSpotreba = array_sum(array_column($this->aOdecty, 'spotreba'));
         $this->celkoveNaklady = array_sum(array_column($this->aOdecty, 'naklady'));
@@ -117,6 +122,10 @@ class odecet extends meridla{
         $this->prumernaSpotrebaDen = $this->celkovaSpotreba / ($pocetHodin / 24);
     }
 
+    /*
+    * Načte seznam odečtů pro dané období
+    * @return array|false
+    */
     public function nactiSeznamOdectu() {
         $this->nactiOdectyObdobi();
         if (empty($this->aOdecty)) return false;
