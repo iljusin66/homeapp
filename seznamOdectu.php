@@ -65,24 +65,26 @@ $oOdecet->nactiSeznamOdectu();
                             </div>
                         </div>
                         <div id="dataContainer" class="row">
+                            <?php
+                                //Jen group writer nebo vyssi muze editovat
+                                if (in_array($oUser->aUser["meridlaRole"][$oOdecet->aMeridlo["id"]], ca_RoleGroup["writer"])) : ?>
                                 <div class="col-12 col-md-6 col-lg-4 mb-3 odecty">
                                     <a href="<?= c_MainUrl; ?>zapisOdecet.php?idm=<?= $oOdecet->aMeridlo["id"] ?>&<?= time() ?>"
                                     class="card text-decoration-none text-body mb-2 bg-lightgreen text-center d-flex align-items-center justify-content-center"
-                                    style="height: 9.8rem;">
+                                    style="height: 7.6rem;">
                                         <div class="d-flex flex-column align-items-center">
-                                            <i class="bi bi-plus-circle text-success" style="font-size: 5rem; font-weight: bold;"></i>
+                                            <i class="bi bi-plus-circle text-success" style="font-size: 3rem; font-weight: bold;"></i>
                                             <div class="mt-0 text-success" style="position:relative;top:-0.5rem"><?= __('Přidat nový odečet') ?></div>
                                         </div>
                                     </a>
                                 </div>
-
-                            <?php
-                            //debug($oOdecet->aOdecty);
+                            <?php endif;
+                            // Pokud je v databázi více odečtů, zobrazíme je
                             foreach ($oOdecet->aOdecty as $aOdecet) : ?>
                                 <div class="col-12 col-md-6 col-lg-4 mb-3 odecty">
                                     <?php
                                     //Jen group editor nebo vyssi muze editovat
-                                    if (in_array($oUser->aUser["meridlaRole"][$aOdecet["idmeridla"]], ca_RoleGroup["writer"])) : ?>
+                                    if (in_array($oUser->aUser["meridlaRole"][$aOdecet["idmeridla"]], ca_RoleGroup["editor"])) : ?>
                                     <a href="<?= c_MainUrl; ?>zapisOdecet.php?idm=<?= $aOdecet["idmeridla"] ?>&ido=<?= $aOdecet["idodectu"] ?>&<?= time() ?>" class="card text-decoration-none text-body bg-light card-hover mb-2">
                                     <?php endif; ?>
                                         <div class="card-body p-2">
@@ -117,7 +119,13 @@ $oOdecet->nactiSeznamOdectu();
                                                         <span class="text-muted"><?= __('Spotřeba') ?></span>
                                                         <span><?= round($aOdecet["spotreba"], 3) ?> <?= $aOdecet["jednotka"] ?></span>
                                                     </div>
+                                                    <?php if ($aOdecet["naklady"] > 0) : ?>
                                                     <div class="d-flex justify-content-between">
+                                                        <span class="text-muted"><?= __('Náklady') ?></span>
+                                                        <span><?= round($aOdecet["naklady"], 3) ?> <?= c_Mena ?></span>
+                                                    </div>
+                                                    <?php endif; ?>
+                                                    <!--<div class="d-flex justify-content-between">
                                                         <span class="text-muted"><?= __('Zadal') ?>:</span>
                                                         <span><?= $aOdecet["userZadal"] ?></span>
                                                     </div>
@@ -127,19 +135,13 @@ $oOdecet->nactiSeznamOdectu();
                                                         <span class="text-muted"><?= __('Opravil') ?>:</span>
                                                         <?php endif; ?>
                                                         <span><?= $aOdecet["userOpravil"] ?></span>
-                                                    </div>
+                                                    </div>-->
                                                     
                                                 </div>
 
                                                 <!-- Pravý sloupec -->
                                                 <div class="col-6">
                                                     
-                                                    <?php if ($aOdecet["naklady"] > 0) : ?>
-                                                    <div class="d-flex justify-content-between">
-                                                    <span class="text-muted"><?= __('Náklady') ?></span>
-                                                    <span><?= round($aOdecet["naklady"], 3) ?> <?= c_Mena ?></span>
-                                                    </div>
-                                                    <?php endif; ?>
                                                     <div class="d-flex justify-content-between">
                                                     <span class="text-muted"><?= __('Denní &oslash;') ?></span>
                                                     <span><?= round($aOdecet["prumernaSpotrebaDen"], 3) ?> <?= $aOdecet["jednotka"] ?></span>
