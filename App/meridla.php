@@ -25,13 +25,15 @@ class meridla {
     private $jenAktivniMeridla = 1; // 1 - jen aktivní, 0 - všechny
     private $jenAktivniUzivatele = 1; // 1 - jen aktivní, 0 - všichni
     
-    public $aMeridla = [];
-    public $aMeridlo = []; // Seznam měřidel uživatele
+    public $aMeridla = []; // Seznam měřidel uživatele
+    public $aMeridlo = []; // Měřidlo podle ID z requestu
     private $aUser = [];
+    public $aJednotkyMeridel = []; // Jednotky měřidel načtené z DB
 
     function __construct($aUser = []) {
         $this->aUser = $aUser;
         if (!self::$initialized) {
+            $this->nactiJednotkyMeridel();
             $this->nactiSeznamMeridelUzivatele();
             $this->nactiMeridlo();
             self::$initialized = true;
@@ -45,6 +47,7 @@ class meridla {
      */
     private function nactiMeridlo() {
         $idm = max(0, request::int("idm", "REQUEST"));
+
         $this->aMeridlo = $this->aMeridla[$idm] ?? [];
         if (empty($this->aMeridlo)) :
             $this->aMeridlo["id"] = 0;
@@ -69,8 +72,17 @@ class meridla {
         if (empty($this->aMeridla)) {
             $this->aMeridla = [];
         }
-        
+
         return $this->aMeridla;
+    }
+
+    private function nactiJednotkyMeridel() : void {
+        $q = "SELECT * FROM cis_merne_jednotky ORDER BY id";
+        $rows = db::fa($q);
+        $this->aJednotkyMeridel = [];
+        foreach ($rows as $row) :
+            $this->aJednotkyMeridel[$row["id"]] = $row;
+        endforeach;
     }
     
 }

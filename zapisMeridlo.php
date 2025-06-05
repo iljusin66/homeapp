@@ -8,7 +8,7 @@ header("Pragma: no-cache");
 require_once 'autoload.php';
 $oUser = new user();
 $oMeridlo = new meridla($oUser->aUser);
-$oOdecet = new odecet($oUser->aUser);
+
 ?><!DOCTYPE html>
 <html lang="cs">
     <head>
@@ -36,7 +36,7 @@ $oOdecet = new odecet($oUser->aUser);
                 <div class="row">
                     <div class="col-2 d-print-none d-none d-md-block"></div>
                     <div class="col ps-0">
-                        <h1 class="fs-3 ps-0"><?= $oOdecet->aMeridlo['nazev'] ?></h1>
+                        <h1 class="fs-3 ps-0"><?= $oMeridlo->aMeridlo['nazev'] ?></h1>
                     </div>
                 </div>
                 <div class="row pt-0">
@@ -52,32 +52,34 @@ $oOdecet = new odecet($oUser->aUser);
                                         <!-- První pole -->
                                         <div class="me-3 mb-2" style="max-width: 400px; width: 100%;">
                                             <div class="d-flex flex-column flex-sm-row align-items-sm-center">
-                                                <label for="odecet" class="me-sm-2 mb-1 mb-sm-0" style="width: 100px; flex-shrink: 0;">
-                                                    <?= __('Hodnota') ?>
+                                                <label for="nazev" class="me-sm-2 mb-1 mb-sm-0" style="width: 150px; flex-shrink: 0;">
+                                                    <?= __('Název měřidla') ?>
                                                 </label>
-                                                <input type="number" placeholder="0.000" step=".001" class="form-control" id="odecet" name="odecet" value="<?= utils::fixFloat(round($oMeridlo->aMeridlo["odecet"], 3), false) ?>" required>
+                                                <input type="text" class="form-control" id="nazev" name="nazev" value="<?= utils::safeForm($oMeridlo->aMeridlo["nazev"]) ?>" required>
                                             </div>
                                         </div>
 
                                         <!-- Druhé pole -->
                                         <div class="me-3 mb-2" style="max-width: 400px; width: 100%;">
                                             <div class="d-flex flex-column flex-sm-row align-items-sm-center">
-                                                <label for="casodectu" class="me-sm-2 mb-1 mb-sm-0" style="width: 100px; flex-shrink: 0;">
-                                                    <?= __('Datum a čas') ?>
+                                                <label for="idjednotky" class="me-sm-2 mb-1 mb-sm-0" style="width: 150px; flex-shrink: 0;">
+                                                    <?= __('Jednotka měření') ?>
                                                 </label>
-                                                <input type="datetime-local" class="form-control" id="casodectu" value="<?= utils::safeForm($oMeridlo->aMeridlo["id"]) ?>" name="casodectu" required>
+                                                <select class="form-select" id="idjednotky" name="idjednotky" required>
+                                                    <?php if ($oMeridlo->aMeridlo['idjednotky']==0) : ?><option value="0"><?= __('Vyberte měrnou jednotku') ?></option><?php endif; ?>
+                                                    <?php foreach ($oMeridlo->aJednotkyMeridel as $id => $jednotka): ?>
+                                                        <option value="<?= utils::fixInt($id) ?>" <?= ($oMeridlo->aMeridlo['idjednotky'] == $id) ? 'selected' : '' ?>>
+                                                            <?= utils::safeForm($jednotka['jednotka']) ?>
+                                                        </option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                                
                                             </div>
                                         </div>
 
                                         <!-- Třetí pole -->
                                         <div class="me-3 mb-2" style="max-width: 400px; width: 100%;">
-                                            <div class="d-flex flex-column flex-sm-row align-items-sm-center">
-                                                <label class="me-sm-2 mb-1 mb-sm-0" style="width: 100px; flex-shrink: 0;"></label>
-                                                <div class="form-check m-0 pt-sm-1">
-                                                    <input type="checkbox" class="form-check-input me-2" id="zacatekobdobi" value="1" name="zacatekobdobi" <?= ($oMeridlo->aMeridlo["id"] == 1) ? 'checked' : '' ?>>
-                                                    <label class="form-check-label" for="zacatekobdobi"><?= __('Chci něco zaškrtnout?') ?></label>
-                                                </div>
-                                            </div>
+                                            
                                         </div>
                                     </div>
 
