@@ -13,10 +13,8 @@ new config();
 
 /*
  * Třída pro práci s měřidly
- * 
- * @author Ivan La.
+ * @author Ivan Latečka
  * @version 1.0
- * @package App
  */
 class meridla {
 
@@ -84,5 +82,7 @@ class meridla {
             $this->aJednotkyMeridel[$row["id"]] = $row;
         endforeach;
     }
+
+    
     
 }
