@@ -80,4 +80,24 @@ $(document).ready(function () {
         smazOdecet($(this));
     });
 
+    $('.smazatCenik').on('click', function (e) {
+        e.preventDefault();
+        var modalWindow = $('#modalConfirmDelete');
+        var myModal = new bootstrap.Modal(modalWindow, {
+            keyboard: false,
+            backdrop: true,
+            focus: true
+        });
+        myModal.show();
+        var url = $(this).attr('href');
+        
+        modalWindow.find('.confirm').off('click').on('click', function() {
+            window.location.href = url;
+        });
+        
+        modalWindow.find('.cancel').off('click').on('click', function() {
+            myModal.hide();
+        });
+    });
+
 });

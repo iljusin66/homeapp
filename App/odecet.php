@@ -8,6 +8,7 @@ use Latecka\Utils\request;
 use Latecka\Utils\db;
 
 require_once 'autoload.php';
+require_once 'autoOdecty.php';
 
 new config();
 
@@ -35,6 +36,9 @@ class odecet extends meridla{
         
         if (!self::$initialized) {
             parent::__construct($this->aUser);
+            // Automatické vytvoření počátečních odečtů při změně ceníků
+            $oAuto = new autoOdecty($this->aUser);
+            $oAuto->kontrolaAVytvoreniAutoOdectu($this->aMeridlo['id']);
             self::$initialized = true;
         }
         $this->konecObdobiOdectu = date('Y-m-d H:i:s');

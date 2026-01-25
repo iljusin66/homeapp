@@ -7,7 +7,8 @@ header("Pragma: no-cache");
 
 require_once 'autoload.php';
 $oUser = new user();
-$oMeridlo = new meridla($oUser->aUser);
+$oMeridlo = new zapisMeridlo($oUser->aUser);
+$oCeniky = new ceniky($oUser->aUser);
 
 ?><!DOCTYPE html>
 <html lang="cs">
@@ -47,6 +48,11 @@ $oMeridlo = new meridla($oUser->aUser);
                                 <input type="hidden" name="idm" value="<?= utils::fixFloat($oMeridlo->aMeridlo['id']) ?>">
                                 <fieldset class="row">
                                     <legend class="form-label"><?= ($oMeridlo->aMeridlo["id"]==0) ? __('Vložit měřidlo') : __('Oprava měřidla') ?></legend>
+                                    <?php if (!empty($oMeridlo->errors)) : ?>
+                                        <div class="alert alert-danger">
+                                            <?= implode('<br>', array_map('htmlspecialchars', $oMeridlo->errors)) ?>
+                                        </div>
+                                    <?php endif; ?>
                                     <div class="row">
                                     <div class="d-flex flex-wrap">
                                         <!-- První pole -->
@@ -95,6 +101,62 @@ $oMeridlo = new meridla($oUser->aUser);
                                 </fieldset>
                                 <input type="submit" name="ulozit" value="<?= __('Uložit') ?>" class="btn btn-primary">
                             </form>
+
+                            <!-- Ceníky -->
+                            <?php if ($oMeridlo->aMeridlo["id"] > 0) : ?>
+                            <div class="col-12 mt-5">
+                                <h2><?= __('Ceníky') ?></h2>
+                                <?php if (in_array($oUser->aUser["meridlaRole"][$oMeridlo->aMeridlo['id']] ?? 0, ca_RoleGroup["editor"])) : ?>
+                                <div class="mb-3">
+                                    <a href="<?= c_MainUrl; ?>zapisCenik.php?idm=<?= $oMeridlo->aMeridlo['id'] ?>&<?= time() ?>" class="btn btn-success">
+                                        <i class="bi-plus-circle me-1"></i><?= __('Přidat ceník') ?>
+                                    </a>
+                                </div>
+                                <?php endif; ?>
+
+                                <?php if (empty($oCeniky->aCeniky)) : ?>
+                                    <div class="alert alert-info"><?= __('Zatím nejsou přidány žádné ceníky.') ?></div>
+                                <?php else : ?>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th><?= __('Dodavatel') ?></th>
+                                                <th><?= __('Cena/j.') ?></th>
+                                                <th><?= __('Platný od') ?></th>
+                                                <th><?= __('Platný do') ?></th>
+                                                <th><?= __('Poznámka') ?></th>
+                                                <?php if (in_array($oUser->aUser["meridlaRole"][$oMeridlo->aMeridlo['id']] ?? 0, ca_RoleGroup["editor"])) : ?>
+                                                <th><?= __('Akce') ?></th>
+                                                <?php endif; ?>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach ($oCeniky->aCeniky as $cenik) : ?>
+                                            <tr>
+                                                <td><?= htmlspecialchars($cenik['dodavatel']) ?></td>
+                                                <td class="text-end"><?= round($cenik['cenazajednotku'], 5) ?> <?= c_Mena ?></td>
+                                                <td><?= (new DateTime($cenik['platnyod']))->format('d.m.Y') ?></td>
+                                                <td><?= (!empty($cenik['platnydo'])) ? (new DateTime($cenik['platnydo']))->format('d.m.Y') : '—' ?></td>
+                                                <td><?= htmlspecialchars($cenik['poznamka']) ?></td>
+                                                <?php if (in_array($oUser->aUser["meridlaRole"][$oMeridlo->aMeridlo['id']] ?? 0, ca_RoleGroup["editor"])) : ?>
+                                                <td>
+                                                    <a href="<?= c_MainUrl; ?>zapisCenik.php?idm=<?= $oMeridlo->aMeridlo['id'] ?>&idc=<?= $cenik['id'] ?>" class="btn btn-sm btn-primary" title="<?= __('Upravit') ?>">
+                                                        <i class="bi-pencil"></i>
+                                                    </a>
+                                                    <a href="#" class="btn btn-sm btn-danger smazatCenik" data-url="<?= c_MainUrl; ?>zapisCenik.php?idm=<?= $oMeridlo->aMeridlo['id'] ?>&del=<?= $cenik['id'] ?>" title="<?= __('Smazat') ?>">
+                                                        <i class="bi-trash"></i>
+                                                    </a>
+                                                </td>
+                                                <?php endif; ?>
+                                            </tr>
+                                            <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <?php endif; ?>
+                            </div>
+                            <?php endif; ?>
                         </div>
                     </div>
 

@@ -52,11 +52,20 @@
 - `cis_merne_jednotky`, `ceniky`, `pausaly`, `zalohy`, `cis_frekvence`: číselníky a ceny (ceníky navázány na měřidla, zálohy/pausaly na ceníky).
 - Pohledy `v_spotrebascenami`, `v_spotrebascenamicelkem` sumarizují spotřebu a náklady; procedura `SpotrebaOd` vrací detail odečtů za zvolené období s dopočty rozdílů a nákladů.
 
+## Automatické zpracování změn ceníků
+- Třída [App/autoOdecty.php](App/autoOdecty.php) řeší problém, když ceník změnil cenu mezi dvěma odečty.
+  - Příklad: poslední odečet 1.11.2025, nový ceník od 1.1.2026, nový odečet až 15.1.2026.
+  - Řešení: při prvním přístupu k měřidlu po změně ceníku se automaticky vytvoří „fiktivní" počáteční odečet na `platnyod` nového ceníku s vypočtenou hodnotou.
+  - Výpočet: průměrná denní spotřeba z předchozího období × počet dní do začátku nového ceníku.
+  - Odečet má `zacatekobdobi = 1` a poznámku „Automaticky dopočítaný začátek období dle průměrné denní spotřeby".
+- Spouští se v konstruktoru třídy `odecet`, ale pouze pokud neexistuje už počáteční odečet pro nový ceník.
+
 ## Tok požadavků (zkráceně)
 1. Uživatel otevře stránku → [index.php](index.php) přes `autoload.php` načte konfiguraci a utilitiy.
 2. `user->checkLogin()` načte cookies a buď přesměruje na login, nebo doplní uživatele a role.
 3. Dashboard nebo jiné stránky instancují `meridla`/`odecet`/`zapisOdecet`, které dotahují data z DB přes `db` wrapper.
 4. Formuláře (login/registrace/odečet/měřidlo) validují klientsky JS, serverově `request` + doménové metody; po úspěchu ukládají do DB a přesměrovávají na seznamy.
+5. Při prvním přístupu ke čtení/zápisu odečtů se automaticky kontroluje, zda nenastala změna ceníků, a případně se vytvoří počáteční odečet.
 
 ## Poznámky k rozšíření
 - Persistenční logika pro formulář měřidla zatím chybí (třída `zapisMeridlo` je prázdná); případné doplnění by mělo využít role a mapování `meridla2users`.
