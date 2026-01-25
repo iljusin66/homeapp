@@ -19,9 +19,9 @@
 
 ## Doménová logika
 ### Měřidla
-- Třída [App/meridla.php](App/meridla.php) načítá seznam měřidel dostupných uživateli (JOIN `meridla`, `meridla2users`, `cis_merne_jednotky`, `role`) a konkrétní měřidlo dle `idm` z requestu. Drží i číselník jednotek.
+- Třída [App/meridla.php](App/meridla.php) načítá seznam měřidel dostupných uživateli (JOIN `meridla`, `meridla2users`, `cis_merne_jednotky`, `role`) a konkrétní měřidlo dle `idm` z requestu. Drží i číselník jednotek. Při každém vytvoření instance se provádí načtení z DB (umožňuje vytvoření více instancí na jedné stránce, např. `zapisMeridlo` + `ceniky`).
 - Stránka [dashboard.php](dashboard.php) dlaždicově zobrazuje měřidla a odkazy na zápis/ seznam odečtů a nastavení.
-- Stránka [zapisMeridlo.php](zapisMeridlo.php) zobrazuje formulář pro vytvoření/úpravu měřidla (název, jednotka, poznámka); samotná persistenci zatím není implementována.
+- Stránka [zapisMeridlo.php](zapisMeridlo.php) zobrazuje formulář pro vytvoření/úpravu měřidla (název, jednotka, poznámka) s metodami `nactiZPost()`, `validuj()`, `kontrolaOpravneni()`, `vytvorMeridlo()` a `opravMeridlo()`. Také instancuje třídu `ceniky` pro zobrazení cenů.
 
 ### Odečty
 - [App/odecet.php](App/odecet.php) rozšiřuje `meridla` o práci s odečty. V konstruktoru nastaví období (od posledního „začátku období“ nebo nejstaršího odečtu) a načte odvozené metriky.
@@ -31,6 +31,15 @@
   - `nactiOdecet()` větví GET (načtení existujícího záznamu) a POST (validace a uložení).
   - `zapisNovyOdecet()` a `opravOdecet()` ukládají do tabulky `odecty`, přesměrovávají na seznam; mazání `smazOdecet()` hlídá oprávnění.
   - Validace: formát datumu (`formatDbDateTime`), kladná hodnota odečtu, volitelný příznak `zacatekobdobi`.
+
+### Ceníky
+- Třída [App/ceniky.php](App/ceniky.php) rozšiřuje `meridla` a načítá ceníky pro konkrétní měřidlo (cena za jednotku, platnost od/do, poznámka, dodavatel).
+- [App/zapisCenik.php](App/zapisCenik.php) obsluhuje CRUD operace na ceníkách:
+  - `vytvorCenik()` – vytvoří nový ceník a automaticky zavře předchozí (nastaví `platnydo` na den před `platnyod` nového ceníku).
+  - `opravCenik()` – upravuje ceník; pokud se změní `platnyod`, znovu otevře starou ceníkovou dobu a recalc uzavření.
+  - `smazCenik()` – smaže ceník a znovu otevře předchozí (nastaví `platnydo = NULL`).
+- Stránka [zapisCenik.php](zapisCenik.php) zobrazuje formulář pro vytvoření/úpravu ceníku.
+- Stránka [zapisMeridlo.php](zapisMeridlo.php) zobrazuje tabulku ceníků s tlačítky na úpravu/smazání (viditelné pouze pro editory).
 
 ## Frontend a UX
 - Šablony jsou přímo v PHP souborech a používají Bootstrap 5 + Bootstrap Icons. Často se sdílí navigace ([inc/navbar-top.php](inc/navbar-top.php)) a levé menu ([inc/leveMenu.php](inc/leveMenu.php)) s akordeonem měřidel a offcanvas pro mobil.
