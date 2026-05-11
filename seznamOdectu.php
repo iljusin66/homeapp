@@ -44,13 +44,14 @@ $oOdecet->nactiSeznamOdectu();
                             <div class="col-12 col-md-6 col-lg-4 mb-3">
                                 <div class="card">
                                     <div class="card-body">
+                                        <h2 class="h6 mb-3"><?= __('Aktuální období') ?></h2>
                                         <div class="d-flex justify-content-between">
                                             <strong><?= __('Celková spotřeba') ?>:</strong>
                                             <span><?= round($oOdecet->celkovaSpotreba, 3) ?> <?= $oOdecet->aMeridlo["jednotka"] ?></span>
                                         </div>
                                         <div class="d-flex justify-content-between">
                                             <strong><?= __('Celkové náklady') ?>:</strong>
-                                            <span><?= round($oOdecet->celkoveNaklady, 3) ?> <?= c_Mena ?></span>
+                                            <span><?= round($oOdecet->celkoveNaklady, c_RoundNaklady) ?> <?= c_Mena ?></span>
                                         </div> 
                                         <div class="d-flex justify-content-between">
                                             <strong><?= __('Průměrná spotřeba') ?>:</strong>
@@ -63,6 +64,47 @@ $oOdecet->nactiSeznamOdectu();
                                     </div>
                                 </div>
                             </div>
+                            <?php if (!empty($oOdecet->souhrnPredchoziObdobi['dostupne'])) : ?>
+                            <div class="col-12 col-md-6 col-lg-4 mb-3">
+                                <div class="card border-secondary-subtle">
+                                    <div class="card-body">
+                                        <h2 class="h6 mb-1"><?= __('Minulé období') ?></h2>
+                                        <div class="small text-muted mb-3">
+                                            <?= utils::getLocaleDate($oOdecet->souhrnPredchoziObdobi['od']) ?>
+                                            -
+                                            <?= (!empty($oOdecet->souhrnPredchoziObdobi['do'])) ? utils::getLocaleDate($oOdecet->souhrnPredchoziObdobi['do']) : __('bez konce') ?>
+                                        </div>
+                                        <div class="d-flex justify-content-between">
+                                            <strong><?= __('Celková spotřeba') ?>:</strong>
+                                            <span><?= round($oOdecet->souhrnPredchoziObdobi['celkovaSpotreba'], 3) ?> <?= $oOdecet->aMeridlo["jednotka"] ?></span>
+                                        </div>
+                                        <!-- Vyúčtování nákladů -->
+                                        <div class="mt-2 pt-2 border-top border-secondary-subtle">
+                                            <div class="d-flex justify-content-between mb-1">
+                                                <small class="text-muted"><?= __('Odhadovaná cena') ?>:</small>
+                                                <small><?= round($oOdecet->souhrnPredchoziObdobi['odhadcenyzajednotku'], 5) ?> <?= c_Mena ?></small>
+                                            </div>
+                                            <div class="d-flex justify-content-between mb-2">
+                                                <small class="text-muted"><strong><?= __('Náklady (odhad)') ?>:</strong></small>
+                                                <small><strong><?= round($oOdecet->souhrnPredchoziObdobi['celkoveNakiadyOdhad'], c_RoundNaklady) ?> <?= c_Mena ?></strong></small>
+                                            </div>
+                                            <div class="d-flex justify-content-between mb-1">
+                                                <small class="text-muted"><?= __('Skutečná cena') ?>:</small>
+                                                <small><?= round($oOdecet->souhrnPredchoziObdobi['cenazajednotku'], 5) ?> <?= c_Mena ?></small>
+                                            </div>
+                                            <div class="d-flex justify-content-between mb-2">
+                                                <small class="text-muted"><strong><?= __('Náklady (skutečné)') ?>:</strong></small>
+                                                <small><strong><?= round($oOdecet->souhrnPredchoziObdobi['celkoveNaklady'], c_RoundNaklady) ?> <?= c_Mena ?></strong></small>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-between mt-2">
+                                            <strong><?= __('Průměrná spotřeba') ?>:</strong>
+                                            <span><?= round($oOdecet->souhrnPredchoziObdobi['prumernaSpotrebaDen'], 3) ?> <?= $oOdecet->aMeridlo["jednotka"] ?> / <?= __('den') ?></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php endif; ?>
                         </div>
                         <div id="dataContainer" class="row">
                             <?php
@@ -122,7 +164,7 @@ $oOdecet->nactiSeznamOdectu();
                                                     <?php if ($aOdecet["naklady"] > 0) : ?>
                                                     <div class="d-flex justify-content-between">
                                                         <span class="text-muted"><?= __('Náklady') ?></span>
-                                                        <span><?= round($aOdecet["naklady"], 3) ?> <?= c_Mena ?></span>
+                                                        <span><?= round($aOdecet["naklady"], c_RoundNaklady) ?> <?= c_Mena ?></span>
                                                     </div>
                                                     <?php endif; ?>
                                                     <!--<div class="d-flex justify-content-between">

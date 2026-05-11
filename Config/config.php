@@ -8,6 +8,8 @@ define('c_ScriptBaseName', $scriptBaseName);
 define('c_MainUrl', (stripos($_SERVER['REQUEST_SCHEME'],'https') === 0 ? 'https://' : 'http://'). $_SERVER["SERVER_NAME"] . c_SubfolderURL);
 define('c_bWork', ($_SERVER["SERVER_NAME"]=='homeapp'));
 define('c_Mena', 'Kč');
+// Na kolik desetinných míst se zaokrouhlují zobrazované náklady (0 = celé jednotky)
+define('c_RoundNaklady', 0);
 define('c_AppName', 'Blinkr'); //Jmeno aplikace
 
 //Defaultni jazyk aplikace

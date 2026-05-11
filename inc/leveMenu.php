@@ -39,6 +39,12 @@ $homeLink = '<a class="nav-link '. ((c_ScriptBaseName == 'index') ? 'active' : '
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link pb-1 pt-1 <?= (c_ScriptBaseName == "statistiky" && $id == $oOdecet->aMeridlo["id"] ? 'active' : '') ?>"
+                               href="<?= c_MainUrl . 'statistiky.php?idm=' . $id . '&t=' . time() ?>">
+                                <?= __('Statistiky') ?>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link pb-1 pt-1 <?= (c_ScriptBaseName == "zapisMeridlo" && $id == $oOdecet->aMeridlo["id"] ? 'active' : '') ?>"
                                href="<?= c_MainUrl . 'zapisMeridlo.php?idm=' . $id . '&t=' . time() ?>">
                                 <?= __('Nastavení') ?>
@@ -87,6 +93,12 @@ $homeLink = '<a class="nav-link '. ((c_ScriptBaseName == 'index') ? 'active' : '
                         <a class="nav-link pb-1 pt-1 <?= (c_ScriptBaseName == "zapisOdecet" && $id == $oOdecet->aMeridlo["id"] ? 'active' : '') ?>"
                             href="<?= c_MainUrl . 'zapisOdecet.php?idm=' . $id . '&t=' . time() ?>">
                             <?= __('Nový odečet') ?>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link pb-1 pt-1 <?= (c_ScriptBaseName == "statistiky" && $id == $oOdecet->aMeridlo["id"] ? 'active' : '') ?>"
+                            href="<?= c_MainUrl . 'statistiky.php?idm=' . $id . '&t=' . time() ?>">
+                            <?= __('Statistiky') ?>
                         </a>
                     </li>
                     <li class="nav-item">

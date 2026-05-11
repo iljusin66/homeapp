@@ -37,6 +37,7 @@ class zapisCenik extends ceniky {
         $this->aCenik["dodavatel"] = request::string('dodavatel', 'POST');
         $this->aCenik["poznamka"] = request::string('poznamka', 'POST');
         $this->aCenik["cenazajednotku"] = request::float('cenazajednotku', 'POST');
+        $this->aCenik["odhadcenyzajednotku"] = request::float('odhadcenyzajednotku', 'POST');
         $this->aCenik["platnyod"] = request::string('platnyod', 'POST');
         $this->aCenik["platnydo"] = request::string('platnydo', 'POST');
     }
@@ -52,9 +53,6 @@ class zapisCenik extends ceniky {
     private function validuj(): bool {
         if (trim($this->aCenik["dodavatel"]) === '') {
             $this->errors[] = __('Dodavatel je povinný.');
-        }
-        if ($this->aCenik["cenazajednotku"] <= 0) {
-            $this->errors[] = __('Cena za jednotku musí být kladné číslo.');
         }
         if (empty(utils::formatDbDate($this->aCenik["platnyod"]))) {
             $this->errors[] = __('Neplatné počáteční datum platnosti.');
@@ -108,12 +106,13 @@ class zapisCenik extends ceniky {
         // Uzavřít předchozí ceník, který nemá konce
         $this->uzavriPredchoziCenik(utils::formatDbDate($this->aCenik["platnyod"]));
 
-        $q = "INSERT INTO ceniky (idmeridla, dodavatel, poznamka, cenazajednotku, platnyod, platnydo) VALUES (?, ?, ?, ?, ?, ?)";
+        $q = "INSERT INTO ceniky (idmeridla, dodavatel, poznamka, cenazajednotku, odhadcenyzajednotku, platnyod, platnydo) VALUES (?, ?, ?, ?, ?, ?, ?)";
         db::q($q, [
             $this->aMeridlo["id"],
             $this->aCenik["dodavatel"],
             $this->aCenik["poznamka"],
             $this->aCenik["cenazajednotku"],
+            $this->aCenik["odhadcenyzajednotku"],
             utils::formatDbDate($this->aCenik["platnyod"]),
             null // Nový ceník nemá konce
         ]);
@@ -146,11 +145,12 @@ class zapisCenik extends ceniky {
             $this->uzavriPredchoziCenik($novyPlatnyOd);
         endif;
 
-        $q = "UPDATE ceniky SET dodavatel = ?, poznamka = ?, cenazajednotku = ?, platnyod = ? WHERE id = ? AND idmeridla = ?";
+        $q = "UPDATE ceniky SET dodavatel = ?, poznamka = ?, cenazajednotku = ?, odhadcenyzajednotku = ?, platnyod = ? WHERE id = ? AND idmeridla = ?";
         db::q($q, [
             $this->aCenik["dodavatel"],
             $this->aCenik["poznamka"],
             $this->aCenik["cenazajednotku"],
+            $this->aCenik["odhadcenyzajednotku"],
             $novyPlatnyOd,
             $this->aCenik["id"],
             $this->aMeridlo["id"]

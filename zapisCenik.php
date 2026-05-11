@@ -65,7 +65,17 @@ $oCenik = new zapisCenik($oUser->aUser);
                                                 <label for="cenazajednotku" class="me-sm-2 mb-1 mb-sm-0" style="width: 120px; flex-shrink: 0;">
                                                     <?= __('Cena za jednotku') ?>
                                                 </label>
-                                                <input type="number" placeholder="0.00000" step=".00001" class="form-control" id="cenazajednotku" name="cenazajednotku" value="<?= utils::fixFloat(round($oCenik->aCenik["cenazajednotku"], 5), false) ?>" required>
+                                                <input type="number" placeholder="0.00000" step=".00001" class="form-control" id="cenazajednotku" name="cenazajednotku" value="<?= utils::fixFloat(round($oCenik->aCenik["cenazajednotku"], 5), false) ?>">
+                                            </div>
+                                        </div>
+
+                                        <!-- Odhadovaná cena za jednotku -->
+                                        <div class="me-3 mb-2" style="max-width: 400px; width: 100%;">
+                                            <div class="d-flex flex-column flex-sm-row align-items-sm-center">
+                                                <label for="odhadcenyzajednotku" class="me-sm-2 mb-1 mb-sm-0" style="width: 120px; flex-shrink: 0;">
+                                                    <?= __('Odhad ceny') ?>
+                                                </label>
+                                                <input type="number" placeholder="0.00000" step=".00001" class="form-control" id="odhadcenyzajednotku" name="odhadcenyzajednotku" value="<?= utils::fixFloat(round($oCenik->aCenik["odhadcenyzajednotku"], 5), false) ?>">
                                             </div>
                                         </div>
 

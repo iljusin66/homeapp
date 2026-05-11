@@ -123,6 +123,7 @@ $oCeniky = new ceniky($oUser->aUser);
                                             <tr>
                                                 <th><?= __('Dodavatel') ?></th>
                                                 <th><?= __('Cena/j.') ?></th>
+                                                <th><?= __('Odhad/j.') ?></th>
                                                 <th><?= __('Platný od') ?></th>
                                                 <th><?= __('Platný do') ?></th>
                                                 <th><?= __('Poznámka') ?></th>
@@ -136,6 +137,7 @@ $oCeniky = new ceniky($oUser->aUser);
                                             <tr>
                                                 <td><?= htmlspecialchars($cenik['dodavatel']) ?></td>
                                                 <td class="text-end"><?= round($cenik['cenazajednotku'], 5) ?> <?= c_Mena ?></td>
+                                                <td class="text-end"><?= (round($cenik['odhadcenyzajednotku'], 5) > 0) ? round($cenik['odhadcenyzajednotku'], 5) . ' ' . c_Mena : '—' ?></td>
                                                 <td><?= (new DateTime($cenik['platnyod']))->format('d.m.Y') ?></td>
                                                 <td><?= (!empty($cenik['platnydo'])) ? (new DateTime($cenik['platnydo']))->format('d.m.Y') : '—' ?></td>
                                                 <td><?= htmlspecialchars($cenik['poznamka']) ?></td>
